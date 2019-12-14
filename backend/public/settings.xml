@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<settings>
+    <mysql>
+        <host>127.0.0.1</host>
+        <port>3306</port>
+        <username>root</username>
+        <password>jonibeck1</password>
+        <database>ispolaso</database>
+    </mysql>
+    <web>
+        <url>/</url>
+    </web>
+    <customisation>
+        <mintime>60</mintime>
+        <missingTime>60</missingTime>
+    </customisation>
+    <style>
+
+    </style>
+
+    <userlevel>
+        <level id="0" name="Scanner" >
+            <permission id="ispolaso.scanner"/>
+        </level>
+        <level id="7" name="Tabellen" >
+            <permission id="ispolaso.dashboard.tables"/>
+        </level>
+        <level id="2" name="Dashhboard">
+            <permission id="ispolaso.dashboard.tables"/>
+            <permission is="ispolaso.dashboard.actions"/>
+        </level>
+        <level id="3" name="Manager" >
+            <permission id="ispolaso.dashboard.tables"/>
+            <permission id="ispolaso.dashboard.actions"/>
+            <permission id="ispolaso.scanner"/>
+        </level>
+        <level id="1" name="Admin" >
+            <permission id="ispolaso.dashboard.tables"/>
+            <permission id="ispolaso.dashboard.actions"/>
+            <permission id="ispolaso.scanner"/>
+            <permission id="ispolaso.user.manage"/>
+            <permission id="ispolaso.tools.schueler"/>
+            <permission id="ispolaso.tools.import"/>
+            <permission id="ispolaso.tools.export"/>
+        </level>
+    </userlevel>
+</settings>

@@ -1,0 +1,11 @@
+{
+    "name": "ispolaso/backend",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Tetraowl",
+            "email": "jonasbecker1.jb@gmail.com"
+        }
+    ],
+    "require": {}
+}

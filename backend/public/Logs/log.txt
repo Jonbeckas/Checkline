@@ -1,0 +1,15 @@
+<log time='[13.12.2019 23:28]' user='root' part='Admin Erstellen'>Der Nutzer hat den Admin root erstellt</log>
+<error time='[13.12.2019 23:30]' user='' part='Datenbank'>Table 'ispolaso.ispolaso' doesn't exist</error>
+<error time='[13.12.2019 23:30]' user='' part='Datenbank'>Table 'ispolaso.ispolaso' doesn't exist</error>
+<error time='[13.12.2019 23:31]' user='' part='Datenbank'>Table 'ispolaso.ispolaso' doesn't exist</error>
+<log time='[13.12.2019 23:46]' user='root' part='Login'>Der Nutzer hat sich angemeldet</log>
+<log time='[13.12.2019 23:47]' user='root' part='Login'>Der Nutzer hat sich angemeldet</log>
+<error time='[13.12.2019 23:47]' user='' part='Datenbank'>Table 'ispolaso.ispolaso' doesn't exist</error>
+<log time='[13.12.2019 23:49]' user='root' part='Login'>Der Nutzer hat sich angemeldet</log>
+<log time='[13.12.2019 23:50]' user='root' part='Login'>Der Nutzer hat sich angemeldet</log>
+<error time='[13.12.2019 23:51]' user='' part='Datenbank'>Table 'ispolaso.ispolaso' doesn't exist</error>
+<error time='[13.12.2019 23:52]' user='' part='Datenbank'>Table 'ispolaso.ispolaso' doesn't exist</error>
+<error time='[13.12.2019 23:52]' user='' part='Datenbank'>Table 'ispolaso.ispolaso' doesn't exist</error>
+<error time='[13.12.2019 23:53]' user='' part='Datenbank'>Table 'ispolaso.ispolaso' doesn't exist</error>
+<log time='[13.12.2019 23:54]' user='root' part='Admin Erstellen'>Der Nutzer hat den Admin root erstellt</log>
+<log time='[14.12.2019 00:06]' user='root' part='Admin Erstellen'>Der Nutzer hat den Admin loot erstellt</log>
