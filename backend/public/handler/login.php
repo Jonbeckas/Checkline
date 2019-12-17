@@ -17,23 +17,43 @@ class login implements handler
 
         $con = new \icore\database("SELECT * FROM admins WHERE username='" . $username . "'");
         $dbresult = $con->getAssoc();
+        if ($dbresult["token"]!="") {
+            if (isset($json["force"]) && $json["force"]==true) {
+                new \icore\database("UPDATE admins SET token=''");
+            }
+            else {
+                exit("{\"error\":\"stillLogedin\"}");
+            }
+        }
         if (password_verify($password, $dbresult["hash"])) {
             $token = hash('gost', time());
             new \icore\database("UPDATE admins SET token='" . $token . "' WHERE username='" . $username . "'");
             \icore\logger::log("Login", "Der Nutzer hat sich angemeldet", $username);
             $levels = icore::getAllPermissions($username);
-            exit("{'token':'$token','levels':'".$levels."'}");
+            exit("{\"token\":\"$token\",\"levels\":\"".$levels."\"}");
         } else {
-            exit("{'error':'wrongLogin'}");
+            exit("{\"error\":\"wrongLogin\"}");
 
         }
     }
 
     public function dologout($json) {
         $username =$json["username"];
-        $toke = $json["token"];
-        $con = new \icore\database("UPDATE admins SET token='$toke' AND username='$username'");
+        $token = $json["token"];
+        $con = new \icore\database("UPDATE admins SET token='$token' AND username='$username'");
     }
+
+    public function checklogin($json) {
+        $token = $json["token"];
+        $con = new \icore\database("SELECT token FROM admins WHERE token='$token'");
+        $con = $con->getAssoc();
+        if ($con["token"] == "") {
+            exit("{\"state\":true}");
+        } else {
+            exit("{\"state\":false}");
+        }
+    }
+
 
     public function getPermission()
     {

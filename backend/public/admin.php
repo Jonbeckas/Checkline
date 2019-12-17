@@ -4,23 +4,47 @@ require ("icore/permission.php");
 require "handler/userman.php";
 require_once "handler/login.php";
 
-header("Access-Control-Allow-Origin: *");
+/*header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
+header("Access-Control-Allow-Methods: POST,PUT,OPTIONS");
 header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");*/
 
+header("Content-Type: application/json; charset=UTF-8");
+//CORS
+if (isset($_SERVER['HTTP_ORIGIN'])) {
+    header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+    header('Access-Control-Allow-Credentials: true');
+    header('Access-Control-Max-Age: 86400');    // cache for 1 day
+}
+// Access-Control headers are received during OPTIONS requests
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+
+    if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+
+    if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+        header("Access-Control-Allow-Headers:        {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+
+    exit(0);
+}
+//Code
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $parsed_uri = explode( '/', $uri );
 
 $settings = \icore\icore::getSettings();
 
-if ($_SERVER["REQUEST_METHOD"]=="POST"&& strpos($uri,"login")!=false) {
+if ($_SERVER["REQUEST_METHOD"]=="POST"&& strpos($uri,"login")!=false&&strpos($uri,"checklogin")==false) {
     $request = file_get_contents("php://input");
     $json = json_decode($request, true);
     $element = new \icore\login();
     $element->dologin($json);
+} elseif ($_SERVER["REQUEST_METHOD"]=="POST"&&strpos($uri,"checklogin")!=false) {
+    $request = file_get_contents("php://input");
+    $json = json_decode($request, true);
+    $element = new \icore\login();
+    $element->checklogin($json);
 }
 
 checkAuth();

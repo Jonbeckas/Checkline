@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --base-href \"/gui/ispolaso/dist/ispolaso/\"",
+    "build": "ng build --base-href \"/frontend/dist/search/\"",
+    "buildLogin": "ng build --base-href \"/frontend/dist/login/\" --project login",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
