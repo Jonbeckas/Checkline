@@ -24,3 +24,5 @@
 <log time='[16.12.2019 18:40]' user='root' part='Login'>Der Nutzer hat sich angemeldet</log>
 <log time='[16.12.2019 18:43]' user='root' part='Login'>Der Nutzer hat sich angemeldet</log>
 <log time='[16.12.2019 20:15]' user='root' part='Login'>Der Nutzer hat sich angemeldet</log>
+<log time='[17.12.2019 15:27]' user='root' part='Login'>Der Nutzer hat sich angemeldet</log>
+<log time='[17.12.2019 15:49]' user='root' part='Login'>Der Nutzer hat sich angemeldet</log>

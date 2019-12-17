@@ -18,7 +18,7 @@ export class AppComponent {
     let cookie:string = this.cookieService.get("token");
     console.log(cookie);
     if (cookie!="") {
-      const request = Axios.post("http://localhost:80/backend/public/admin.php/login",{token:cookie});
+      const request = Axios.post("http://localhost:80/backend/public/admin.php/checklogin",{token:cookie});
       request.then((res:AxiosResponse)=>{
         console.log(res.data);
         if (res.data.state == true) this.toSearch();})
