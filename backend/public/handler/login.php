@@ -47,7 +47,7 @@ class login implements handler
         $token = $json["token"];
         $con = new \icore\database("SELECT token FROM admins WHERE token='$token'");
         $con = $con->getAssoc();
-        if ($con["token"] == "") {
+        if ($con["token"] != "") {
             exit("{\"state\":true}");
         } else {
             exit("{\"state\":false}");

@@ -5,35 +5,30 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import {ReactiveFormsModule} from "@angular/forms";
-import * as Sentry from "@sentry/browser";
-import {NavsModule} from "../navs/navs.module";
-import { TestComponent } from './test/test.component';
-import { LoginComponent } from './login/login.component';
-Sentry.init({
-  //dsn: "https://0a6dac5f58b84b6ea4902f8d7b4f26bb@sentry.io/1839947"
-});
+import {CookieService} from "ngx-cookie-service";
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LoginModule } from './login/login.module';
+import { SearchModule } from './search/search.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
-@Injectable()
-export class SentryErrorHandler implements ErrorHandler {
-  constructor() {}
-  handleError(error) {
-    const eventId = Sentry.captureException(error.originalError || error);
-    Sentry.showReportDialog({ eventId });
-  }
-}
+
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent,
-    LoginComponent],
+    PageNotFoundComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     ReactiveFormsModule,
-    NavsModule
+    LoginModule,
+    SearchModule,
+    AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   bootstrap: [AppComponent],
-  providers:[{ provide: ErrorHandler, useClass: SentryErrorHandler }]
+  providers:[ CookieService]
 })
 export class AppModule { }
