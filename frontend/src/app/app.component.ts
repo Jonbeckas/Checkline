@@ -1,5 +1,6 @@
 import {Component, Inject, NgModule, ViewContainerRef} from '@angular/core';
 import {BrowserModule} from "@angular/platform-browser";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -10,10 +11,14 @@ import {BrowserModule} from "@angular/platform-browser";
 
 export class AppComponent {
   title = 'Checkline';
+  show: boolean = true;
 
   constructor() {
 
   }
+  ngOnInit() {
+  }
+
   ngAfterViewInit() {
 
   }

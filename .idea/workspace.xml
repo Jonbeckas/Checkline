@@ -86,7 +86,7 @@
       <recent name="H:\Jonas\Documents\GitHub\Checkline\frontend\src\app\login\login" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.buildProd">
+  <component name="RunManager" selected="npm.Angular CLI Server">
     <configuration name="E2E Tests (ispolaso)" type="JavaScriptTestRunnerProtractor">
       <config-file value="$PROJECT_DIR$/frontend/e2e/protractor.conf.js" />
       <node-interpreter value="project" />
@@ -183,6 +183,7 @@
       <workItem from="1576519791323" duration="3501000" />
       <workItem from="1576592259135" duration="966000" />
       <workItem from="1576593278326" duration="15933000" />
+      <workItem from="1576652040197" duration="3602000" />
     </task>
     <servers />
   </component>
@@ -214,22 +215,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="274" key="FileChooserDialogImpl/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576363485127" />
-    <state width="1877" height="260" key="GridCell.Tab.0.bottom" timestamp="1576612902467">
+    <state width="1877" height="260" key="GridCell.Tab.0.bottom" timestamp="1576655643237">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="260" key="GridCell.Tab.0.bottom/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576612902467" />
-    <state width="1877" height="260" key="GridCell.Tab.0.center" timestamp="1576612902467">
+    <state width="1877" height="260" key="GridCell.Tab.0.bottom/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576655643237" />
+    <state width="1877" height="260" key="GridCell.Tab.0.center" timestamp="1576655643237">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="260" key="GridCell.Tab.0.center/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576612902467" />
-    <state width="1877" height="260" key="GridCell.Tab.0.left" timestamp="1576612902467">
+    <state width="1877" height="260" key="GridCell.Tab.0.center/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576655643237" />
+    <state width="1877" height="260" key="GridCell.Tab.0.left" timestamp="1576655643236">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="260" key="GridCell.Tab.0.left/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576612902467" />
-    <state width="1877" height="260" key="GridCell.Tab.0.right" timestamp="1576612902467">
+    <state width="1877" height="260" key="GridCell.Tab.0.left/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576655643236" />
+    <state width="1877" height="260" key="GridCell.Tab.0.right" timestamp="1576655643237">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="260" key="GridCell.Tab.0.right/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576612902467" />
+    <state width="1877" height="260" key="GridCell.Tab.0.right/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576655643237" />
     <state x="440" y="93" key="SettingsEditor" timestamp="1576363372287">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
