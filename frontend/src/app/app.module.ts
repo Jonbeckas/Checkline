@@ -12,6 +12,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { NavComponent } from './nav/nav.component';
 import {ScannerModule} from "./scanner/scanner.module";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatListModule} from "@angular/material/list";
 
 
 
@@ -30,7 +32,9 @@ import {ScannerModule} from "./scanner/scanner.module";
     ScannerModule,
     SearchModule,
     AppRoutingModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+    BrowserAnimationsModule,
+    MatListModule,
   ],
   bootstrap: [AppComponent],
   providers:[ CookieService]

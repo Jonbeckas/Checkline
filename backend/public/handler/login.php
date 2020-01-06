@@ -30,7 +30,7 @@ class login implements handler
             new \icore\database("UPDATE admins SET token='" . $token . "' WHERE username='" . $username . "'");
             \icore\logger::log("Login", "Der Nutzer hat sich angemeldet", $username);
             $levels = icore::getAllPermissions($username);
-            exit("{\"token\":\"$token\",\"levels\":\"".$levels."\"}");
+            exit("{\"username\":\"$username\",\"token\":\"$token\",\"levels\":\"".$levels."\"}");
         } else {
             exit("{\"error\":\"wrongLogin\"}");
 

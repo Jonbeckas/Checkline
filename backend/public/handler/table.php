@@ -48,8 +48,12 @@ class table implements handler
         if ($nummerv!=null) {
             $nummer = $nummerv;
         }
-        $result = new \icore\database("SELECT * FROM runner WHERE Vorname NOT LIKE '%MAN_%' AND Nummer='$nummer'");
+        $result = new \icore\database("SELECT * FROM runner WHERE Nummer='$nummer'");
         $sqlSelect = $result->getAssoc();
+        if ($sqlSelect["Nummer"]=="") {
+            header('HTTP/1.0 404 Not Found');
+            exit();
+        }
         isset($array["Vorname"]) ? $vorname = $array["Vorname"] : $vorname = $sqlSelect["Vorname"];
         isset($array["Name"]) ? $name = $array["Name"] : $name = $sqlSelect["Name"];
         isset($array["Gruppe"]) ? $gruppe = $array["Gruppe"] : $gruppe = $sqlSelect["Gruppe"];
@@ -57,7 +61,11 @@ class table implements handler
         isset($array["Ankunftszeit"]) ? $ankunftszeit = $array["Ankunftszeit"] : $ankunftszeit = $sqlSelect["Ankunftszeit"];
         isset($array["Endzeit"]) ?$endzeit = $array["Endzeit"] : $endzeit = $sqlSelect["Endzeit"];
         isset($array["Uhrzeit"]) ?$uhrzeit = $array["Uhrzeit"] : $uhrzeit = $sqlSelect["Uhrzeit"];
-        isset($array["Runde"]) ? $runde = $array["Runde"] : $runde = $sqlSelect["Runde"];
+        if (isset($array["Runde"])) {
+            $array["Runde"]=="+"?  $runde =$sqlSelect["Runde"]+1: $runde =$array["Runde"];
+        } else {
+            $runde = $sqlSelect["Runde"];
+        }
         isset($array["Station"]) ? $station = $array["Station"] : $station = $sqlSelect["Station"];
         isset($array["old"]) ?$old = $array["old"] : $old=$sqlSelect["Nummer"];
         $this->testzero($nummer);
@@ -66,6 +74,8 @@ class table implements handler
         $arguments = array($vorname,$name,$gruppe,$nummer,$anwesenheit,$ankunftszeit,$endzeit,$uhrzeit,$runde,$station,$old);
         $req= $pdo->prepare("UPDATE runner SET Vorname=?,Name=?,Gruppe=?,Nummer=?,Anwesenheit=?,Ankunftszeit=?,Endzeit=?,Uhrzeit=?,Runde=?,Station=? WHERE Nummer=?");
         $req->execute($arguments);
+        $req = new \icore\database("SELECT * FROM runner WHERE Nummer='$nummer'");
+        exit(json_encode($req->getAssoc(), JSON_PRETTY_PRINT));
     }
 
     private function testzero($nummer){

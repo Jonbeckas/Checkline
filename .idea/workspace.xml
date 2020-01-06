@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6404a6e2-9933-4162-afd8-9bb7c54b1cca" name="Default Changelist" comment="" />
+    <list default="true" id="6404a6e2-9933-4162-afd8-9bb7c54b1cca" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/Logs/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/public/Logs/log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/handler/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/public/handler/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/handler/table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/public/handler/table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/icore/permission.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/public/icore/permission.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/public/table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/e2e/protractor.conf.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/e2e/protractor.conf.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/e2e/protractor.conf.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/projects/login/e2e/protractor.conf.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/login/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/login/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/nav/nav.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/nav/nav.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/scanner.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/scanner/scanner.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/scanner.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/scanner.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/scanner.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/scanner.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/scanner.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/scanner.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles.scss" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,6 +71,16 @@
     <option name="OPEN_IN_BROWSER" value="true" />
     <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../Checkline\exportToHTML" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="H:\Jonas\Documents\GitHub\Checkline\.idea" />
+      </set>
+    </option>
+  </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/backend/vendor/composer" />
@@ -59,8 +93,10 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend" />
@@ -184,6 +220,15 @@
       <workItem from="1576592259135" duration="966000" />
       <workItem from="1576593278326" duration="15933000" />
       <workItem from="1576652040197" duration="3602000" />
+      <workItem from="1576747838383" duration="902000" />
+      <workItem from="1576773542477" duration="599000" />
+      <workItem from="1576961909042" duration="1303000" />
+      <workItem from="1576964861470" duration="517000" />
+      <workItem from="1577274827541" duration="463000" />
+      <workItem from="1578173809833" duration="3257000" />
+      <workItem from="1578220571491" duration="17263000" />
+      <workItem from="1578242647952" duration="14302000" />
+      <workItem from="1578303447582" duration="18107000" />
     </task>
     <servers />
   </component>
@@ -191,6 +236,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="552" y="179" key="#SQL_Dialects" timestamp="1578228496530">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="179" key="#SQL_Dialects/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1578228496530" />
     <state x="552" y="177" key="#TSLint" timestamp="1576363409050">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -215,33 +264,37 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="274" key="FileChooserDialogImpl/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576363485127" />
-    <state width="1877" height="260" key="GridCell.Tab.0.bottom" timestamp="1576655643237">
+    <state width="1877" height="261" key="GridCell.Tab.0.bottom" timestamp="1578322920012">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="260" key="GridCell.Tab.0.bottom/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576655643237" />
-    <state width="1877" height="260" key="GridCell.Tab.0.center" timestamp="1576655643237">
+    <state width="1877" height="261" key="GridCell.Tab.0.bottom/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1578322920012" />
+    <state width="1877" height="261" key="GridCell.Tab.0.center" timestamp="1578322920012">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="260" key="GridCell.Tab.0.center/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576655643237" />
-    <state width="1877" height="260" key="GridCell.Tab.0.left" timestamp="1576655643236">
+    <state width="1877" height="261" key="GridCell.Tab.0.center/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1578322920012" />
+    <state width="1877" height="261" key="GridCell.Tab.0.left" timestamp="1578322920011">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="260" key="GridCell.Tab.0.left/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576655643236" />
-    <state width="1877" height="260" key="GridCell.Tab.0.right" timestamp="1576655643237">
+    <state width="1877" height="261" key="GridCell.Tab.0.left/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1578322920011" />
+    <state width="1877" height="261" key="GridCell.Tab.0.right" timestamp="1578322920012">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="260" key="GridCell.Tab.0.right/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576655643237" />
+    <state width="1877" height="261" key="GridCell.Tab.0.right/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1578322920012" />
     <state x="440" y="93" key="SettingsEditor" timestamp="1576363372287">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="440" y="93" key="SettingsEditor/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576363372287" />
-    <state x="636" y="342" key="com.intellij.ide.util.TipDialog" timestamp="1576592282897">
+    <state x="636" y="342" key="com.intellij.ide.util.TipDialog" timestamp="1578303451544">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="636" y="342" key="com.intellij.ide.util.TipDialog/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576592282897" />
-    <state x="581" y="206" width="758" height="628" key="find.popup" timestamp="1576511233244">
+    <state x="636" y="342" key="com.intellij.ide.util.TipDialog/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1578303451544" />
+    <state x="767" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1578257492871">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="581" y="206" width="758" height="628" key="find.popup/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576511233244" />
+    <state x="767" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1578257492871" />
+    <state x="581" y="208" width="758" height="638" key="find.popup" timestamp="1578311720080">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="581" y="208" width="758" height="638" key="find.popup/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1578311720080" />
   </component>
 </project>

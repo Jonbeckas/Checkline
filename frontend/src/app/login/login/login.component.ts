@@ -79,6 +79,7 @@ export class LoginComponent implements OnInit {
 
   login(username:string,token:string,permission:string) {
     let date = new Date(9999,12,31);
+    this.cookieService.set("username", username,date,"/");
     this.cookieService.set("token", token,date,"/");
     this.cookieService.set("permission",permission,date,"/");
     this.toSearch();

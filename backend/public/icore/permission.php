@@ -30,6 +30,22 @@ class permission
         }
     }
 
+    public static function checkToken($token) {
+        $req = new database("SELECT token FROM admins WHERE token='$token'");
+        $tk = $req->getAssoc();
+        if ($tk["token"]=="") {
+            return false;
+        } else{
+            return true;
+        }
+    }
+
+    public static function getNameByToken($token) {
+        $req = new database("SELECT * FROM admins WHERE token='$token'");
+        $tk = $req->getAssoc();
+        return $tk["username"];
+    }
+
 
     public static function getLevel($username) {
         $level =new database("SELECT level FROM admins WHERE username='$username'");
