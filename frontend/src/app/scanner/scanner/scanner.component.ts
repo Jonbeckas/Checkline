@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import Axios, {AxiosError, AxiosResponse} from "axios";
 import {BarcodeFormat} from '@zxing/library';
 import {CookieService} from "ngx-cookie-service";
@@ -6,15 +6,17 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {NetworkErrorComponent} from "../network-error/network-error.component";
 import {WarningComponent} from "../warning/warning.component";
 import {InfoComponent} from "../info/info.component";
-import {MatTableDataSource} from "@angular/material/table";
-import {BehaviorSubject} from "rxjs";
+import {MatTable, MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
+import {Item, TableDataSource} from "./tableDataSource";
 
 @Component({
   selector: 'app-scanner',
   templateUrl: './scanner.component.html',
   styleUrls: ['./scanner.component.scss']
 })
-export class ScannerComponent implements OnInit {
+export class ScannerComponent implements OnInit,AfterViewInit {
   station: string;
   allowedFormats: any = [BarcodeFormat.QR_CODE, BarcodeFormat.CODE_128];
   lastNumber: string;
@@ -24,15 +26,22 @@ export class ScannerComponent implements OnInit {
   torchCompatible: boolean;
   cameras: MediaDeviceInfo[];
   currentCamera: MediaDeviceInfo = null;
-  history : string[]= [];
-  displayedColumns: ['Id'];
+  displayedColumns:any= ['id','name',"status","round","station"];
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatTable, {static: false}) table: MatTable<Item>;
+  dataSource: TableDataSource|null =null;
+  data:Item[] =[];
 
   constructor(private cookieService: CookieService, private dialog:MatDialog) {
-    //this.history.push({id:"5",name:"Test tost (1)",status:"An",round:"8",station:"7"});
   }
 
   ngOnInit() {
     this.station = "0";
+    this.dataSource= new TableDataSource(this.data);
+    new Promise(resolve => setTimeout(resolve, 3000)).then(r =>{
+      this.scanSucces("1");
+    });
   }
 
   scanSucces(result: string) {
@@ -57,9 +66,8 @@ export class ScannerComponent implements OnInit {
       };
       this.dialog.open(InfoComponent,dialogConfig);
       let json = res.data;
-      this.history.push(json.Nummer);
-      this.history = [...this.history];
-      console.log(this.history);
+      this.data.push({id:json.Nummer,name:json.Vorname+" "+json.Name+" ("+json.Gruppe+")",status:json.Anwesenheit,round:json.Runde,station:json.Station});
+      this.dataSource = new TableDataSource(this.data);
     }).catch((err: AxiosError) => {
       console.error(err);
       if (!err.response) {
@@ -121,15 +129,14 @@ export class ScannerComponent implements OnInit {
       this.currentCamera = this.cameras.find(x => x.deviceId === (<HTMLSelectElement>$event.target).value);
     }
   }
+
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.table.dataSource = this.dataSource;
+  }
 }
 
-export interface Runner{
-  id:string;
-  name:string;
-  status:string;
-  round:string;
-  station:string;
-}
 
 
 

@@ -14,10 +14,13 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { WarningComponent } from './warning/warning.component';
 import { InfoComponent } from './info/info.component';
 import {MatTableModule} from "@angular/material/table";
+import { TableComponent } from './table/table.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
-  declarations: [ScannerComponent, NetworkErrorComponent, WarningComponent, InfoComponent],
+  declarations: [ScannerComponent, NetworkErrorComponent, WarningComponent, InfoComponent, TableComponent],
   imports: [
     CommonModule,
     ZXingScannerModule,
@@ -28,8 +31,13 @@ import {MatTableModule} from "@angular/material/table";
     MatButtonToggleModule,
     MatDialogModule,
     ReactiveFormsModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
-  entryComponents: [NetworkErrorComponent,WarningComponent,InfoComponent],
+  entryComponents: [NetworkErrorComponent, WarningComponent, InfoComponent],
+  exports: [
+    TableComponent
+  ]
 })
 export class ScannerModule { }
