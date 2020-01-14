@@ -2,7 +2,6 @@ import {CollectionViewer, DataSource} from "@angular/cdk/collections";
 import {merge, Observable, of as observableOf} from "rxjs";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {TableItem} from "../table/table-datasource";
 import {map} from "rxjs/operators";
 
 export interface Item {
