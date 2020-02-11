@@ -41,6 +41,10 @@ return merge(...dataMutations).pipe(map(() => {
     this.data = this.data.concat(item);
   }
 
+  public changeItemns(items:Item[]) {
+    this.data = items;
+  }
+
 
   /**
    * Paginate the data (client-side). If you're using server-side pagination,

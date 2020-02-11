@@ -80,15 +80,30 @@ function checkPermission($user,$permission) {
     }
     return false;
 }
+
+function getToken() {
+    $auth = null;
+
+
+    if (isset($_SERVER['Authorization'])) {
+        $auth = $_SERVER['Authorization'];
+    }
+    else if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+       $auth = $_SERVER['HTTP_AUTHORIZATION'];
+    }
+    if (preg_match('/Bearer\s(\S+)/', $auth, $matches)) {
+        return $matches[1];
+    }
+
+}
 function checkAuth() {
-    $request = file_get_contents("php://input");
-    $json = json_decode($request, true);
-    if (isset($json["token"])) {
-          if (!\icore\permission::checkToken($json["token"])) {
+    $token = getToken();
+    if (isset($token)) {
+          if (!\icore\permission::checkToken($token)) {
               header('HTTP/1.0 401 Unauthorized');
               exit();
           } else {
-            return \icore\permission::getNameByToken($json["token"]);
+            return \icore\permission::getNameByToken($token);
           }
     }
     else {
