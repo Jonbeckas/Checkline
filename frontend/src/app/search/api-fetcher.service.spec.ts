@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TableService } from './table-service.service';
+import { ApiFetcherService } from './api-fetcher.service';
 
-describe('TableServiceService', () => {
+describe('ApiFetcherService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: TableService = TestBed.get(TableService);
+    const service: ApiFetcherService = TestBed.get(ApiFetcherService);
     expect(service).toBeTruthy();
   });
 });

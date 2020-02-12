@@ -6,6 +6,9 @@ import { MainComponent } from './main/main.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
+import {TableService} from "./table.service";
+import {HttpClientModule} from "@angular/common/http";
+
 
 
 @NgModule({
@@ -15,7 +18,9 @@ import {MatSortModule} from "@angular/material/sort";
     SearchRoutingModule,
     MatPaginatorModule,
     MatTableModule,
-    MatSortModule
-  ]
+    MatSortModule,
+    HttpClientModule
+  ],
+  providers: [TableService]
 })
 export class SearchModule { }

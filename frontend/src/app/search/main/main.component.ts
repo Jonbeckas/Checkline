@@ -6,6 +6,7 @@ import Axios, {AxiosRequestConfig, AxiosResponse} from "axios";
 import {environment} from "../../../environments/environment";
 import {CookieService} from "ngx-cookie-service";
 import {Item, TableDataSource} from "../../scanner/scanner/tableDataSource";
+import {TableService} from "../table.service";
 
 @Component({
   selector: 'app-main',
@@ -19,30 +20,18 @@ export class MainComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   @ViewChild(MatTable, {static: false}) table: MatTable<Item>;
-  dataSource: TableDataSource;
+  dataSource$: TableDataSource;
   data:Item[] =[];
-  constructor(private cookieService:CookieService) {
+  constructor(private api:TableService) {
 
   }
 
   ngOnInit() {
-    this.dataSource = new TableDataSource([]);
-    let token = this.cookieService.get("token");
-    const request = Axios.get(environment.backendUrl+"/table.php",{
-      headers:{
-        Authorization: `Bearer ${token}`
-      }
+    this.api.fetchPeople().subscribe((o:Object)=> {
+      console.log(o);
+      this.dataSource = new TableDataSource( <Item[]> o)
     });
-    request.then((res:AxiosResponse) => {
-      this.data = [];
-      let json = res.data;
-      for (let i = 0; i < Object.keys(res.data).length; i++) {
-        let item = json[i];
-        this.data.push({id:item.Nummer,name:item.Vorname+" "+item.Name+" ("+item.Gruppe+")",status:item.Anwesenheit,round:item.Runde,station:item.Station})
-      }
-      this.dataSource = new TableDataSource(this.data);
-      console.log("datas"+this.data);
-    });
+
   }
 
   change($event: Event) {
