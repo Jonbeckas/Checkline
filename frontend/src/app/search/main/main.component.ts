@@ -17,10 +17,10 @@ export class MainComponent implements OnInit, AfterViewInit {
   @ViewChild("input",null) input;
 
   displayedColumns:any= ['id','name',"status","round","station"];
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
-  @ViewChild(MatTable, {static: false}) table: MatTable<Item>;
-  dataSource$: TableDataSource;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatTable, {static: true}) table: MatTable<Item>;
+  dataSource: TableDataSource;
   data:Item[] =[];
   constructor(private api:TableService) {
 

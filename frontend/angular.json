@@ -23,7 +23,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "showCircularDependencies": false,
-            "aot": false,
+            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/assets",
@@ -48,7 +48,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -151,7 +150,7 @@
             "main": "projects/login/src/main.ts",
             "polyfills": "projects/login/src/polyfills.ts",
             "tsConfig": "projects/login/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "projects/login/src/favicon.ico",
               "projects/login/src/assets"
@@ -174,7 +173,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
