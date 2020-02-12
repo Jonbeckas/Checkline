@@ -14,6 +14,7 @@ import { NavComponent } from './nav/nav.component';
 import {ScannerModule} from "./scanner/scanner.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatListModule} from "@angular/material/list";
+import { DetailsPopUpComponent } from './details-pop-up/details-pop-up.component';
 
 
 
@@ -24,6 +25,7 @@ import {MatListModule} from "@angular/material/list";
     AppComponent,
     PageNotFoundComponent,
     NavComponent,
+    DetailsPopUpComponent,
     ],
   imports: [
     BrowserModule,

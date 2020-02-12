@@ -94,7 +94,7 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.spelling" />
-    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2019.3.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="ts.external.directory.path" value="H:\Jonas\Documents\GitHub\Checkline\frontend\node_modules\typescript\lib" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -240,7 +240,10 @@
       <workItem from="1581423864075" duration="4689000" />
       <workItem from="1581491821760" duration="2679000" />
       <workItem from="1581503727436" duration="623000" />
-      <workItem from="1581504713744" duration="939000" />
+      <workItem from="1581504713744" duration="2735000" />
+      <workItem from="1581507562924" duration="1058000" />
+      <workItem from="1581519533341" duration="9161000" />
+      <workItem from="1581532721852" duration="339000" />
     </task>
     <servers />
   </component>
@@ -293,22 +296,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="274" key="FileChooserDialogImpl/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576363485127" />
-    <state width="1876" height="261" key="GridCell.Tab.0.bottom" timestamp="1581505600041">
+    <state width="1876" height="261" key="GridCell.Tab.0.bottom" timestamp="1581529283781">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1876" height="261" key="GridCell.Tab.0.bottom/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1581505600041" />
-    <state width="1876" height="261" key="GridCell.Tab.0.center" timestamp="1581505600041">
+    <state width="1876" height="261" key="GridCell.Tab.0.bottom/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1581529283781" />
+    <state width="1876" height="261" key="GridCell.Tab.0.center" timestamp="1581529283780">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1876" height="261" key="GridCell.Tab.0.center/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1581505600041" />
-    <state width="1876" height="261" key="GridCell.Tab.0.left" timestamp="1581505600039">
+    <state width="1876" height="261" key="GridCell.Tab.0.center/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1581529283780" />
+    <state width="1876" height="261" key="GridCell.Tab.0.left" timestamp="1581529283779">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1876" height="261" key="GridCell.Tab.0.left/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1581505600039" />
-    <state width="1876" height="261" key="GridCell.Tab.0.right" timestamp="1581505600041">
+    <state width="1876" height="261" key="GridCell.Tab.0.left/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1581529283779" />
+    <state width="1876" height="261" key="GridCell.Tab.0.right" timestamp="1581529283780">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1876" height="261" key="GridCell.Tab.0.right/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1581505600041" />
+    <state width="1876" height="261" key="GridCell.Tab.0.right/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1581529283780" />
     <state x="440" y="93" key="SettingsEditor" timestamp="1578679895632">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -329,10 +332,10 @@
       <screen x="1920" y="0" width="1280" height="984" />
     </state>
     <state x="1920" y="147" width="1296" height="736" key="dock-window-2/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1578674712240" />
-    <state x="581" y="208" width="758" height="638" key="find.popup" timestamp="1578311720080">
+    <state x="581" y="208" width="758" height="638" key="find.popup" timestamp="1581508230853">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="581" y="208" width="758" height="638" key="find.popup/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1578311720080" />
+    <state x="581" y="208" width="758" height="638" key="find.popup/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1581508230853" />
     <state x="342" y="100" key="new project wizard" timestamp="1580560861399">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

@@ -9,8 +9,8 @@ import {CookieService} from "ngx-cookie-service";
 })
 export class AppComponent {
   title = 'login';
-  @ViewChild('username', null) username;
-  @ViewChild('password', null) password;
+  @ViewChild('username', {static:false}) username;
+  @ViewChild('password', {static:false}) password;
 
   constructor( private cookieService:CookieService) { }
 

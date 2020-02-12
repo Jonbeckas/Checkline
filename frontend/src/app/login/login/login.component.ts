@@ -11,8 +11,8 @@ import {Router} from "@angular/router";
 export class LoginComponent implements OnInit {
 
   title = 'login';
-  @ViewChild('username', null) username;
-  @ViewChild('password', null) password;
+  @ViewChild('username', {static:true}) username;
+  @ViewChild('password', {static:true}) password;
 
   constructor( private cookieService:CookieService,private router:Router) { }
 

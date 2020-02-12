@@ -10,6 +10,7 @@ import {MatTable, MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {Item, TableDataSource} from "./tableDataSource";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-scanner',
@@ -39,6 +40,7 @@ export class ScannerComponent implements OnInit,AfterViewInit {
   ngOnInit() {
     this.station = "0";
     this.dataSource= new TableDataSource(this.data);
+    //TODO:Just Testing
     new Promise(resolve => setTimeout(resolve, 3000)).then(r =>{
       this.scanSucces("1");
     });
@@ -50,12 +52,14 @@ export class ScannerComponent implements OnInit,AfterViewInit {
     }
     let token = this.cookieService.get("token");
     console.log("scanned");
-    const request = Axios.patch("http://localhost:80/backend/public/table.php", {
+    const request = Axios.patch(environment.backendUrl+"/table.php", {
       Nummer: result,
       Runde: '+',
       Station: this.station,
       token: token
-    });
+    },{headers:{
+      Authorization: `Bearer ${token}`
+    }});
     request.then((res: AxiosResponse) => {
       this.lastNumber = result;
       const dialogConfig = new MatDialogConfig();
@@ -68,6 +72,8 @@ export class ScannerComponent implements OnInit,AfterViewInit {
       let json = res.data;
       this.data.push({id:json.Nummer,name:json.Vorname+" "+json.Name+" ("+json.Gruppe+")",status:json.Anwesenheit,round:json.Runde,station:json.Station});
       this.dataSource = new TableDataSource(this.data);
+      this.table.renderRows();
+
     }).catch((err: AxiosError) => {
       console.error(err);
       if (!err.response) {

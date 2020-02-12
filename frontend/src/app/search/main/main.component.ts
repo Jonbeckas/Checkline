@@ -1,12 +1,11 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {Item, TableDataSource} from "../../scanner/scanner/tableDataSource";
+import {TableService} from "../table.service";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatTable} from "@angular/material/table";
-import Axios, {AxiosRequestConfig, AxiosResponse} from "axios";
-import {environment} from "../../../environments/environment";
-import {CookieService} from "ngx-cookie-service";
-import {Item, TableDataSource} from "../../scanner/scanner/tableDataSource";
-import {TableService} from "../table.service";
+import {MatDialogConfig} from "@angular/material/dialog";
+import {WarningComponent} from "../../scanner/warning/warning.component";
 
 @Component({
   selector: 'app-main',
@@ -14,7 +13,7 @@ import {TableService} from "../table.service";
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit, AfterViewInit {
-  @ViewChild("input",null) input;
+  @ViewChild("input",{static:false}) input;
 
   displayedColumns:any= ['id','name',"status","round","station"];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -22,23 +21,39 @@ export class MainComponent implements OnInit, AfterViewInit {
   @ViewChild(MatTable, {static: true}) table: MatTable<Item>;
   dataSource: TableDataSource;
   data:Item[] =[];
-  constructor(private api:TableService) {
+  constructor(private api:TableService,private changeDetector:ChangeDetectorRef) {
 
   }
 
+
   ngOnInit() {
-    this.api.fetchPeople().subscribe((o:Object)=> {
-      console.log(o);
-      this.dataSource = new TableDataSource( <Item[]> o)
+    this.dataSource = new TableDataSource([]);
+    this.api.fetchPeople().subscribe((o:[])=> {
+      let items:Item[] = [];
+      o.forEach((item:any) =>this.dataSource.addItem({id:item.Nummer,name:item.Vorname+" "+item.Name+" ("+item.Gruppe+")",status:item.Anwesenheit,round:item.Runde,station:item.Station}));
+      this.table.renderRows();
     });
 
   }
 
   change($event: Event) {
-
+    console.log(this.dataSource);
   }
 
   ngAfterViewInit(): void {
-      console.log("data"+this.dataSource);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.table.dataSource = this.dataSource;
+  }
+
+  openDetails(row: Item) {
+    console.log(row);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      title: 'Fehler',
+      message:"Es ist ein Fehler aufgetreten!"
+    };
+    this.dialog.open(WarningComponent,dialogConfig);
   }
 }

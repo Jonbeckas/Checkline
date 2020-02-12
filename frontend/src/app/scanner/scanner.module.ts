@@ -16,10 +16,11 @@ import { InfoComponent } from './info/info.component';
 import {MatTableModule} from "@angular/material/table";
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { DetailsPopUpComponent } from './details-pop-up/details-pop-up.component';
 
 
 @NgModule({
-  declarations: [ScannerComponent, NetworkErrorComponent, WarningComponent, InfoComponent],
+  declarations: [ScannerComponent, NetworkErrorComponent, WarningComponent, InfoComponent, DetailsPopUpComponent],
   imports: [
     CommonModule,
     ZXingScannerModule,
