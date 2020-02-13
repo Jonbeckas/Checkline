@@ -7,5 +7,7 @@
             "email": "jonasbecker1.jb@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+      "ext-json": "*"
+    }
 }

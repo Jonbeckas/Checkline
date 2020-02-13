@@ -14,6 +14,7 @@ import { NavComponent } from './nav/nav.component';
 import {ScannerModule} from "./scanner/scanner.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatListModule} from "@angular/material/list";
+import {MatButton, MatButtonModule} from "@angular/material/button";
 
 
 
@@ -34,6 +35,7 @@ import {MatListModule} from "@angular/material/list";
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     BrowserAnimationsModule,
     MatListModule,
+    MatButtonModule
   ],
   bootstrap: [AppComponent],
   providers:[ CookieService]

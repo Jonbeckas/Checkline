@@ -1,9 +1,16 @@
-<h2 mat-dialog-title>{{title}}</h2>
+<div id="titlebar">
+  <h2 mat-dialog-title>Auswahl für Läufer/in {{title}}</h2>
+  <button mat-fab class="mat-raised-button" (click)="close()">X</button>
+</div>
 <mat-dialog-content>
-  <p> {{message}}</p>
-  <img src="https://img.icons8.com/material-rounded/48/000000/info.png">
+  <button mat-raised-button (click)="anmelden()">Anmelden</button>
+  <button mat-raised-button (click)="abmelden()">Abmelden</button>
+  <button mat-raised-button (click)="roundplus()">Runde +1</button>
+  <button mat-raised-button (click)="roundminus()">Runde -1</button>
+  <button mat-raised-button (click)="verletzt()">Momentan Verhindet</button>
+  <button mat-raised-button (click)="gesund()">Wieder mitlaufend</button>
+  <button mat-raised-button (click)="minAn()">Mindestanwesenheit ?</button>
+  <p>{{text}}</p>
 </mat-dialog-content>
-<mat-dialog-actions>
-  <mat-button-toggle class="mat-raised-button" (click)="close()" >Ok</mat-button-toggle>
-</mat-dialog-actions>
+
 

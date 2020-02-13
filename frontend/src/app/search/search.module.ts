@@ -11,6 +11,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import { DetailsPopUpComponent } from './details-pop-up/details-pop-up.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
 
 
 
@@ -24,7 +25,8 @@ import {MatDialogModule} from "@angular/material/dialog";
         MatSortModule,
         HttpClientModule,
         MatButtonToggleModule,
-        MatDialogModule
+        MatDialogModule,
+        MatButtonModule
     ],
   providers: [TableService]
 })

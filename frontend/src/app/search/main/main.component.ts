@@ -50,9 +50,10 @@ export class MainComponent implements OnInit, AfterViewInit {
     console.log(row);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
+
     dialogConfig.data = {
-      title: 'Fehler',
-      message:"Es ist ein Fehler aufgetreten!"
+      title: row.name,
+      id:row
     };
     this.dialog.open(DetailsPopUpComponent,dialogConfig);
   }

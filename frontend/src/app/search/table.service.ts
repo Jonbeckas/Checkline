@@ -15,27 +15,13 @@ export class TableService {
 
   }
 
-  fetchPeople():Observable<Object> {let token = this.cookieService.get("token");
-  let data:Item[] = [];
-  return this.http.get(environment.backendUrl+"/table.php",{
-    headers:{
-      Authorization: `Bearer ${token}`
-    }
-  });
-
-  const request = Axios.get(environment.backendUrl+"/table.php",{
-    headers:{
-      Authorization: `Bearer ${token}`
-    }
-  });
-  request.then((res:AxiosResponse) => {
-    let json = res.data;
-    for (let i = 0; i < Object.keys(res.data).length; i++) {
-      let item = json[i];
-      data.push({id:item.Nummer,name:item.Vorname+" "+item.Name+" ("+item.Gruppe+")",status:item.Anwesenheit,round:item.Runde,station:item.Station})
-    }
-    return data;
-  }).catch((err:AxiosError) => {return []});
-  return from(request).pipe();
+  fetchPeople():Observable<Object> {
+    let token = this.cookieService.get("token");
+    let data: Item[] = [];
+    return this.http.get(environment.backendUrl + "/table.php", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
   }
 }

@@ -62,7 +62,17 @@ class table implements handler
         isset($array["Endzeit"]) ?$endzeit = $array["Endzeit"] : $endzeit = $sqlSelect["Endzeit"];
         isset($array["Uhrzeit"]) ?$uhrzeit = $array["Uhrzeit"] : $uhrzeit = $sqlSelect["Uhrzeit"];
         if (isset($array["Runde"])) {
-            $array["Runde"]=="+"?  $runde =$sqlSelect["Runde"]+1: $runde =$array["Runde"];
+            switch ($array["Runde"]) {
+                case "+":
+                    $runde =$sqlSelect["Runde"]+1;
+                    break;
+                case "-":
+                    if ($sqlSelect["Runde"]>0) $runde =$sqlSelect["Runde"]-1;
+                    else $runde =$sqlSelect["Runde"];
+                    break;
+                default: $runde =$array["Runde"];
+
+            }
         } else {
             $runde = $sqlSelect["Runde"];
         }
