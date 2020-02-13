@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <settings>
     <mysql>
-        <host>127.0.0.1</host>
+        <host>localhost</host>
         <port>3306</port>
-        <username>root</username>
-        <password>jonibeck1</password>
+        <username>test</username>
+        <password>123</password>
         <database>ispolaso</database>
     </mysql>
     <web>

@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
     }
     const request = Axios.post("http://localhost:80/backend/public/admin.php/login",{username:username,password:password});
     request.then((res:AxiosResponse)=>{
+      console.log(res.data);
       if (res.data.error!=undefined) {
         switch (res.data.error) {
           case "wrongLogin":

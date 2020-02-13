@@ -4,8 +4,9 @@ import {TableService} from "../table.service";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatTable} from "@angular/material/table";
-import {MatDialogConfig} from "@angular/material/dialog";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {WarningComponent} from "../../scanner/warning/warning.component";
+import {DetailsPopUpComponent} from "../details-pop-up/details-pop-up.component";
 
 @Component({
   selector: 'app-main',
@@ -21,7 +22,7 @@ export class MainComponent implements OnInit, AfterViewInit {
   @ViewChild(MatTable, {static: true}) table: MatTable<Item>;
   dataSource: TableDataSource;
   data:Item[] =[];
-  constructor(private api:TableService,private changeDetector:ChangeDetectorRef) {
+  constructor(private api:TableService,private changeDetector:ChangeDetectorRef,private dialog:MatDialog) {
 
   }
 
@@ -29,7 +30,6 @@ export class MainComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.dataSource = new TableDataSource([]);
     this.api.fetchPeople().subscribe((o:[])=> {
-      let items:Item[] = [];
       o.forEach((item:any) =>this.dataSource.addItem({id:item.Nummer,name:item.Vorname+" "+item.Name+" ("+item.Gruppe+")",status:item.Anwesenheit,round:item.Runde,station:item.Station}));
       this.table.renderRows();
     });
@@ -54,6 +54,6 @@ export class MainComponent implements OnInit, AfterViewInit {
       title: 'Fehler',
       message:"Es ist ein Fehler aufgetreten!"
     };
-    this.dialog.open(WarningComponent,dialogConfig);
+    this.dialog.open(DetailsPopUpComponent,dialogConfig);
   }
 }

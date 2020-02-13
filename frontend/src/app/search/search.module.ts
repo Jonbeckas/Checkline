@@ -9,11 +9,13 @@ import {MatSortModule} from "@angular/material/sort";
 import {TableService} from "./table.service";
 import {HttpClientModule} from "@angular/common/http";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import { DetailsPopUpComponent } from './details-pop-up/details-pop-up.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 
 @NgModule({
-  declarations: [MainComponent],
+  declarations: [MainComponent, DetailsPopUpComponent],
     imports: [
         CommonModule,
         SearchRoutingModule,
@@ -21,7 +23,8 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
         MatTableModule,
         MatSortModule,
         HttpClientModule,
-        MatButtonToggleModule
+        MatButtonToggleModule,
+        MatDialogModule
     ],
   providers: [TableService]
 })
