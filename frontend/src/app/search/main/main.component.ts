@@ -50,7 +50,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     console.log(row);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-
+    dialogConfig.disableClose =true;
     dialogConfig.data = {
       title: row.name,
       id:row

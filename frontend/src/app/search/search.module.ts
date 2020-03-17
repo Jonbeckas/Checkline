@@ -12,11 +12,13 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import { DetailsPopUpComponent } from './details-pop-up/details-pop-up.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
+import { PlaceholderDialogComponent } from './placeholder-dialog/placeholder-dialog.component';
+import {FormsModule} from "@angular/forms";
 
 
 
 @NgModule({
-  declarations: [MainComponent, DetailsPopUpComponent],
+  declarations: [MainComponent, DetailsPopUpComponent, PlaceholderDialogComponent],
     imports: [
         CommonModule,
         SearchRoutingModule,
@@ -26,7 +28,8 @@ import {MatButtonModule} from "@angular/material/button";
         HttpClientModule,
         MatButtonToggleModule,
         MatDialogModule,
-        MatButtonModule
+        MatButtonModule,
+        FormsModule
     ],
   providers: [TableService]
 })

@@ -19,7 +19,7 @@ class addUser implements handler
         $uhrzeit = $params["Uhrzeit"];
         $runde = $params["Runde"];
         $station = $params["Station"];
-       if ($nummer==0) {
+       if ($nummer=="0") {
            header("'HTTP/1.0 403 Forbidden'");
            exit();
        }
@@ -33,7 +33,7 @@ class addUser implements handler
         $pdo = new PDO("mysql:host=".$settings["mysql"]["host"].":".$settings["mysql"]["port"].";dbname=".$settings["mysql"]["database"],$settings["mysql"]["username"],$settings["mysql"]["password"]);
         $arguments = array($vorname,$name,$gruppe,$nummer,$anwesenheit,$ankunftszeit,$endzeit,$uhrzeit,$runde,$station);
         $req= $pdo->prepare("INSERT INTO runner(`Vorname`, `Name`, `Gruppe`, `Nummer`, `Anwesenheit`, `Ankunftszeit`, `Endzeit`, `Uhrzeit`, `Runde`, `Station`) VALUES (? ,? ,? ,?, ?, ?, ?, ?, ?, ?)");
-        $req->execute($arguments);
+        $answ = $req->execute($arguments);
     }
 
     public function getPermission()

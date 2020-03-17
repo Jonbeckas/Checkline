@@ -1,0 +1,24 @@
+<mat-tab-group>
+  <mat-tab label="User">
+    <h1>Paswort ändern</h1>
+    <form>
+      <mat-form-field>
+        <mat-label>Neues Passwort</mat-label>
+        <input matInput type="password" placeholder="Neues Password" [value]="password">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Neues Passwort wiederholen</mat-label>
+        <input matInput type="password" placeholder="Widerhole das neue passwort" [value]="repeatPassword"/>
+      </mat-form-field>
+      <button  mat-raised-button color="accent"> Passwort ändern</button>
+    </form>
+  </mat-tab>
+  <mat-tab label="Runner">
+    <h1>Some tab content</h1>
+    <p>...</p>
+  </mat-tab>
+  <mat-tab label="Admins">
+    <h1>Some more tab content</h1>
+    <p>...</p>
+  </mat-tab>
+</mat-tab-group>

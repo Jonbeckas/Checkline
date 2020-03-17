@@ -1,11 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
 import {InfoComponent} from "../../scanner/info/info.component";
 import {Item} from "../../scanner/scanner/tableDataSource";
 import {CookieService} from "ngx-cookie-service";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import Axios, {AxiosError, AxiosResponse} from "axios";
+import {PlaceholderDialogComponent} from "../placeholder-dialog/placeholder-dialog.component";
 
 @Component({
   selector: 'app-details-pop-up',
@@ -17,7 +18,7 @@ export class DetailsPopUpComponent implements OnInit {
   text: any="";
   private id: Item;
 
-  constructor(private dialogRef : MatDialogRef<InfoComponent>, @Inject(MAT_DIALOG_DATA) data,private cookieService:CookieService,private http:HttpClient) {
+  constructor(private dialogRef : MatDialogRef<InfoComponent>, @Inject(MAT_DIALOG_DATA) data,private cookieService:CookieService,private http:HttpClient,private dialog:MatDialog) {
     this.title = data.title;
     this.id = data.id;
   }
@@ -79,7 +80,30 @@ export class DetailsPopUpComponent implements OnInit {
         Authorization: `Bearer ${token}`
       }});
     request.then((res:AxiosResponse)=> {
-      this.text= "Dem Läufer/In "+this.title+" wurde angemeldet"
+      if (res.data == "placeholder") {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.autoFocus = true;
+        dialogConfig.disableClose =true;
+        dialogConfig.data = {
+          title: this.title
+        };
+         let placeholder =this.dialog.open(PlaceholderDialogComponent,dialogConfig);
+        placeholder.afterClosed().subscribe((data:string) =>{
+          let token = this.cookieService.get("token");
+          const request = Axios.patch(environment.backendUrl+"/table.php", {
+            Nummer:data,
+            Anwesenheit: '1',
+            old:this.id.id
+          },{headers:{
+              Authorization: `Bearer ${token}`
+            }});
+          request.then((res:AxiosResponse)=> {
+            this.text= "Dem Läufer/In "+this.title+" wurde angemeldet"
+          }).catch((err:AxiosError)=> this.text= "Es ist ein Fehler aufgetreten!")
+        });
+      } else {
+        this.text= "Dem Läufer/In "+this.title+" wurde angemeldet"
+      }
     }).catch((err:AxiosError)=> this.text= "Es ist ein Fehler aufgetreten!")
 
   }

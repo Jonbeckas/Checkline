@@ -10,11 +10,17 @@ import { LoginModule } from './login/login.module';
 import { SearchModule } from './search/search.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { NavComponent } from './nav/nav.component';
 import {ScannerModule} from "./scanner/scanner.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatListModule} from "@angular/material/list";
 import {MatButton, MatButtonModule} from "@angular/material/button";
+import {SettingsModule} from "./settings/settings.module";
+import { NavComponent } from './nav/nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import {CommonModule} from "@angular/common";
 
 
 
@@ -27,17 +33,25 @@ import {MatButton, MatButtonModule} from "@angular/material/button";
     ],
   imports: [
     BrowserModule,
+    CommonModule,
     ReactiveFormsModule,
     LoginModule,
     ScannerModule,
     SearchModule,
-    AppRoutingModule,
+    SettingsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     BrowserAnimationsModule,
     MatListModule,
-    MatButtonModule
+    MatButtonModule,
+    AppRoutingModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+
   ],
   bootstrap: [AppComponent],
   providers:[ CookieService]
 })
 export class AppModule { }
+

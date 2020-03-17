@@ -50,9 +50,15 @@ class table implements handler
         }
         $result = new \icore\database("SELECT * FROM runner WHERE Nummer='$nummer'");
         $sqlSelect = $result->getAssoc();
-        if ($sqlSelect["Nummer"]=="") {
+        if ($sqlSelect["Nummer"]==""&& !isset($array["old"]) ) {
             header('HTTP/1.0 404 Not Found');
             exit();
+        } elseif ($sqlSelect["Nummer"]=="" && isset($array["old"])) {
+            $result = new \icore\database("SELECT * FROM runner WHERE Nummer='$array[old]'");
+            $sqlSelect = $result->getAssoc();
+        }
+        if (strpos($array["Nummer"],"~")!==false && !isset($array["old"])) {
+            exit("placeholder");
         }
         isset($array["Vorname"]) ? $vorname = $array["Vorname"] : $vorname = $sqlSelect["Vorname"];
         isset($array["Name"]) ? $name = $array["Name"] : $name = $sqlSelect["Name"];
