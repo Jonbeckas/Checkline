@@ -9,6 +9,7 @@ import {
 import { Observable } from 'rxjs';
 import Axios, {AxiosError, AxiosResponse} from "axios";
 import {CookieService} from "ngx-cookie-service";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class AuthGuard implements CanActivate {
     let cookie:string = this.cookieService.get("token");
     let status;
     if (cookie!="") {
-      const request = Axios.post("http://localhost:80/backend/public/admin.php/checklogin",{token:cookie});
+      const request = Axios.post(environment.backendUrl+"/admin.php/checklogin",{token:cookie});
       request.then((res:AxiosResponse)=>{
         status= res.data.state;
       }).catch((err:AxiosError)=>{status=false});

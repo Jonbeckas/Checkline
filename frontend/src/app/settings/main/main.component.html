@@ -4,13 +4,13 @@
     <form>
       <mat-form-field>
         <mat-label>Neues Passwort</mat-label>
-        <input matInput type="password" placeholder="Neues Password" [value]="password">
+        <input matInput type="password" placeholder="Neues Password"  #passwort>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Neues Passwort wiederholen</mat-label>
-        <input matInput type="password" placeholder="Widerhole das neue passwort" [value]="repeatPassword"/>
+        <input matInput type="password" placeholder="Widerhole das neue passwort" #passwordRepeat/>
       </mat-form-field>
-      <button  mat-raised-button color="accent"> Passwort ändern</button>
+      <button  mat-raised-button color="accent" (click)="onPasswordChange(password.value,passwordRepeat.value)"> Passwort ändern</button>
     </form>
   </mat-tab>
   <mat-tab label="Runner">

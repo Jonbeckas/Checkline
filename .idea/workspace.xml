@@ -1,14 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6404a6e2-9933-4162-afd8-9bb7c54b1cca" name="Default Changelist" comment="">
+    <list default="true" id="2e1d6c14-ea2f-426f-934d-581facbc058b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/PHP_Server.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/db/MongoUsers.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/model/User.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/public/Logs/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/public/Logs/log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/public/table.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/public/table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/tableDataSource.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/tableDataSource.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/main/main.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/search/main/main.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/composer.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/.htaccess" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/Logs/.htaccess" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/Logs/log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/cache/test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/handler/handler.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/handler/login.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/handler/table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/handler/tableAdministrartion.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/handler/userman.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/icore/database.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/icore/icore.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/icore/logger.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/icore/permission.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/public/table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/autoload.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/composer/ClassLoader.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/composer/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/composer/autoload_classmap.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/composer/autoload_namespaces.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/composer/autoload_psr4.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/composer/autoload_real.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/composer/autoload_static.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vendor/composer/installed.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/browserslist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/e2e/protractor.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/e2e/src/app.e2e-spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/e2e/src/app.po.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/e2e/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/karma.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/src/app/app-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/src/app/app.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/src/app/app.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/config/config-interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/src/app/app.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/src/app/app.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/src/app/app.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/src/assets/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/db/MongoDb.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/src/environments/environment.prod.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/src/environments/environment.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/src/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/src/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/src/main.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/src/polyfills.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/src/styles.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/src/test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/tsconfig.app.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/tsconfig.spec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/projects/login/tslint.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/auth/auth.guard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/auth/auth.guard.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/libs/Cookie.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/libs/loginTools.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/login/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/login/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/nav/nav.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/nav/nav.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/nav/nav.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/nav/nav.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/search/main/main.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/search/main/main.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/search.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/search/search.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/settings/main/main.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/settings/main/main.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/settings/main/main.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/settings/main/main.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/environments/environment.prod.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/environments/environment.prod.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/environments/environment.ts" afterDir="false" />
     </list>
@@ -17,49 +75,17 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="DONT_SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/backend/composer.json</pharConfigPath>
-    <execution>
-      <executable />
-    </execution>
+    <execution />
   </component>
-  <component name="DatabaseView">
-    <option name="SHOW_INTERMEDIATE" value="true" />
-    <option name="GROUP_DATA_SOURCES" value="true" />
-    <option name="GROUP_SCHEMA" value="true" />
-    <option name="GROUP_CONTENTS" value="false" />
-    <option name="SORT_POSITIONED" value="false" />
-    <option name="SHOW_EMPTY_GROUPS" value="false" />
-    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
-    <option name="HIDDEN_KINDS">
-      <set />
-    </option>
-    <expand>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="ispolaso@localhost" type="feb32156:DbDataSourceImpl" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="ispolaso@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="ispolaso@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="ispolaso: schema" type="ebfa3cd1:MariaImplModel$Schema" />
-      </path>
-    </expand>
-    <select />
-  </component>
-  <component name="ExportToHTMLSettings">
-    <option name="OPEN_IN_BROWSER" value="true" />
-    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../Checkline\exportToHTML" />
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Jupyter Notebook" />
         <option value="TypeScript File" />
       </list>
     </option>
@@ -67,61 +93,54 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="KotlinMultiplatform">
+    <allAvailableExecutables />
+  </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/backend/vendor/composer" />
     </include_path>
   </component>
-  <component name="ProjectId" id="1UzcbPacUZr5FaAEksNLYAyzQ1g" />
+  <component name="ProjectId" id="1qJjxbQmcNuu6ttlmWL5TB4oOMG" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="android.sdk.path" value="$PROJECT_DIR$/../../../../Programme/AndroidSDK" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/lupo-in-cool-frontend-master" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs.protractor.protractor_package" value="$PROJECT_DIR$/frontend/node_modules/protractor" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
     <property name="ts.external.directory.path" value="H:\Jonas\Documents\GitHub\Checkline\frontend\node_modules\typescript\lib" />
   </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="H:\Jonas\Documents\GitHub\Checkline\frontend\src" />
-      <recent name="H:\Jonas\Documents\GitHub\Checkline\frontend\src\assets" />
-      <recent name="H:\Jonas\Documents\GitHub\Checkline\frontend\dist" />
-      <recent name="H:\Jonas\Documents\GitHub\Checkline\frontend\src\app\login\login" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="H:\Jonas\Documents\GitHub\Checkline\frontend" />
-      <recent name="H:\Jonas\Documents\GitHub\Checkline\frontend\dist\checkline" />
-    </key>
-  </component>
   <component name="RunManager" selected="npm.Angular CLI Server">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="E2E Tests (ispolaso)" type="JavaScriptTestRunnerProtractor">
       <config-file value="$PROJECT_DIR$/frontend/e2e/protractor.conf.js" />
       <node-interpreter value="project" />
-      <protractor-package value="$PROJECT_DIR$/frontend/node_modules/protractor" />
-      <protractor-options value="" />
-      <envs />
-      <scope-kind value="ALL" />
-      <method v="2" />
-    </configuration>
-    <configuration name="E2E Tests (login)" type="JavaScriptTestRunnerProtractor">
-      <config-file value="$PROJECT_DIR$/frontend/projects/login/e2e/protractor.conf.js" />
-      <node-interpreter value="project" />
-      <protractor-package value="$PROJECT_DIR$/frontend/node_modules/protractor" />
       <protractor-options value="" />
       <envs />
       <scope-kind value="ALL" />
@@ -130,248 +149,113 @@
     <configuration name="Angular Application" type="JavascriptDebugType" uri="http://localhost:4200">
       <method v="2" />
     </configuration>
+    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.mongo: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="mongo" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <configuration name="Angular CLI Server" type="js.build_tools.npm">
       <package-json value="$PROJECT_DIR$/frontend/package.json" />
       <command value="run" />
       <scripts>
         <script value="start" />
       </scripts>
-      <node-interpreter value="node" />
-      <package-manager value="npm" />
+      <node-interpreter value="project" />
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/frontend/package.json" />
+    <configuration name="build:dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/backend/package.json" />
       <command value="run" />
       <scripts>
-        <script value="build" />
+        <script value="build:dev" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="buildProd" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/frontend/package.json" />
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/backend/package.json" />
       <command value="run" />
       <scripts>
-        <script value="buildProd" />
+        <script value="dev" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml.mongo: Compose Deployment" />
       <item itemvalue="JavaScript Debug.Angular Application" />
       <item itemvalue="npm.Angular CLI Server" />
-      <item itemvalue="npm.build" />
-      <item itemvalue="npm.buildProd" />
+      <item itemvalue="npm.build:dev" />
+      <item itemvalue="npm.dev" />
+      <item itemvalue="PHP Built-in Web Server.PHP Server" />
       <item itemvalue="Protractor.E2E Tests (ispolaso)" />
-      <item itemvalue="Protractor.E2E Tests (login)" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.buildProd" />
-        <item itemvalue="npm.build" />
+        <item itemvalue="Docker.docker-compose.yml.mongo: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+        <item itemvalue="npm.dev" />
+        <item itemvalue="npm.build:dev" />
       </list>
     </recent_temporary>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
-    <configuration />
+    <configuration>C:\Users\Jonas\AppData\Roaming\Subversion</configuration>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="6404a6e2-9933-4162-afd8-9bb7c54b1cca" name="Default Changelist" comment="" />
-      <created>1576362934060</created>
+      <changelist id="2e1d6c14-ea2f-426f-934d-581facbc058b" name="Default Changelist" comment="" />
+      <created>1616804840487</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1576362934060</updated>
-      <workItem from="1576362937183" duration="546000" />
-      <workItem from="1576364004247" duration="2981000" />
-      <workItem from="1576404864164" duration="4175000" />
-      <workItem from="1576506695479" duration="8156000" />
-      <workItem from="1576516841981" duration="2492000" />
-      <workItem from="1576519791323" duration="3501000" />
-      <workItem from="1576592259135" duration="966000" />
-      <workItem from="1576593278326" duration="15933000" />
-      <workItem from="1576652040197" duration="3602000" />
-      <workItem from="1576747838383" duration="902000" />
-      <workItem from="1576773542477" duration="599000" />
-      <workItem from="1576961909042" duration="1303000" />
-      <workItem from="1576964861470" duration="517000" />
-      <workItem from="1577274827541" duration="463000" />
-      <workItem from="1578173809833" duration="3257000" />
-      <workItem from="1578220571491" duration="17263000" />
-      <workItem from="1578242647952" duration="14302000" />
-      <workItem from="1578303447582" duration="18107000" />
-      <workItem from="1578341312810" duration="1264000" />
-      <workItem from="1578401868440" duration="37000" />
-      <workItem from="1578402661619" duration="180000" />
-      <workItem from="1578601886007" duration="39000" />
-      <workItem from="1578303447582" duration="18758000" />
-      <workItem from="1578665474176" duration="3371000" />
-      <workItem from="1578669282018" duration="7604000" />
-      <workItem from="1578678743594" duration="5627000" />
-      <workItem from="1578746962626" duration="1773000" />
-      <workItem from="1579106456440" duration="1475000" />
-      <workItem from="1579109993702" duration="1209000" />
-      <workItem from="1579163839998" duration="10000" />
-      <workItem from="1579340630548" duration="3556000" />
-      <workItem from="1579452446914" duration="5000" />
-      <workItem from="1579452551376" duration="4412000" />
-      <workItem from="1579457106647" duration="1985000" />
-      <workItem from="1579510345595" duration="2593000" />
-      <workItem from="1579532994270" duration="8033000" />
-      <workItem from="1579624575856" duration="601000" />
-      <workItem from="1579712384428" duration="2657000" />
-      <workItem from="1579791504052" duration="1570000" />
-      <workItem from="1579858682460" duration="1836000" />
-      <workItem from="1579881917391" duration="11000" />
-      <workItem from="1580149208097" duration="387000" />
-      <workItem from="1580153082666" duration="1045000" />
-      <workItem from="1580560785034" duration="287000" />
-      <workItem from="1580715661976" duration="21000" />
-      <workItem from="1581423864075" duration="4689000" />
-      <workItem from="1581491821760" duration="2679000" />
-      <workItem from="1581503727436" duration="623000" />
-      <workItem from="1581504713744" duration="2735000" />
-      <workItem from="1581507562924" duration="1058000" />
-      <workItem from="1581519533341" duration="9161000" />
-      <workItem from="1581532721852" duration="339000" />
-      <workItem from="1581592978179" duration="3936000" />
-      <workItem from="1581606455270" duration="566000" />
-      <workItem from="1581607576759" duration="5968000" />
-      <workItem from="1581691680541" duration="614000" />
-      <workItem from="1581703266334" duration="2059000" />
-      <workItem from="1581767968243" duration="5034000" />
-      <workItem from="1581792273143" duration="1071000" />
-      <workItem from="1582392536774" duration="896000" />
-      <workItem from="1582397300275" duration="254000" />
+      <updated>1616804840487</updated>
+      <workItem from="1616804842068" duration="1913000" />
+      <workItem from="1616843625958" duration="7818000" />
+      <workItem from="1616853815887" duration="182000" />
+      <workItem from="1616863483955" duration="735000" />
+      <workItem from="1617359586151" duration="629000" />
+      <workItem from="1617384692625" duration="2363000" />
+      <workItem from="1617394526207" duration="590000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="344" y="97" width="591" height="640" key="#Angular_CLI_Server" timestamp="1578342278863">
-      <screen x="0" y="27" width="1280" height="773" />
-    </state>
-    <state x="344" y="97" width="591" height="640" key="#Angular_CLI_Server/0.27.1280.773@0.27.1280.773" timestamp="1578342278863" />
-    <state x="552" y="179" key="#SQL_Dialects" timestamp="1578228496530">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="552" y="179" key="#SQL_Dialects/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1578228496530" />
-    <state x="552" y="177" key="#TSLint" timestamp="1576363409050">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="552" y="177" key="#TSLint/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576363409050" />
-    <state x="552" y="177" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581590768776">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="552" y="177" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1581590768776" />
-    <state x="724" y="309" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1579511562351">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="724" y="309" key="#com.intellij.fileTypes.FileTypeChooser/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1579511562351" />
-    <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser" timestamp="1579363119886">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1579363119886" />
-    <state x="640" y="247" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1581606783751">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="640" y="247" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1581606783751" />
-    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1576602955054">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576602955054" />
-    <state x="493" y="231" width="424" height="491" key="FileChooserDialogImpl" timestamp="1578601924904">
-      <screen x="0" y="27" width="1280" height="773" />
-    </state>
-    <state x="493" y="231" width="424" height="491" key="FileChooserDialogImpl/0.27.1280.773@0.27.1280.773" timestamp="1578601924904" />
-    <state x="740" y="274" key="FileChooserDialogImpl/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1576363485127" />
-    <state width="1876" height="284" key="GridCell.Tab.0.bottom" timestamp="1582393432621">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1238" height="161" key="GridCell.Tab.0.bottom/0.27.1280.773@0.27.1280.773" timestamp="1578342606089" />
-    <state width="1876" height="284" key="GridCell.Tab.0.bottom/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1582393432621" />
-    <state width="1876" height="284" key="GridCell.Tab.0.center" timestamp="1582393432619">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1238" height="161" key="GridCell.Tab.0.center/0.27.1280.773@0.27.1280.773" timestamp="1578342606086" />
-    <state width="1876" height="284" key="GridCell.Tab.0.center/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1582393432619" />
-    <state width="1876" height="284" key="GridCell.Tab.0.left" timestamp="1582393432619">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1238" height="161" key="GridCell.Tab.0.left/0.27.1280.773@0.27.1280.773" timestamp="1578342606085" />
-    <state width="1876" height="284" key="GridCell.Tab.0.left/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1582393432619" />
-    <state width="1876" height="284" key="GridCell.Tab.0.right" timestamp="1582393432621">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1238" height="161" key="GridCell.Tab.0.right/0.27.1280.773@0.27.1280.773" timestamp="1578342606087" />
-    <state width="1876" height="284" key="GridCell.Tab.0.right/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1582393432621" />
-    <state x="440" y="93" key="SettingsEditor" timestamp="1581593431242">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="440" y="93" key="SettingsEditor/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1581593431242" />
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1581772310411">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1581772310411" />
-    <state x="636" y="342" key="com.intellij.ide.util.TipDialog" timestamp="1578669522915">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="424" y="281" key="com.intellij.ide.util.TipDialog/0.27.1280.773@0.27.1280.773" timestamp="1578601903014" />
-    <state x="636" y="342" key="com.intellij.ide.util.TipDialog/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1578669522915" />
-    <state x="767" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1578257492871">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="767" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1578257492871" />
-    <state x="619" y="288" width="1296" height="1021" key="dock-window-1" timestamp="1581592375694">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="619" y="288" width="1296" height="1021" key="dock-window-1/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1581592375694" />
-    <state x="1920" y="147" width="1296" height="736" key="dock-window-2" timestamp="1578674712240">
-      <screen x="1920" y="0" width="1280" height="984" />
-    </state>
-    <state x="1920" y="147" width="1296" height="736" key="dock-window-2/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1578674712240" />
-    <state x="581" y="208" width="758" height="638" key="find.popup" timestamp="1581508230853">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="581" y="208" width="758" height="638" key="find.popup/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1581508230853" />
-    <state x="342" y="100" key="new project wizard" timestamp="1580560861399">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="342" y="100" key="new project wizard/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1580560861399" />
-    <state x="823" y="446" width="350" height="298" key="org.angular.cli.generate" timestamp="1581608319973">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="823" y="446" width="350" height="298" key="org.angular.cli.generate/1920.0.1280.984/0.0.1920.1040@0.0.1920.1040" timestamp="1581608319973" />
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

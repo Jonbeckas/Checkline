@@ -14,6 +14,9 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onPasswordChange(password:string,passwordRepeat:string) {
+
+  }
 }
 
 

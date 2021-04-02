@@ -5,7 +5,6 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatTable} from "@angular/material/table";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {WarningComponent} from "../../scanner/warning/warning.component";
 import {DetailsPopUpComponent} from "../details-pop-up/details-pop-up.component";
 
 @Component({
