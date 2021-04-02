@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import Axios, {AxiosError, AxiosResponse} from "axios";
 import {Router} from "@angular/router";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     let cookie:string = this.cookieService.get("token");
     if (cookie!="") {
-      const request = Axios.post("http://localhost:80/backend/public/admin.php/checklogin",{token:cookie});
+      const request = Axios.post(environment.backendUrl +"/admin.php/checklogin",{token:cookie});
       request.then((res:AxiosResponse)=>{
         if (res.data.state == true) this.toSearch();})
     }
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
       alert("Bitte fülle die folgenden Felder aus!");
       return;
     }
-    const request = Axios.post("http://localhost:80/backend/public/admin.php/login",{username:username,password:password});
+    const request = Axios.post(environment.backendUrl+"/admin.php/login",{username:username,password:password});
     request.then((res:AxiosResponse)=>{
       console.log(res.data);
       if (res.data.error!=undefined) {
@@ -65,7 +66,7 @@ export class LoginComponent implements OnInit {
   private logoutQuestion(username,password) {
     let answer:boolean = confirm("Sie sind auf einem anderen PC bereits angemeldet. \n Wollen sie sich von einem anderen PC abmelden?");
     if (answer) {
-      const request = Axios.post("http://localhost:80/backend/public/admin.php/login",{username:username,password:password,force:true});
+      const request = Axios.post(environment.backendUrl+"/admin.php/login",{username:username,password:password,force:true});
       request.then((res:AxiosResponse)=>{
         if (res.data.token==undefined) {
           this.error("No Token! "+res.data.error);
