@@ -1,2 +1,6 @@
 
 .idea/
+
+!.idea/
+backend/node_modules
+backend/build
