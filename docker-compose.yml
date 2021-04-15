@@ -1,9 +1,23 @@
-version: '3'
+version: '3.2'
+
 services:
-  mongo:
-    image: mongo
+  db:
+    image: mysql:latest
+    container_name: appsDB
+    restart: always
     ports:
-      - 27017:27017
+      - '3306:3306'
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: password
+
+  app:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOST: db
+
