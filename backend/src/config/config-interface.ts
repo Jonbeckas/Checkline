@@ -1,4 +1,11 @@
+export interface Database {
+    host:string;
+    username:string;
+    password:string;
+    port:number;
+    database:string;
+}
+
 export interface Configuration {
-    port: number;
-    mongoUrl: string;
+    database:Database;
 }
