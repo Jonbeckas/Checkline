@@ -27,7 +27,7 @@ export class UserDB {
         let valuesString = ` VALUES (`
 
         for (const index in keys) {
-            command += "\`"+keys[index]+"\`";
+            command += this.connection?.escapeId(keys[index]);
 
             //@ts-ignore
             if (index != keys.length-1) {
@@ -36,7 +36,7 @@ export class UserDB {
                 command +=")"
             }
 
-            valuesString += `\'${values[index]}\'`;
+            valuesString += this.connection?.escape(values[index]);
             // @ts-ignore
             if (index !=keys.length-1) {
                 valuesString +=",";
@@ -63,7 +63,7 @@ export class UserDB {
 
         for (const index in keys) {
             if (!primaryKeys.includes(keys[index])) {
-                command += `\`${keys[index]}\`='${values[index]}'`;
+                command += `${this.connection?.escapeId(keys[index])} =${this.connection?.escape(values[index])}`;
 
                 //@ts-ignore
                 if (index != keys.length-1) {
@@ -71,7 +71,7 @@ export class UserDB {
                 }
             } else {
                 curIf++;
-                when += `\`${keys[index]}\` = '${values[index]}'`
+                when += `${this.connection?.escapeId(keys[index])} = ${this.connection?.escape(values[index])}`
                 if(primaryKeys.length != curIf){
                     when +="AND";
                 }
@@ -86,12 +86,11 @@ export class UserDB {
     async deleteObject(table:string,primaryKeyValue:Object) {
         const keys = Object.keys(primaryKeyValue);
         const values = Object.values(primaryKeyValue);
-        let curIf = 0;
 
         let command =`DELETE FROM \`${table}\` WHERE `
 
         for (const index in keys) {
-            command+=`\`${keys[index]}\`='${values[index]}' `;
+            command+=`${this.connection?.escapeId(keys[index])} = ${this.connection?.escape(values[index])} `;
             // @ts-ignore
             if (index < keys.length-1) {
                 command+="AND ";
@@ -112,7 +111,7 @@ export class UserDB {
         let command =`SELECT * FROM \`${table}\` WHERE `
 
         for (const index in keys) {
-            command+=`\`${keys[index]}\`='${values[index]}' `;
+            command+=` ${this.connection?.escapeId(keys[index])} = ${this.connection?.escape(values[index])} `;
             // @ts-ignore
             if (index < keys.length-1) {
                 command+="AND ";
@@ -121,8 +120,10 @@ export class UserDB {
 
         const mysqlStatement = command+";";
         console.log("Run Command: "+mysqlStatement);
+        // @ts-ignore
         let result =  await this.connection?.execute(mysqlStatement);
-        return JSON.parse(JSON.stringify(result));
+        console.log(result)
+        //return JSON.stringify(result[0][0]);
     }
 
 
