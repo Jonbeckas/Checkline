@@ -2,8 +2,9 @@ import {MongoClient} from "mongodb";
 import {CONFIG} from "../config";
 import {Connection, createConnection} from "mysql2/promise";
 import {NotEnougthArgumentsException} from "../exception/not-enougth-arguments.exception";
+import {User} from "../model/User";
 
-export class UserDB {
+export class DB {
     private connection: Connection | undefined;
 
 
@@ -103,37 +104,39 @@ export class UserDB {
     }
 
 
-    async getObject(table:string,primaryKeyValue:Object) {
+    async getObject(table:string,primaryKeyValue:Object):Promise<unknown[]> {
         const keys = Object.keys(primaryKeyValue);
         const values = Object.values(primaryKeyValue);
         let curIf = 0;
 
-        let command =`SELECT * FROM \`${table}\` WHERE `
+        let command =`SELECT * FROM \`${table}\``
 
-        for (const index in keys) {
-            command+=` ${this.connection?.escapeId(keys[index])} = ${this.connection?.escape(values[index])} `;
-            // @ts-ignore
-            if (index < keys.length-1) {
-                command+="AND ";
+        if (keys.length>0) {
+            command +=" WHERE "
+            for (const index in keys) {
+                command+=` ${this.connection?.escapeId(keys[index])} = ${this.connection?.escape(values[index])} `;
+                // @ts-ignore
+                if (index < keys.length-1) {
+                    command+="AND ";
+                }
             }
         }
+
 
         const mysqlStatement = command+";";
         console.log("Run Command: "+mysqlStatement);
         // @ts-ignore
-        let result =  await this.connection?.execute(mysqlStatement);
-        console.log(result)
-        //return JSON.stringify(result[0][0]);
+        const [rows, fields] = await this.connection?.execute(mysqlStatement);
+        return rows;
     }
 
 
 
     async  creatUserDb() {
-        const  createUsers = await this.connection?.execute("CREATE TABLE IF NOT EXISTS `checkline`.`users` ( `userId` VARCHAR(36) NOT NULL , `name` VARCHAR(36) NOT NULL , `firstname` TEXT NOT NULL , `password` TEXT NOT NULL , PRIMARY KEY (`userId`));");
-        const  createUserGroups = await this.connection?.execute("CREATE TABLE IF NOT EXISTS `checkline`.`user-groups` ( `groupId` VARCHAR(36) NOT NULL , `userId` VARCHAR(36) NOT NULL );");
+        const createUsers = await this.connection?.execute("CREATE TABLE IF NOT EXISTS `checkline`.`users` ( `userId` VARCHAR(36) NOT NULL , `name` VARCHAR(36) NOT NULL , `firstname` TEXT NOT NULL , `password` TEXT NOT NULL, `loginName` VARCHAR(30) NOT NULL  , `lastLogin` VARCHAR(14) DEFAULT NULL , PRIMARY KEY (`userId`));");
+        const createUserGroups = await this.connection?.execute("CREATE TABLE IF NOT EXISTS `checkline`.`user-groups` ( `groupId` VARCHAR(36) NOT NULL , `userId` VARCHAR(36) NOT NULL );");
         const createGroups = await this.connection?.execute("CREATE TABLE IF NOT EXISTS `checkline`.`groups` ( `groupId` VARCHAR(36) NOT NULL , `name` VARCHAR(50) NOT NULL,PRIMARY KEY (`groupId`));");
         const createGroupPermissions = await this.connection?.execute("CREATE TABLE IF NOT EXISTS `checkline`.`group-permissions` ( `groupId` VARCHAR(36) NOT NULL , `permission` VARCHAR(36) NOT NULL );");
-        const createUserSessions = await this.connection?.execute("CREATE TABLE IF NOT EXISTS `checkline`.`user-sessions` ( `userId` VARCHAR(36) NOT NULL , `token` VARCHAR(36) NOT NULL );");
         const createRunners = await this.connection?.execute("CREATE TABLE IF NOT EXISTS `checkline`.`runners` ( `userId` VARCHAR(36) NOT NULL , `runner-id` VARCHAR(36) NOT NULL , `state` INT NOT NULL , `check-in` TIMESTAMP NOT NULL , `check-out` TIMESTAMP NOT NULL , `round` INT NOT NULL , `timestamp` TIMESTAMP NOT NULL , PRIMARY KEY (`userId`));");
     }
 

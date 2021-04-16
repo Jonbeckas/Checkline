@@ -7,6 +7,7 @@ export const CONFIG:Configuration  = {
         username: "root",
         password: "password",
         database:"checkline"
-    }
+    },
+    jwtSecret:"fuckthispassword"
 
 }
