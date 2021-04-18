@@ -67,7 +67,7 @@ export class DB {
                 command += `${this.connection?.escapeId(keys[index])} =${this.connection?.escape(values[index])}`;
 
                 //@ts-ignore
-                if (index != keys.length-1) {
+                if (index < (keys.length-1)-primaryKeys.length-1) {
                     command +=",";
                 }
             } else {

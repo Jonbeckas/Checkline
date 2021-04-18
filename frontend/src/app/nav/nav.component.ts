@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../auth/auth.service";
+import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
   selector: 'app-nav',
@@ -7,9 +9,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
-  constructor() { }
 
-  ngOnInit() {
+
+  username = this.authService.getUsername();
+  currTab:string|undefined;
+
+
+  constructor(private authService:AuthService,private router:Router) {
+    this.username = this.authService.getUsername();
+  }
+
+  ngOnInit(): void {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.username = this.authService.getUsername();
+        this.currTab = event.url;
+      }
+    })
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 }

@@ -2,6 +2,8 @@ import {DB} from "../db/DB";
 import {InvalidMysqlData} from "../exception/invalid-mysql-data";
 import {NoUserFoundException} from "../exception/no-user-found.exception";
 import {User} from "../model/User";
+import {GroupService} from "./group-service";
+import * as Argon2 from "argon2";
 
 export class UserService {
     static async getUserByLoginNameExceptional(name:string):Promise<User> {
@@ -33,6 +35,30 @@ export class UserService {
         await db.connect();
         const result =  <User[]>await db.getObject("users",{});
         return result;
+    }
+
+    static async getUserPermissions(userId:string):Promise<string[]> {
+        const db = new DB();
+        await db.connect();
+        const groups = await GroupService.getGroupsByUser(userId);
+        if (!groups) return [];
+        let userPermission: string[] = [];
+        for (let group of groups) {
+            const permissions = await GroupService.getPermissionsByGroup(group.groupId);
+            for (const permission of permissions) {
+                if (!userPermission.includes(permission)) {
+                    userPermission.push(permission);
+                }
+            }
+        }
+        return userPermission;
+    }
+
+    static async changeUserPasswort(userId:string,newPassword:string) {
+        const db = new DB();
+        await db.connect();
+        const hash = await Argon2.hash(newPassword);
+        await db.editObject("users",["userId"],{password:hash,userId:userId});
     }
 }
 
