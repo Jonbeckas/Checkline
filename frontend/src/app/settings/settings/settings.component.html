@@ -1,0 +1,30 @@
+<div id="settings">
+  <h1>Settings</h1>
+
+  <h2>Change Password</h2>
+
+  <form clrForm [formGroup]="form" (ngSubmit)="submit()">
+    <p *ngIf="error!=undefined" style="color: red">{{error}}</p>
+    <p *ngIf="showSucces" style="color: green">Successfuly changed Password</p>
+    <clr-input-container>
+      <label>Old password</label>
+      <input clrInput formControlName="oldPassword" type="password" />
+      <clr-control-error *clrIfError="'required'">Old password required</clr-control-error>
+    </clr-input-container>
+
+    <clr-input-container>
+      <label>New password</label>
+      <input clrInput formControlName="newPassword" type="password" />
+      <clr-control-error *clrIfError="'required'">New password required</clr-control-error>
+    </clr-input-container>
+
+    <clr-input-container>
+      <label>Repeat new password</label>
+      <input clrInput formControlName="newPasswordRepeat" type="password" />
+      <clr-control-error *clrIfError="'required'">New password repetition required</clr-control-error>
+    </clr-input-container>
+
+    <button class="btn">Change Password <clr-spinner clrInline="true" *ngIf="spinner"></clr-spinner></button>
+  </form>
+</div>
+

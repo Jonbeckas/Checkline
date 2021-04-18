@@ -11,16 +11,19 @@ import {UserGroup} from "../../model/UserGroup";
 import {Permission} from "./dtos/permission";
 import {GroupPermission} from "../../model/GroupPermission";
 import {UserService} from "../../services/UserService";
+import bodyParser from "body-parser";
+import {authRouter} from "../authentification/authentification.module";
 
 
 export const groupsRouter = express.Router({caseSensitive:false});
 
-groupsRouter.use(express.urlencoded({ extended: true }));
+authRouter.use(bodyParser.json());
+authRouter.use(bodyParser.urlencoded({ extended: true }))
 
 const db = new DB();
 db.connect().catch(e => console.error(e));
 
-groupsRouter.post('/groups/add',LoginValidator, async (req, res, next) => {
+groupsRouter.put('/group',LoginValidator, async (req, res, next) => {
     const gReq = <AddGroupDto> req.body;
     if (!gReq || !gReq.name) {
         res.status(400).send({err: "Missing Fields"});
@@ -36,7 +39,7 @@ groupsRouter.post('/groups/add',LoginValidator, async (req, res, next) => {
     }
 });
 
-groupsRouter.post('/groups/remove',LoginValidator, async (req, res, next) => {
+groupsRouter.delete('/group',LoginValidator, async (req, res, next) => {
     const gReq = <AddGroupDto> req.body;
     if (!gReq || !gReq.name) {
         res.status(400).send({err: "Missing Fields"});
@@ -108,7 +111,7 @@ groupsRouter.post('/groups/removeUserToGroup',LoginValidator, async (req, res, n
     }
 });
 
-groupsRouter.post('/groups/addPermission',LoginValidator, async (req, res, next) => {
+groupsRouter.put('/groups/permission',LoginValidator, async (req, res, next) => {
     const gReq = <Permission> req.body;
     if (!gReq || !gReq.groupname || !gReq.permission ) {
         res.status(400).send({err: "Missing Fields"});
@@ -130,7 +133,7 @@ groupsRouter.post('/groups/addPermission',LoginValidator, async (req, res, next)
     }
 });
 
-groupsRouter.post('/groups/removePermission',LoginValidator, async (req, res, next) => {
+groupsRouter.delete('/groups/permission',LoginValidator, async (req, res, next) => {
     const gReq = <Permission> req.body;
     if (!gReq || !gReq.groupname || !gReq.permission ) {
         res.status(400).send({err: "Missing Fields"});

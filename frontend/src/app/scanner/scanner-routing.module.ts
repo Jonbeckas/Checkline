@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {ScannerComponent} from "./scanner/scanner.component";
+import { RouterModule, Routes } from '@angular/router';
 import {AuthGuard} from "../auth/auth.guard";
+import {ScannerComponent} from "./scanner/scanner.component";
 
-
-const routes: Routes = [{path:'scanner',component:ScannerComponent,canActivate:[AuthGuard]}];
+const routes: Routes = [  {path:"scanner",component:ScannerComponent, canActivate:[AuthGuard]}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

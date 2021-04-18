@@ -20,6 +20,14 @@ export class GroupService {
         return result.map(obj => obj.userId)
     }
 
+
+    static async getGroupsByUser(userId:string):Promise<Group[]> {
+        const db = new DB();
+        await db.connect();
+        const result =  <Group[]>await db.getObject("user-groups",<UserGroup>{userId:userId});
+        return result;
+    }
+
     static async getGroupById(groupId:string):Promise<Group|undefined> {
         const db = new DB();
         await db.connect();
