@@ -9,8 +9,6 @@ import {NavigationEnd, Router} from "@angular/router";
 })
 export class NavComponent implements OnInit {
 
-
-
   username = this.authService.getUsername();
   currTab:string|undefined;
 

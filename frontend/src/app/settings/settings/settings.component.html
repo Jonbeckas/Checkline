@@ -4,8 +4,32 @@
   <h2>Change Password</h2>
 
   <form clrForm [formGroup]="form" (ngSubmit)="submit()">
-    <p *ngIf="error!=undefined" style="color: red">{{error}}</p>
-    <p *ngIf="showSucces" style="color: green">Successfuly changed Password</p>
+    <div class="alert alert-danger" *ngIf="error!=undefined">
+      <div class="alert-items">
+        <div class="alert-item static" role="alert">
+          <div class="alert-icon-wrapper">
+            <cds-icon class="alert-icon" shape="exclamation-circle"></cds-icon>
+          </div>
+          <span class="alert-text">
+        {{error}}
+      </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-success" *ngIf="showSucces">
+      <div class="alert-items">
+        <div class="alert-item static" role="alert">
+          <div class="alert-icon-wrapper">
+            <cds-icon class="alert-icon" shape="check-circle"></cds-icon>
+          </div>
+          <span class="alert-text">
+        Successfully changed password
+      </span>
+        </div>
+      </div>
+    </div>
+
     <clr-input-container>
       <label>Old password</label>
       <input clrInput formControlName="oldPassword" type="password" />

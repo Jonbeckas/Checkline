@@ -4,16 +4,18 @@ import {Router} from "@angular/router";
 import {environment} from "../../../environments/environment";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService, WebResult} from "../../auth/auth.service";
+import {ClarityIcons, exclamationCircleIcon, windowCloseIcon} from "@cds/core/icon";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent  {
+export class LoginComponent implements OnInit {
   form: FormGroup;
   error: undefined|string;
   spinner = false;
+
 
 
   constructor( private router: Router, private formBuilder:FormBuilder,private authService:AuthService) {
@@ -35,6 +37,10 @@ export class LoginComponent  {
         }
       })
     }
+  }
+
+  ngOnInit(): void {
+    ClarityIcons.addIcons(exclamationCircleIcon)
   }
 }
 

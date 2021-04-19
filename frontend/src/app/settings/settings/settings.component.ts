@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService, WebResult} from "../../auth/auth.service";
+import {checkCircleIcon, ClarityIcons, exclamationCircleIcon} from "@cds/core/icon";
 
 @Component({
   selector: 'app-settings',
@@ -21,6 +22,8 @@ export class SettingsComponent {
       newPassword: ['', Validators.required],
       newPasswordRepeat: ['', Validators.required]
     });
+    ClarityIcons.addIcons(exclamationCircleIcon)
+    ClarityIcons.addIcons(checkCircleIcon)
   }
 
   submit() {
