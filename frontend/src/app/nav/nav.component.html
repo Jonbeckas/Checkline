@@ -9,20 +9,8 @@
     <a class="nav-link nav-text" routerLink="/scanner" [ngClass]="{'active':this.currTab=='/scanner'}" *ngIf="username!=undefined">Scanner</a>
     <a class="nav-link nav-text" routerLink="/dashboard" [ngClass]="{'active':this.currTab=='/dashboard'}" *ngIf="username!=undefined">Dashboard</a>
     <a class="nav-link nav-text" routerLink="/admin" [ngClass]="{'active':this.currTab=='/admin'}" *ngIf="username!=undefined">Administration</a>
-
-    <div class="header-actions header-actions--overflow" *ngIf="username!=undefined">
-      <clr-dropdown  id="userMenu">
-        <button clrDropdownTrigger>
-          {{this.username}}
-          <cds-icon shape="angle" direction="down"></cds-icon>
-        </button>
-        <clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen>
-          <a clrDropdownItem routerLink="/settings">Settings</a>
-          <a clrDropdownItem (click)="logout()">Log out</a>
-        </clr-dropdown-menu>
-      </clr-dropdown>
-    </div>
-
+  </div>
+  <div class="header-actions header-actions--overflow" *ngIf="username!=undefined">
     <clr-dropdown  id="userMenu">
       <button clrDropdownTrigger>
         {{this.username}}
