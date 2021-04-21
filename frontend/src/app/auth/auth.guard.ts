@@ -1,48 +1,40 @@
 import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  UrlTree,
-  Router
-} from '@angular/router';
+import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router} from '@angular/router';
 import { Observable } from 'rxjs';
-import Axios, {AxiosError, AxiosResponse} from "axios";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {environment} from "../../environments/environment";
 import {CookieService} from "ngx-cookie-service";
+import {AuthService} from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-
-  constructor( private cookieService:CookieService,private router: Router) {
-  }
+  constructor(private httpClient:HttpClient,private cookieService:CookieService,private authService:AuthService,private router:Router) {}
 
   canActivate(
-    next: ActivatedRouteSnapshot,
-
+    route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    let cookie:string = this.cookieService.get("token");
-    let status;
-    if (cookie!="") {
-      const request = Axios.post("http://localhost:80/backend/public/admin.php/checklogin",{token:cookie});
-      request.then((res:AxiosResponse)=>{
-        status= res.data.state;
-      }).catch((err:AxiosError)=>{status=false});
-      if (status == false) {
-        this.loadLogin();
-        return false;
-      } else {
-        return true;
-      }
-    } else {
-      this.loadLogin();
-      return false;
-    }
+
+    return new Observable((observer)=> {
+      let token = this.cookieService.get("token");
+      let bearer = "Bearer "+token;
+      this.httpClient.get<any>(environment.backendUrl+"/isValid",{headers:{Authorization:bearer}}).subscribe({
+        next: (data) =>{
+          observer.next(true);
+          observer.complete();
+        },
+        error: (err:HttpErrorResponse) => {
+          if (err.status == 401) {
+            this.authService.logout();
+            this.router.navigateByUrl("/login")
+          }
+          observer.next(false);
+          observer.complete();
+        }
+      })
+    });
   }
 
-  loadLogin() {
-    this.router.navigate(["/login"]);
-  }
 }

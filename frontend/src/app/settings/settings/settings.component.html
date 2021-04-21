@@ -1,0 +1,54 @@
+<div id="settings">
+  <h1>Settings</h1>
+
+  <h2>Change Password</h2>
+
+  <form clrForm [formGroup]="form" (ngSubmit)="submit()">
+    <div class="alert alert-danger" *ngIf="error!=undefined">
+      <div class="alert-items">
+        <div class="alert-item static" role="alert">
+          <div class="alert-icon-wrapper">
+            <cds-icon class="alert-icon" shape="exclamation-circle"></cds-icon>
+          </div>
+          <span class="alert-text">
+        {{error}}
+      </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-success" *ngIf="showSucces">
+      <div class="alert-items">
+        <div class="alert-item static" role="alert">
+          <div class="alert-icon-wrapper">
+            <cds-icon class="alert-icon" shape="check-circle"></cds-icon>
+          </div>
+          <span class="alert-text">
+        Successfully changed password
+      </span>
+        </div>
+      </div>
+    </div>
+
+    <clr-input-container>
+      <label>Old password</label>
+      <input clrInput formControlName="oldPassword" type="password" />
+      <clr-control-error *clrIfError="'required'">Old password required</clr-control-error>
+    </clr-input-container>
+
+    <clr-input-container>
+      <label>New password</label>
+      <input clrInput formControlName="newPassword" type="password" />
+      <clr-control-error *clrIfError="'required'">New password required</clr-control-error>
+    </clr-input-container>
+
+    <clr-input-container>
+      <label>Repeat new password</label>
+      <input clrInput formControlName="newPasswordRepeat" type="password" />
+      <clr-control-error *clrIfError="'required'">New password repetition required</clr-control-error>
+    </clr-input-container>
+
+    <button class="btn">Change Password <clr-spinner clrInline="true" *ngIf="spinner"></clr-spinner></button>
+  </form>
+</div>
+

@@ -2,20 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SettingsRoutingModule } from './settings-routing.module';
-import { MainComponent } from './main/main.component';
-import {MatTabsModule} from "@angular/material/tabs";
-import {MatButtonModule} from "@angular/material/button";
-import {MatInputModule} from "@angular/material/input";
+import { SettingsComponent } from './settings/settings.component';
+import {ClarityModule} from "@clr/angular";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
-  declarations: [MainComponent],
+  declarations: [
+    SettingsComponent
+  ],
   imports: [
     CommonModule,
+    ClarityModule,
     SettingsRoutingModule,
-    MatTabsModule,
-    MatButtonModule,
-    MatInputModule
+    ReactiveFormsModule,
   ]
 })
 export class SettingsModule { }

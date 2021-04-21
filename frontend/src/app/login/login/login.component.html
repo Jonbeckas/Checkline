@@ -1,3 +1,34 @@
-<input type="text" (keyup.enter)="OnInput($event)" #username>
-<input type="password" #password (keyup.enter)="OnInput($event)">
-<button (click)="OnInput($event)">submit</button>
+<div id="loginForm">
+  <h1>Login</h1>
+
+  <form clrForm [formGroup]="form" (ngSubmit)="submit()">
+
+    <div class="alert alert-danger" *ngIf="error!=undefined">
+      <div class="alert-items">
+        <div class="alert-item static" role="alert">
+          <div class="alert-icon-wrapper">
+            <cds-icon class="alert-icon" shape="exclamation-circle"></cds-icon>
+          </div>
+          <span class="alert-text">
+        {{error}}
+      </span>
+        </div>
+      </div>
+    </div>
+
+    <clr-input-container>
+      <label>Username</label>
+      <input clrInput formControlName="username" type="text" />
+      <clr-control-error *clrIfError="'required'">Username Required</clr-control-error>
+    </clr-input-container>
+
+    <clr-input-container>
+      <label>Password</label>
+      <input clrInput formControlName="password" type="password" />
+      <clr-control-error *clrIfError="'required'">Password Required</clr-control-error>
+    </clr-input-container>
+
+    <button class="btn">Login <clr-spinner clrInline="true" *ngIf="spinner"></clr-spinner></button>
+  </form>
+</div>
+
