@@ -1,8 +1,6 @@
-import {MongoClient} from "mongodb";
 import {CONFIG} from "../config";
 import {Connection, createConnection} from "mysql2/promise";
 import {NotEnougthArgumentsException} from "../exception/not-enougth-arguments.exception";
-import {User} from "../model/User";
 
 export class DB {
     private connection: Connection | undefined;
@@ -18,6 +16,10 @@ export class DB {
         });
 
         await this.creatUserDb();
+    }
+
+    async close() {
+        await this.connection?.end()
     }
 
     async insertObject(table:string,object:Object) {
@@ -122,6 +124,29 @@ export class DB {
             }
         }
 
+
+        const mysqlStatement = command+";";
+        console.log("Run Command: "+mysqlStatement);
+        // @ts-ignore
+        const [rows, fields] = await this.connection?.execute(mysqlStatement);
+        return rows;
+    }
+
+    async innerJoin(table1:string,table2:string,row:string,where:Object):Promise<unknown[]> {
+        const keys = Object.keys(where);
+        const values = Object.values(where);
+        let command =`SELECT * FROM ${this.connection?.escapeId(table1)}INNER JOIN ${this.connection?.escapeId(table2)} USING (${this.connection?.escapeId(row)})`
+
+        if (keys.length>0) {
+            command +=" WHERE "
+            for (const index in keys) {
+                command+=` ${this.connection?.escapeId(keys[index])} = ${this.connection?.escape(values[index])} `;
+                // @ts-ignore
+                if (index < keys.length-1) {
+                    command+="AND ";
+                }
+            }
+        }
 
         const mysqlStatement = command+";";
         console.log("Run Command: "+mysqlStatement);

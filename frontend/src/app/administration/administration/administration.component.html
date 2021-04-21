@@ -1,0 +1,102 @@
+<div class="clr-row" id="tablezone">
+  <div class="clr-col">
+      <h2>Users</h2>
+
+
+    <clr-datagrid>
+      <clr-dg-column [clrDgField]="'loginName'">Username</clr-dg-column>
+      <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
+      <clr-dg-column [clrDgField]="'firstName'">First name</clr-dg-column>
+      <clr-dg-column [clrDgField]="'firstName'">Groups</clr-dg-column>
+      <clr-dg-column>
+        Actions
+        <button type="button" class="btn btn-icon btn-info btn-sm addButton" aria-label="edit" (click)="onNewUserClick()">
+          <cds-icon shape="plus"></cds-icon>
+        </button>
+      </clr-dg-column>
+
+      <clr-dg-row *clrDgItems="let user of users$ " >
+        <p>{{user}}</p>
+        <clr-dg-cell>{{user.loginName}}</clr-dg-cell>
+        <clr-dg-cell>{{user.name}}</clr-dg-cell>
+        <clr-dg-cell>{{user.firstname}}</clr-dg-cell>
+        <clr-dg-cell>{{user.groups}}</clr-dg-cell>
+        <clr-dg-cell>
+          <button type="button" class="btn btn-icon btn-primary btn-sm" aria-label="edit" (click)="onUserEdit(user.loginName)">
+            <cds-icon shape="pencil"></cds-icon>
+          </button>
+
+          <button type="button" class="btn btn-icon btn-danger btn-sm" aria-label="trash" (click)="this.openUserDelete = true; element= user.loginName">
+            <cds-icon shape="trash"></cds-icon>
+          </button>
+        </clr-dg-cell>
+      </clr-dg-row>
+
+      <clr-dg-footer>
+        <clr-dg-pagination #pagination [clrDgPageSize]="10">
+          <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Users per page</clr-dg-page-size>
+          {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} users
+        </clr-dg-pagination>
+      </clr-dg-footer>
+    </clr-datagrid>
+  </div>
+
+  <div class="clr-col">
+    <h2>Groups</h2>
+    <clr-datagrid>
+      <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
+      <clr-dg-column [clrDgField]="'permissions'">Permissions</clr-dg-column>
+      <clr-dg-column>
+        Actions
+        <button type="button" class="btn btn-icon btn-info btn-sm addButton" aria-label="edit" (click)="onNewGroup()">
+          <cds-icon shape="plus"></cds-icon>
+        </button>
+      </clr-dg-column>
+
+      <clr-dg-row *clrDgItems="let group of groups$ " >
+        <clr-dg-cell>{{group.name||""}}</clr-dg-cell>
+        <clr-dg-cell>{{group.permissions||""}}</clr-dg-cell>
+        <clr-dg-cell>
+          <button type="button" class="btn btn-icon btn-primary btn-sm" aria-label="edit" (click)="onGroupEdit(group)">
+            <cds-icon shape="pencil"></cds-icon>
+          </button>
+
+          <button type="button" class="btn btn-icon btn-danger btn-sm" aria-label="trash" (click)="this.openGroupDelete = true; element= group.name">
+            <cds-icon shape="trash"></cds-icon>
+          </button>
+        </clr-dg-cell>
+      </clr-dg-row>
+
+      <clr-dg-footer>
+        <clr-dg-pagination #pagination [clrDgPageSize]="10">
+          <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Users per page</clr-dg-page-size>
+          {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} users
+        </clr-dg-pagination>
+      </clr-dg-footer>
+    </clr-datagrid>
+
+  </div>
+</div>
+
+<!-- MODALS -->
+<clr-modal [(clrModalOpen)]="openUserDelete" [clrModalClosable]="true" [clrModalStaticBackdrop]="false">
+  <h3 class="modal-title">Question</h3>
+  <div class="modal-body">
+    <p>Do you want to delete the User {{element}}?</p>
+  </div>
+  <div  class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="onUserCancel()">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="onUserDelete()">Delete</button>
+  </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="openGroupDelete" [clrModalClosable]="true" [clrModalStaticBackdrop]="false">
+  <h3 class="modal-title">Question</h3>
+  <div class="modal-body">
+    <p>Do you want to delete the Group {{element}}?</p>
+  </div>
+  <div  class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="onGroupCancel()">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="onGroupDelete()">Delete</button>
+  </div>
+</clr-modal>

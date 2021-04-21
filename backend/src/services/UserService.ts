@@ -4,8 +4,12 @@ import {NoUserFoundException} from "../exception/no-user-found.exception";
 import {User} from "../model/User";
 import {GroupService} from "./group-service";
 import * as Argon2 from "argon2";
+import  * as Uuid from "uuid";
+import {UserWithGroups} from "../modules/users/dtos/group-user";
+import {Group} from "../model/Group";
 
 export class UserService {
+
     static async getUserByLoginNameExceptional(name:string):Promise<User> {
         const db = new DB();
         await db.connect();
@@ -15,6 +19,7 @@ export class UserService {
         } else if (result.length ==0) {
             throw new NoUserFoundException();
         }
+        await db.close();
         return <User> result[0];
     }
 
@@ -27,15 +32,35 @@ export class UserService {
         } else if (result.length ==0) {
             return undefined;
         }
+        await db.close();
         return <User> result[0];
     }
 
-    static async getUsers():Promise<User[]> {
+    static async getUsers():Promise<UserWithGroups[]> {
         const db = new DB();
         await db.connect();
-        const result =  <User[]>await db.getObject("users",{});
+        const result =  <UserWithGroups[]>await db.getObject("users",{});
+        for (let index in result) {
+            let groups = await db.innerJoin("user-groups","groups","groupId",{userId:result[index].userId})
+            let strGroup = groups.map((obj: unknown) => (<any>obj).name);
+            result[index].groups = strGroup;
+        }
+        await db.close();
         return result;
     }
+
+    static async getUserWithGroups(username:string):Promise<UserWithGroups> {
+        const db = new DB();
+        await db.connect();
+        const result =  <UserWithGroups>await this.getUserByLoginName(username);
+        let groups = await db.innerJoin("user-groups","groups","groupId",{userId:result.userId});
+        let strGroup = groups.map((obj: unknown) => (<any>obj).name);
+        result.groups = strGroup;
+        await db.close()
+        return result;
+    }
+
+
 
     static async getUserPermissions(userId:string):Promise<string[]> {
         const db = new DB();
@@ -51,6 +76,7 @@ export class UserService {
                 }
             }
         }
+        await db.close();
         return userPermission;
     }
 
@@ -59,6 +85,35 @@ export class UserService {
         await db.connect();
         const hash = await Argon2.hash(newPassword);
         await db.editObject("users",["userId"],{password:hash,userId:userId});
+        await db.close();
+    }
+
+    static async addUser(username:string,password:string, firstname:string,name:string):Promise<{ success:boolean,err:string }> {
+        const user = await this.getUserByLoginName(username);
+        if (user) {
+            return {success:false,err: "Username exists"};
+        } else {
+            const db = new DB();
+            await db.connect();
+            const hash = await Argon2.hash(password);
+            const id = Uuid.v4();
+            await db.insertObject("users",<User>{userId:id,loginName:username,firstName:firstname,name:name,password:hash})
+            await db.close();
+            return {success:true,err: ""};
+        }
+    }
+
+    static async deleteUser(username:string):Promise<{ success:boolean,err:string }> {
+        const user = await this.getUserByLoginName(username);
+        if (!user) {
+            return {success:false,err: "Username does not exists"};
+        } else {
+            const db = new DB();
+            await db.connect();
+            await db.deleteObject("users",{userId:user.userId})
+            await db.close();
+            return {success:true,err: ""};
+        }
     }
 }
 

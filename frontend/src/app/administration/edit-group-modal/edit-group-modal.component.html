@@ -1,0 +1,91 @@
+<clr-modal [(clrModalOpen)]="open" [clrModalClosable]="true" [clrModalStaticBackdrop]="false" >
+  <h3 class="modal-title">Edit Group {{this.group}}</h3>
+  <div class="modal-body">
+    <div class="alert alert-danger" *ngIf="error!=undefined">
+      <div class="alert-items">
+        <div class="alert-item static" role="alert">
+          <div class="alert-icon-wrapper">
+            <cds-icon class="alert-icon" shape="exclamation-circle"></cds-icon>
+          </div>
+          <span class="alert-text">
+        {{error}}
+      </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-success" *ngIf="ok">
+      <div class="alert-items">
+        <div class="alert-item static" role="alert">
+          <div class="alert-icon-wrapper">
+            <cds-icon class="alert-icon" shape="check-circle"></cds-icon>
+          </div>
+          <span class="alert-text">
+        Successfully changed groupname
+      </span>
+        </div>
+      </div>
+    </div>
+    <form clrForm [formGroup]="groupnameForm" (ngSubmit)="changeGroupName()">
+      <clr-input-container>
+        <label>Change group name</label>
+        <input clrInput formControlName="name" type="text" [value]="group" />
+        <clr-control-error *clrIfError="'required'">Group name required</clr-control-error>
+      </clr-input-container>
+
+      <button class="btn">Change name <clr-spinner clrInline="true" *ngIf="groupnameSpinner"></clr-spinner></button>
+    </form>
+
+    <h3>Permissions</h3>
+
+    <clr-datagrid>
+      <clr-dg-column [clrDgField]="''">Permission</clr-dg-column>
+      <clr-dg-column>
+        Actions
+      </clr-dg-column>
+
+      <clr-dg-row *clrDgItems="let permission of permissions " >
+        <clr-dg-cell>{{permission}}</clr-dg-cell>
+        <clr-dg-cell>
+          <button type="button" class="btn btn-icon btn-danger btn-sm" aria-label="trash" (click)="this.removePermission(permission)">
+            <cds-icon shape="trash"></cds-icon>
+          </button>
+        </clr-dg-cell>
+      </clr-dg-row>
+
+      <clr-dg-footer>
+        <clr-dg-pagination #pagination [clrDgPageSize]="5">
+          <clr-dg-page-size [clrPageSizeOptions]="[5,10,20,50,100]">Permissions per page</clr-dg-page-size>
+          {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} users
+        </clr-dg-pagination>
+      </clr-dg-footer>
+    </clr-datagrid>
+
+    <div class="alert alert-danger" *ngIf="groupError!=undefined">
+      <div class="alert-items">
+        <div class="alert-item static" role="alert">
+          <div class="alert-icon-wrapper">
+            <cds-icon class="alert-icon" shape="exclamation-circle"></cds-icon>
+          </div>
+          <span class="alert-text">
+        {{groupError}}
+      </span>
+        </div>
+      </div>
+    </div>
+
+    <form clrForm [formGroup]="permissionForm" (ngSubmit)="addPermission()">
+      <clr-input-container>
+        <label>Add Permission</label>
+        <input clrInput formControlName="permission" type="text" />
+        <clr-control-error *clrIfError="'required'">Permission required</clr-control-error>
+      </clr-input-container>
+
+      <button class="btn">Add Permission <clr-spinner clrInline="true" *ngIf="spinnerPem"></clr-spinner></button>
+    </form>
+
+  </div>
+  <div  class="modal-footer">
+    <button type="button" class="btn btn-info" (click)="onOk()">Close</button>
+  </div>
+</clr-modal>
