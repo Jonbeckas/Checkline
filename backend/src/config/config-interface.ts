@@ -9,4 +9,5 @@ export interface Database {
 export interface Configuration {
     database:Database;
     jwtSecret: string
+    port: number
 }

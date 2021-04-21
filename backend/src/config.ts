@@ -8,6 +8,7 @@ export const CONFIG:Configuration  = {
         password: "password",
         database:"checkline"
     },
-    jwtSecret:"fuckthispassword"
+    jwtSecret:"fuckthispassword",
+    port: 8000
 
 }
