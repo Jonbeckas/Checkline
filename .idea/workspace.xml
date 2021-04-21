@@ -2,176 +2,109 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2e1d6c14-ea2f-426f-934d-581facbc058b" name="Default Changelist" comment="feat: basic REST api">
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/.editorconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/angular.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/e2e/protractor.conf.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/e2e/src/app.e2e-spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/e2e/src/app.po.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/e2e/tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/karma.conf.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/app-routing.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/app.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/app.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/app.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/app.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/auth/auth.guard.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/auth/auth.guard.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/login/login-routing.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/login/login.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/login/login/login.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/login/login/login.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/login/login/login.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/nav/nav.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/nav/nav.component.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/nav/nav.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/nav/nav.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/info/info.component.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/scanner-routing.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/scanner.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/scanner/scanner.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/scanner/scanner.component.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/scanner/scanner.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/scanner/scanner.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/warning/warning.component.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/search/placeholder-dialog/placeholder-dialog.component.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/settings/settings-routing.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/app/settings/settings.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/assets/.gitkeep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/environments/environment.prod.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/environments/environment.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/main.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/polyfills.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/styles.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/src/test.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/tsconfig.app.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/tsconfig.spec.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend-old/tslint.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/.browserslistrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/auth/auth.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/auth/auth.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/settings/settings/settings.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/settings/settings/settings.component.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/settings/settings/settings.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/settings/settings/settings.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Checkline.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Checkline.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/514782e5-1838-4e47-b657-61c6abd31155.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/514782e5-1838-4e47-b657-61c6abd31155.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/db/DB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/db/DB.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/modules/authentification/authentification.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/modules/authentification/authentification.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/modules/authentification/login-validator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/modules/authentification/login-validator.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/modules/groups/groups.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/modules/groups/groups.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/modules/users/users.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/modules/users/users.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/server/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/server/server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/services/UserService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/services/UserService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/services/group-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/services/group-service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/browserslist" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/.browserslistrc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/e2e/protractor.conf.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/e2e/protractor.conf.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/e2e/src/app.e2e-spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/e2e/src/app.e2e-spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/e2e/src/app.po.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/e2e/src/app.po.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/e2e/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/e2e/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/karma.conf.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/karma.conf.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/ngsw-config.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/ngsw-config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/.htaccess" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/Interface.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/Interface.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/auth/auth.guard.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/auth/auth.guard.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/auth/auth.guard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/auth/auth.guard.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/login/login.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/login/login.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/login/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/login/login/login.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/login/login/login.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/login/login/login.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/login/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/login/login/login.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/nav/nav.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/nav/nav.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/nav/nav.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/nav/nav.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/nav/nav.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/nav/nav.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/nav/nav.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/nav/nav.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/page-not-found/page-not-found.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/page-not-found/page-not-found.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/page-not-found/page-not-found.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/modules/authentification/dtos/change-password.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/page-not-found/page-not-found.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/page-not-found/page-not-found.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/page-not-found/page-not-found.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/page-not-found/page-not-found.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/info/info.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/info/info.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/info/info.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/app.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/info/info.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/info/info.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/info/info.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/info/info.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/network-error/network-error.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/network-error/network-error.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/network-error/network-error.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/network-error/network-error.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/network-error/network-error.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/network-error/network-error.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/network-error/network-error.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/network-error/network-error.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/scanner-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/scanner/scanner-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/scanner.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/scanner/scanner.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/TableDataManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/scanner/TableDataManager.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/scanner.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/scanner.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/scanner.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/scanner.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/scanner.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/scanner.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/scanner.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/scanner.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/scanner/tableDataSource.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/scanner/tableDataSource.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/warning/warning.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/warning/warning.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/warning/warning.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/login/login/login.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/warning/warning.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/warning/warning.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/scanner/warning/warning.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/scanner/warning/warning.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/details-pop-up/details-pop-up.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/search/details-pop-up/details-pop-up.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/details-pop-up/details-pop-up.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/search/details-pop-up/details-pop-up.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/details-pop-up/details-pop-up.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/search/details-pop-up/details-pop-up.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/details-pop-up/details-pop-up.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/search/details-pop-up/details-pop-up.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/main/main.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/search/main/main.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/main/main.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/search/main/main.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/main/main.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/search/main/main.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/main/main.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/search/main/main.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/placeholder-dialog/placeholder-dialog.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/search/placeholder-dialog/placeholder-dialog.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/placeholder-dialog/placeholder-dialog.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/page-not-found/page-not-found.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/placeholder-dialog/placeholder-dialog.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/search/placeholder-dialog/placeholder-dialog.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/placeholder-dialog/placeholder-dialog.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/search/placeholder-dialog/placeholder-dialog.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/search-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/search/search-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/search.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/search/search.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/table-service.service.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/search/table-service.service.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/search/table.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/search/table.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/settings/main/main.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/settings/main/main.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/settings/main/main.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/settings/main/main.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/settings/main/main.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/settings/main/main.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/settings/main/main.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/app/settings/main/main.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/settings/settings-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/settings/settings-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/settings/settings.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/settings/settings.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/icons/icon-128x128.png" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/assets/icons/icon-128x128.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/icons/icon-144x144.png" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/assets/icons/icon-144x144.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/icons/icon-152x152.png" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/assets/icons/icon-152x152.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/icons/icon-192x192.png" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/assets/icons/icon-192x192.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/icons/icon-384x384.png" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/assets/icons/icon-384x384.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/icons/icon-512x512.png" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/assets/icons/icon-512x512.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/icons/icon-72x72.png" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/assets/icons/icon-72x72.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/icons/icon-96x96.png" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/assets/icons/icon-96x96.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/environments/environment.prod.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/environments/environment.prod.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/environments/environment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/manifest.webmanifest" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-old/src/manifest.webmanifest" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/polyfills.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/polyfills.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/tsconfig.app.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tsconfig.app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/tsconfig.spec.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tsconfig.spec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/tslint.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tslint.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stuff/all.sh" beforeDir="false" afterPath="$PROJECT_DIR$/stuff-old/all.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stuff/ispolaso (4).sql" beforeDir="false" afterPath="$PROJECT_DIR$/stuff-old/ispolaso (4).sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stuff/tables" beforeDir="false" afterPath="$PROJECT_DIR$/stuff-old/tables" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/.browserslistrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/angular.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/e2e/protractor.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/e2e/src/app.e2e-spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/e2e/src/app.po.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/e2e/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/karma.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/ngsw-config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/.htaccess" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/Interface.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/app-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/app.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/app.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/app.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/app.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/app.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/auth/auth.guard.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/auth/auth.guard.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/login/login-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/login/login.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/login/login/login.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/login/login/login.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/login/login/login.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/login/login/login.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/nav/nav.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/nav/nav.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/nav/nav.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/nav/nav.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/page-not-found/page-not-found.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/page-not-found/page-not-found.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/page-not-found/page-not-found.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/page-not-found/page-not-found.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/info/info.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/info/info.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/info/info.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/info/info.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/network-error/network-error.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/network-error/network-error.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/network-error/network-error.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/network-error/network-error.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/scanner-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/scanner.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/scanner/TableDataManager.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/scanner/scanner.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/scanner/scanner.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/scanner/scanner.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/scanner/scanner.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/scanner/tableDataSource.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/warning/warning.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/warning/warning.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/warning/warning.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/scanner/warning/warning.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/search/details-pop-up/details-pop-up.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/search/details-pop-up/details-pop-up.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/search/details-pop-up/details-pop-up.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/search/details-pop-up/details-pop-up.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/search/main/main.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/search/main/main.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/search/main/main.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/search/main/main.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/search/placeholder-dialog/placeholder-dialog.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/search/placeholder-dialog/placeholder-dialog.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/search/placeholder-dialog/placeholder-dialog.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/search/placeholder-dialog/placeholder-dialog.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/search/search-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/search/search.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/search/table-service.service.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/search/table.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/settings/main/main.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/settings/main/main.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/settings/main/main.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/settings/main/main.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/settings/settings-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/app/settings/settings.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/assets/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/assets/icons/icon-128x128.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/assets/icons/icon-144x144.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/assets/icons/icon-152x152.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/assets/icons/icon-192x192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/assets/icons/icon-384x384.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/assets/icons/icon-512x512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/assets/icons/icon-72x72.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/assets/icons/icon-96x96.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/environments/environment.prod.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/environments/environment.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/main.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/manifest.webmanifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/polyfills.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/styles.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/src/test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/tsconfig.app.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/tsconfig.spec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-old/tslint.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,9 +127,22 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="master" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="new-backend" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -212,8 +158,13 @@
   <component name="KotlinMultiplatform">
     <allAvailableExecutables />
   </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/backend/vendor/composer" />
+    </include_path>
+  </component>
   <component name="ProjectId" id="1qJjxbQmcNuu6ttlmWL5TB4oOMG" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -252,6 +203,17 @@
     </key>
   </component>
   <component name="RunManager" selected="npm.start:dev">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="E2E Tests (ispolaso)" type="JavaScriptTestRunnerProtractor">
       <config-file value="$PROJECT_DIR$/frontend/e2e/protractor.conf.js" />
       <node-interpreter value="project" />
@@ -412,6 +374,8 @@
       <workItem from="1618747378624" duration="22213000" />
       <workItem from="1618776623987" duration="19000" />
       <workItem from="1618779291993" duration="1553000" />
+      <workItem from="1618989887077" duration="125000" />
+      <workItem from="1618990514610" duration="325000" />
     </task>
     <task id="LOCAL-00001" summary="added npm gitignore">
       <created>1617407507001</created>

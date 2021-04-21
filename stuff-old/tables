@@ -1,1 +1,0 @@
-CREATE TABLE `ispolaso`.`admins` ( `username` TEXT NOT NULL COMMENT 'username' , `hash` TEXT NOT NULL COMMENT 'hashed value of the password' , `token` TEXT NOT NULL COMMENT 'the token of the client' , `lrefresh` TIMESTAMP NOT NULL COMMENT 'latest refresh of the tables' , `level` INT NOT NULL COMMENT 'permission level of user' ) ENGINE = InnoDB;
