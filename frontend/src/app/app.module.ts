@@ -12,6 +12,8 @@ import {ScannerRoutingModule} from "./scanner/scanner-routing.module";
 import { NavComponent } from './nav/nav.component';
 import {SettingsRoutingModule} from "./settings/settings-routing.module";
 import {SettingsModule} from "./settings/settings.module";
+import {AdministrationRoutingModule} from "./administration/administration-routing.module";
+import {AdministrationModule} from "./administration/administration.module";
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import {SettingsModule} from "./settings/settings.module";
     SettingsRoutingModule,
     SettingsModule,
     ScannerRoutingModule,
+    AdministrationRoutingModule,
+    AdministrationModule,
     AppRoutingModule,
     LoginModule,
     BrowserAnimationsModule,

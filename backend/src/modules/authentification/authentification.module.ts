@@ -17,7 +17,6 @@ authRouter.post('/login', async (req, res, next) => {
     const db =  await new DB();
     await db.connect()
     const logReq = <LoginDto> req.body;
-    console.log(req.body);
     if (!logReq||logReq.password == undefined || logReq.username== undefined) {
         res.status(400).send({err: "Missing fields"})
         return;

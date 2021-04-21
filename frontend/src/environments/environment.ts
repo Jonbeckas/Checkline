@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backendUrl: "http://localhost:8000"
+  backendUrl: "http://jonas-laptop.fritz.box:8000"
 };
 
 /*

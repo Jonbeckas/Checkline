@@ -85,7 +85,7 @@ groupsRouter.post('/groups/addUserToGroup',LoginValidator, async (req, res, next
     }
 });
 
-groupsRouter.post('/groups/removeUserToGroup',LoginValidator, async (req, res, next) => {
+groupsRouter.post('/groups/removeUserFromGroup',LoginValidator, async (req, res, next) => {
     const gReq = <UserGroupDto> req.body;
     if (!gReq || !gReq.groupname || !gReq.username ) {
         res.status(400).send({err: "Missing Fields"});
@@ -111,13 +111,28 @@ groupsRouter.post('/groups/removeUserToGroup',LoginValidator, async (req, res, n
     }
 });
 
+groupsRouter.post('/groups/changeName',LoginValidator, async (req, res, next) => {
+    const gReq = req.body;
+    if (!gReq || !gReq.groupname || !gReq.newgroupname ) {
+        res.status(400).send({err: "Missing Fields"});
+        return;
+    }
+    let group = await GroupService.changeGroupName(gReq.groupname,gReq.newgroupname);
+    if (group) {
+        res.status(200).send();
+    } else {
+        res.status(404).send({err: "Group not found"});
+    }
+
+});
+
 groupsRouter.put('/groups/permission',LoginValidator, async (req, res, next) => {
     const gReq = <Permission> req.body;
     if (!gReq || !gReq.groupname || !gReq.permission ) {
         res.status(400).send({err: "Missing Fields"});
         return;
     }
-    let group = await GroupService.getGroupByName(gReq.groupname);
+    let group = await GroupService.getGroupByName(gReq.groupname)
     if (!group) {
         res.status(404).send({err: "Group does not exists"});
         return;
@@ -135,6 +150,7 @@ groupsRouter.put('/groups/permission',LoginValidator, async (req, res, next) => 
 
 groupsRouter.delete('/groups/permission',LoginValidator, async (req, res, next) => {
     const gReq = <Permission> req.body;
+    console.log(gReq)
     if (!gReq || !gReq.groupname || !gReq.permission ) {
         res.status(400).send({err: "Missing Fields"});
         return;
@@ -175,5 +191,22 @@ groupsRouter.get('/groups',LoginValidator, async (req, res, next) => {
     let group = await GroupService.getGroups();
     res.status(200).send(group);
 });
+
+groupsRouter.post('/group',LoginValidator, async (req, res, next) => {
+    const gReq = req.body;
+    if (!gReq || !gReq.groupname) {
+        res.status(400).send({err: "Missing Fields"});
+        return;
+    }
+    console.log(gReq)
+    let group = await GroupService.getGroupWithPermissions(gReq.groupname);
+    if (group) {
+        console.log(group)
+        res.status(200).send(group);
+    } else {
+        res.status(404).send({err:"Group not found"});
+    }
+});
+
 
 
