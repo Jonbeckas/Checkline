@@ -7,6 +7,7 @@ import {ClrDatagrid} from "@clr/angular";
 import {ModalService} from "../services/modal.service";
 import {GroupDto} from "../dtos/group.dto";
 import {GroupService} from "../services/group.service";
+import {AuthService} from "../../auth/auth.service";
 
 @Component({
   selector: 'app-administration',
@@ -26,9 +27,17 @@ export class AdministrationComponent implements OnInit, OnDestroy{
   @ViewChild(ClrDatagrid) datagrid:ClrDatagrid;
   openGroupDelete: boolean =false;
 
-  constructor(private userService:UserService,private groupService:GroupService, private modalService:ModalService, private viewContainerRef:ViewContainerRef) {
-    this.userService.getUsers().subscribe(sub => this.users$ = sub)
-    this.groupService.getGroups().subscribe(sub => this.groups$ = sub)
+  constructor(private userService:UserService,private groupService:GroupService, private authService:AuthService,private modalService:ModalService, private viewContainerRef:ViewContainerRef) {
+      if (this.authService.hasPermissionOrAdmin("CENGINE_LISTUSERS")) {
+        this.userService.getUsers().subscribe(sub => {
+          this.users$ = sub
+        });
+      }
+      if (this.authService.hasPermissionOrAdmin("CENGINE_LISTGROUPS")) {
+        this.groupService.getGroups().subscribe(sub => {
+          this.groups$ = sub
+      })
+    }
   }
 
   inDeleteUser(userId:string) {
@@ -41,17 +50,21 @@ export class AdministrationComponent implements OnInit, OnDestroy{
     ClarityIcons.addIcons(plusIcon)
 
     this.interval = setInterval(() => {
-      this.userService.getUsers().subscribe(sub => {
-        console.log("Refreshed user Dataset!");
-        this.users$ = sub
-        this.datagrid.dataChanged();
-      });
+      if (this.authService.hasPermissionOrAdmin("CENGINE_LISTUSERS")) {
+        this.userService.getUsers().subscribe(sub => {
+          console.log("Refreshed user Dataset!");
+          this.users$ = sub
+          this.datagrid.dataChanged();
+        });
+      }
 
-      this.groupService.getGroups().subscribe(sub => {
-        console.log("Refreshed group Dataset!");
-        this.groups$ = sub
-        this.datagrid.dataChanged();
-      })
+      if (this.authService.hasPermissionOrAdmin("CENGINE_LISTGROUPS")) {
+        this.groupService.getGroups().subscribe(sub => {
+          console.log("Refreshed group Dataset!");
+          this.groups$ = sub
+          this.datagrid.dataChanged();
+        })
+      }
     },this.TIMEOUT)
   }
 

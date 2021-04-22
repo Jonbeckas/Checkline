@@ -2,22 +2,23 @@ import { Injectable } from '@angular/core';
 import {AuthService, WebResult} from "../../auth/auth.service";
 import {Observable} from "rxjs";
 import {UserDto} from "../dtos/user.dto";
-import {environment} from "../../../environments/environment";
+import {environment} from "../../../../environments/environment";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
+import {GroupDto} from "../dtos/group.dto";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class GroupService {
 
   constructor(private authService: AuthService,private cookieService: CookieService, private httpService:HttpClient) { }
 
-  getUsers():Observable<UserDto[]> {
-    return new Observable<UserDto[]>((observer)=>{
+  getGroups():Observable<GroupDto[]> {
+    return new Observable<GroupDto[]>((observer)=>{
       let token = this.cookieService.get("token");
       let bearer = "Bearer "+token;
-      this.httpService.get<UserDto[]>(environment.backendUrl+"/users",{headers:{Authorization:bearer}}).subscribe({
+      this.httpService.get<GroupDto[]>(environment.backendUrl+"/groups",{headers:{Authorization:bearer}}).subscribe({
         next: data => {
           observer.next(data)
           observer.complete();
@@ -38,11 +39,11 @@ export class UserService {
     })
   }
 
-  getUser(username:string):Observable<UserDto> {
-    return new Observable<UserDto>((observer)=>{
+  getGroup(groupname:string):Observable<GroupDto> {
+    return new Observable<GroupDto>((observer)=>{
       let token = this.cookieService.get("token");
       let bearer = "Bearer "+token;
-      this.httpService.post<UserDto>(environment.backendUrl+"/user",{username:username},{headers:{Authorization:bearer}}).subscribe({
+      this.httpService.post<GroupDto>(environment.backendUrl+"/group",{groupname:groupname},{headers:{Authorization:bearer}}).subscribe({
         next: data => {
           observer.next(data)
           observer.complete();
@@ -63,11 +64,11 @@ export class UserService {
     })
   }
 
-  deleteUser(username:string) {
+  deleteGroup(groupname:string) {
     return new Observable<WebResult>((observer)=>{
       let token = this.cookieService.get("token");
       let bearer = "Bearer "+token;
-      this.httpService.request("DELETE",environment.backendUrl+"/user",{headers:{Authorization:bearer}, body:{username:username}}).subscribe( {
+      this.httpService.request("DELETE",environment.backendUrl+"/group",{headers:{Authorization:bearer}, body:{name:groupname}}).subscribe( {
         next: data => {
           observer.next({success: true,error:""})
           observer.complete();
@@ -89,20 +90,20 @@ export class UserService {
     })
   }
 
-  changeUserPassword(username:string,password:string):Observable<WebResult> {
+  changeGroupName(groupname:string,newname:string):Observable<WebResult> {
     return new Observable<WebResult>((observer)=>{
       let token = this.cookieService.get("token");
       let bearer = "Bearer "+token;
-      this.httpService.post<any>(environment.backendUrl+"/users/changePasswordByAdmin",{username:username,newPassword:password},{headers:{Authorization:bearer}}).subscribe({
+      this.httpService.post<any>(environment.backendUrl+"/groups/changeName",{groupname:groupname,newgroupname:newname},{headers:{Authorization:bearer}}).subscribe({
         next: data => {
           observer.next({success:true,error:undefined})
           observer.complete();
         },
         error: (error:HttpErrorResponse) => {
-          if (error.status == 400) {
+          if (error.status == 404) {
             console.warn(error.error.err);
-            if (error.error.err == "oldPassword is invalid") {
-              observer.next({success:false,error:"Wrong 'old password'"})
+            if (error.error.err == "Group not found") {
+              observer.next({success:false,error:"Group not found'"})
             } else {
               observer.next({success:false,error:"Unknown Error"})
             }
@@ -115,12 +116,12 @@ export class UserService {
     })
   }
 
-  addUserToGroup(username:string,groupname:string):Observable<WebResult> {
+  addPermissionToGroup(permission:string,groupname:string):Observable<WebResult> {
     return new Observable<WebResult>((observer) => {
       let token = this.cookieService.get("token");
       let bearer = "Bearer " + token;
-      this.httpService.post<any>(environment.backendUrl + "/groups/addUserToGroup", {
-        username: username,
+      this.httpService.put<any>(environment.backendUrl + "/groups/permission", {
+        permission: permission,
         groupname: groupname
       }, {headers: {Authorization: bearer}}).subscribe({
         next: data => {
@@ -136,8 +137,8 @@ export class UserService {
             }
           }else if (error.status== 404){
             observer.next({success: false, error: "Group not found!"});
-          } else if (error.status == 400 && error.error.err == "User is already in group") {
-            observer.next({success: false, error: "User is already in this group!"});
+          } else if (error.status == 400 && error.error.err == "The group already has the permission") {
+            observer.next({success: false, error: "The group already has this permission"});
           }else {
             observer.next({success: false, error: "Unknown error!"});
             console.error(error);
@@ -148,11 +149,11 @@ export class UserService {
     })
   }
 
-  removeUserFromGroup(username:string,groupname:string):Observable<WebResult> {
+  removePermissionFromGroup(permission:string,groupname:string):Observable<WebResult> {
     return new Observable<WebResult>((observer)=>{
       let token = this.cookieService.get("token");
       let bearer = "Bearer "+token;
-      this.httpService.post<any>(environment.backendUrl+"/groups/removeUserFromGroup",{username:username,groupname:groupname},{headers:{Authorization:bearer}}).subscribe({
+      this.httpService.request<any>("DELETE",environment.backendUrl+"/groups/permission",{headers:{Authorization:bearer},body:{permission:permission,groupname:groupname}}).subscribe({
         next: data => {
           observer.next({success:true,error:undefined})
           observer.complete();
@@ -174,11 +175,11 @@ export class UserService {
     })
   }
 
-  addUser(username:string,firstname:string,name:string,password:string):Observable<WebResult> {
+  addGroup(groupname:string):Observable<WebResult> {
     return new Observable<WebResult>((observer)=>{
       let token = this.cookieService.get("token");
       let bearer = "Bearer "+token;
-      this.httpService.put<any>(environment.backendUrl+"/user",{username:username,firstname:firstname,name:name,password:password},{headers:{Authorization:bearer}}).subscribe({
+      this.httpService.put<any>(environment.backendUrl+"/group",{name:groupname},{headers:{Authorization:bearer}}).subscribe({
         next: data => {
           observer.next({success:true,error:undefined})
           observer.complete();
@@ -191,8 +192,8 @@ export class UserService {
               console.error(error);
               observer.next({success: false,error:"Unknown error!"});
             }
-          } else if(error.status == 400 && error.error.err == "Username exists") {
-            observer.next({success: false,error:"Another user with that name exists!"});
+          } else if(error.status == 400 && error.error.err == "Group exists") {
+            observer.next({success: false,error:"Another Group with that name exists!"});
 
           } else {
             observer.next({success: false,error:"Unknown error!"});

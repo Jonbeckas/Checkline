@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {environment} from "../../environments/environment";
+import {environment} from "../../../environments/environment";
 import {CookieService} from "ngx-cookie-service";
 import {Observable} from "rxjs";
 import jwtDecode from "jwt-decode";
@@ -85,6 +85,25 @@ export class AuthService {
         }
       })
     })
+  }
+
+  hasPermissionOrAdmin(permission:string) {
+    let token = this.cookieService.get("token")
+    let permissions = (<any> jwtDecode(token)).permissions;
+    return permissions.includes(permission) ||permissions.includes("CENGINE_ADMIN");
+  }
+
+  hasPermissionsOrAdmin(permission:string[]) {
+    let token = this.cookieService.get("token")
+    let permissions = (<any> jwtDecode(token)).permissions;
+    let bool:boolean;
+    for (let pem of permission) {
+      if (permissions.includes(pem) ||permissions.includes("CENGINE_ADMIN")) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import '@cds/core/icon/register.js';
 import {ClarityIcons, videoCameraIcon, flagIcon, cogIcon} from '@cds/core/icon';
-import {AuthService} from "./auth/auth.service";
+import {AuthService} from "./modules/auth/auth.service";
 import {ActivatedRouteSnapshot, Router} from "@angular/router";
 
 ClarityIcons.addIcons(videoCameraIcon);

@@ -6,7 +6,7 @@
     </div>
   </div>
   <div class="header-nav" [clr-nav-level]="1">
-    <a class="nav-link nav-text" routerLink="/scanner" [ngClass]="{'active':this.currTab=='/scanner'}" *ngIf="username!=undefined">Scanner</a>
+    <a *permissionIf="['TEST']" class="nav-link nav-text" routerLink="/scanner" [ngClass]="{'active':this.currTab=='/scanner'}">Scanner</a>
     <a class="nav-link nav-text" routerLink="/dashboard" [ngClass]="{'active':this.currTab=='/dashboard'}" *ngIf="username!=undefined">Dashboard</a>
     <a class="nav-link nav-text" routerLink="/admin" [ngClass]="{'active':this.currTab=='/admin'}" *ngIf="username!=undefined">Administration</a>
   </div>
