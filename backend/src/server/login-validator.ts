@@ -1,5 +1,5 @@
 import * as Jwt from "jsonwebtoken"
-import {CONFIG} from "../../config";
+import {CONFIG} from "../config";
 
 
 export const LoginValidator = (req:any, res:any, next:Function) => {

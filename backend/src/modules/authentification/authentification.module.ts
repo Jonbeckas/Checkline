@@ -7,7 +7,7 @@ import * as Jwt from "jsonwebtoken"
 import {CONFIG} from "../../config";
 import {UserService} from "../../services/UserService";
 import bodyParser from "body-parser";
-import {LoginValidator} from "./login-validator";
+import {LoginValidator} from "../../server/login-validator";
 
 export const authRouter = express.Router();
 authRouter.use(bodyParser.json());
@@ -26,6 +26,10 @@ authRouter.post('/login', async (req, res, next) => {
         res.status(401).send({err: "Unauthorized"});
         return;
     }
+    if (! await UserService.hasUserPermissions(user.userId,[["CENGINE_LOGINABLE"],["CENGINE_ADMIN"]])) {
+        res.status(401).send({err: "Invalid Permissions"});
+        return;
+    }
     if (await Argon2.verify(user.password, logReq.password)) {
         const permissions = await UserService.getUserPermissions(user.userId);
         const token = Jwt.sign({username:user.loginName, userId:user.userId,permissions:permissions},CONFIG.jwtSecret,{expiresIn:"7d"});
@@ -41,7 +45,14 @@ authRouter.post('/login', async (req, res, next) => {
 });
 
 
-authRouter.get("/isValid",LoginValidator, (req,res)=>{
-    res.status(200).send();
+authRouter.get("/isValid",LoginValidator,async (req,res)=>{
+    const user = await UserService.getUserById((<any>req).userData.userId)
+    if (!user) {
+        res.status(404).send({err: "User not found"});
+    } else {
+        const permissions = await UserService.getUserPermissions(user.userId);
+        const token = Jwt.sign({username:user.loginName, userId:user.userId,permissions:permissions},CONFIG.jwtSecret,{expiresIn:"1d"});
+        res.status(200).send({token: token})
+    }
 });
 

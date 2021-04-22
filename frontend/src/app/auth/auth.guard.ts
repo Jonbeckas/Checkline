@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {CookieService} from "ngx-cookie-service";
-import {AuthService} from "./auth.service";
+import {AuthService, LoginResponse} from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +20,9 @@ export class AuthGuard implements CanActivate {
     return new Observable((observer)=> {
       let token = this.cookieService.get("token");
       let bearer = "Bearer "+token;
-      this.httpClient.get<any>(environment.backendUrl+"/isValid",{headers:{Authorization:bearer}}).subscribe({
+      this.httpClient.get<LoginResponse>(environment.backendUrl+"/isValid",{headers:{Authorization:bearer}}).subscribe({
         next: (data) =>{
+          this.cookieService.set("token",data.token)
           observer.next(true);
           observer.complete();
         },

@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
 
 
 
-interface LoginResponse {
+export interface LoginResponse {
   token:string;
 }
 
@@ -34,8 +34,10 @@ export class AuthService {
           observer.complete();
         },
         error: (error:HttpErrorResponse) => {
-          if (error.status == 401) {
+          if (error.status == 401 && error.error.err =="Unauthorized") {
             observer.next({success:false,error:"Wrong Username or password"})
+          } else if(error.status == 401 && error.error.err =="Invalid Permissions") {
+            observer.next({success:false,error:"The user does not have the Permission to log in"})
           } else {
             observer.next({success:false,error:"Unknown Error"})
           }

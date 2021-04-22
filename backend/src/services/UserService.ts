@@ -7,6 +7,9 @@ import * as Argon2 from "argon2";
 import  * as Uuid from "uuid";
 import {UserWithGroups} from "../modules/users/dtos/group-user";
 import {Group} from "../model/Group";
+import {UserGroup} from "../model/UserGroup";
+import {Permission} from "../modules/groups/dtos/permission";
+import {GroupPermission} from "../model/GroupPermission";
 
 export class UserService {
 
@@ -29,6 +32,19 @@ export class UserService {
         const result = await db.getObject("users",{loginName:name});
         if (result.length >1){
             throw new InvalidMysqlData("No unique username "+name+"!");
+        } else if (result.length ==0) {
+            return undefined;
+        }
+        await db.close();
+        return <User> result[0];
+    }
+
+    static async getUserById(userId:string):Promise<User|undefined> {
+        const db = new DB();
+        await db.connect();
+        const result = await db.getObject("users",{userId:userId});
+        if (result.length >1){
+            throw new InvalidMysqlData("No unique userId "+userId+"!");
         } else if (result.length ==0) {
             return undefined;
         }
@@ -114,6 +130,27 @@ export class UserService {
             await db.close();
             return {success:true,err: ""};
         }
+    }
+
+    static async hasUserPermissions(userId:string,permissions:string[][]):Promise<boolean> {
+        const db = new DB();
+        await db.connect();
+        let groups = await GroupService.getGroupsByUser(userId)
+        if (!groups) return false;
+        let perms = <GroupPermission[]> await db.innerJoin("groups","group-permissions","groupId",{})
+        let pemStr = perms.filter(obj => groups.map(obj2 => obj2.groupId).includes(obj.groupId)).map(obj3 => obj3.permission);
+        let bool:boolean = false;
+        for (let orPem of permissions) {
+            if (!bool) {
+                let founds = 0;
+                for (let andPem of orPem) {
+                    if (pemStr.includes(andPem)) founds++;
+                }
+                if (founds == orPem.length) bool = true;
+            }
+        }
+        await db.close();
+        return bool;
     }
 }
 

@@ -1,5 +1,5 @@
 import express from "express";
-import {LoginValidator} from "../authentification/login-validator";
+import {LoginValidator} from "../../server/login-validator";
 import {AddGroupDto} from "./dtos/add-group";
 import {DB} from "../../db/DB";
 import {Group} from "../../model/Group";
@@ -13,6 +13,7 @@ import {GroupPermission} from "../../model/GroupPermission";
 import {UserService} from "../../services/UserService";
 import bodyParser from "body-parser";
 import {authRouter} from "../authentification/authentification.module";
+import {PermissionLoginValidator} from "../../server/permission-login-validator";
 
 
 export const groupsRouter = express.Router({caseSensitive:false});
@@ -23,7 +24,7 @@ authRouter.use(bodyParser.urlencoded({ extended: true }))
 const db = new DB();
 db.connect().catch(e => console.error(e));
 
-groupsRouter.put('/group',LoginValidator, async (req, res, next) => {
+groupsRouter.put('/group',PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]]), async (req, res, next) => {
     const gReq = <AddGroupDto> req.body;
     if (!gReq || !gReq.name) {
         res.status(400).send({err: "Missing Fields"});
@@ -39,7 +40,7 @@ groupsRouter.put('/group',LoginValidator, async (req, res, next) => {
     }
 });
 
-groupsRouter.delete('/group',LoginValidator, async (req, res, next) => {
+groupsRouter.delete('/group',PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]]), async (req, res, next) => {
     const gReq = <AddGroupDto> req.body;
     if (!gReq || !gReq.name) {
         res.status(400).send({err: "Missing Fields"});
@@ -59,7 +60,7 @@ groupsRouter.delete('/group',LoginValidator, async (req, res, next) => {
 });
 
 
-groupsRouter.post('/groups/addUserToGroup',LoginValidator, async (req, res, next) => {
+groupsRouter.post('/groups/addUserToGroup',PermissionLoginValidator([["CENGINE_MODIFYUSERS"]]), async (req, res, next) => {
     const gReq = <UserGroupDto> req.body;
     if (!gReq || !gReq.groupname || !gReq.username ) {
         res.status(400).send({err: "Missing Fields"});
@@ -85,7 +86,7 @@ groupsRouter.post('/groups/addUserToGroup',LoginValidator, async (req, res, next
     }
 });
 
-groupsRouter.post('/groups/removeUserFromGroup',LoginValidator, async (req, res, next) => {
+groupsRouter.post('/groups/removeUserFromGroup',PermissionLoginValidator([["CENGINE_MODIFYUSERS"]]), async (req, res, next) => {
     const gReq = <UserGroupDto> req.body;
     if (!gReq || !gReq.groupname || !gReq.username ) {
         res.status(400).send({err: "Missing Fields"});
@@ -111,7 +112,7 @@ groupsRouter.post('/groups/removeUserFromGroup',LoginValidator, async (req, res,
     }
 });
 
-groupsRouter.post('/groups/changeName',LoginValidator, async (req, res, next) => {
+groupsRouter.post('/groups/changeName',PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]]), async (req, res, next) => {
     const gReq = req.body;
     if (!gReq || !gReq.groupname || !gReq.newgroupname ) {
         res.status(400).send({err: "Missing Fields"});
@@ -126,7 +127,7 @@ groupsRouter.post('/groups/changeName',LoginValidator, async (req, res, next) =>
 
 });
 
-groupsRouter.put('/groups/permission',LoginValidator, async (req, res, next) => {
+groupsRouter.put('/groups/permission',PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]]), async (req, res, next) => {
     const gReq = <Permission> req.body;
     if (!gReq || !gReq.groupname || !gReq.permission ) {
         res.status(400).send({err: "Missing Fields"});
@@ -148,7 +149,7 @@ groupsRouter.put('/groups/permission',LoginValidator, async (req, res, next) => 
     }
 });
 
-groupsRouter.delete('/groups/permission',LoginValidator, async (req, res, next) => {
+groupsRouter.delete('/groups/permission',PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]]), async (req, res, next) => {
     const gReq = <Permission> req.body;
     console.log(gReq)
     if (!gReq || !gReq.groupname || !gReq.permission ) {
@@ -170,7 +171,7 @@ groupsRouter.delete('/groups/permission',LoginValidator, async (req, res, next) 
     }
 });
 
-groupsRouter.get('/groups/permissions',LoginValidator, async (req, res, next) => {
+groupsRouter.get('/groups/permissions',PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]]), async (req, res, next) => {
     const gReq = <Permission>req.body;
     if (!gReq || !gReq.groupname) {
         res.status(400).send({err: "Missing Fields"});
@@ -187,18 +188,17 @@ groupsRouter.get('/groups/permissions',LoginValidator, async (req, res, next) =>
     res.status(200).send(permissions);
 });
 
-groupsRouter.get('/groups',LoginValidator, async (req, res, next) => {
+groupsRouter.get('/groups',PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]]), async (req, res, next) => {
     let group = await GroupService.getGroups();
     res.status(200).send(group);
 });
 
-groupsRouter.post('/group',LoginValidator, async (req, res, next) => {
+groupsRouter.post('/group', async (req, res, next) => {
     const gReq = req.body;
     if (!gReq || !gReq.groupname) {
         res.status(400).send({err: "Missing Fields"});
         return;
     }
-    console.log(gReq)
     let group = await GroupService.getGroupWithPermissions(gReq.groupname);
     if (group) {
         console.log(group)

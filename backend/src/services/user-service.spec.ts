@@ -39,4 +39,12 @@ describe('Userservices', () => {
         assert.strictEqual(res.userId,"33ecb6e3-ec16-4f45-a77e-9d45c7adf5d5");
     })
 
+    it("Test Has user permissions",async ()=> {
+        const user = new DB();
+        await user.connect();
+
+        const res = await UserService.hasUserPermissions("name1@test",[["CENGINE_LOGINABLE","LOGIN_PERMISSION"]]);
+        assert.strictEqual(res,true);
+    })
+
 })

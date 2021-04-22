@@ -1,6 +1,6 @@
 import express from "express";
 import {DB} from "../../db/DB";
-import {LoginValidator} from "../authentification/login-validator";
+import {LoginValidator} from "../../server/login-validator";
 import {UserService} from "../../services/UserService";
 import {ChangePasswordDto} from "../authentification/dtos/change-password";
 import * as Argon2 from "argon2";
@@ -8,6 +8,7 @@ import {NewUserDto} from "./dtos/new-user";
 import {SingleUserDto} from "./dtos/single-user";
 import bodyParser from "body-parser";
 import {authRouter} from "../authentification/authentification.module";
+import {PermissionLoginValidator} from "../../server/permission-login-validator";
 
 
 
@@ -19,14 +20,14 @@ userRouter.use(bodyParser.urlencoded({ extended: true }))
 const db = new DB();
 db.connect().catch(e => console.error(e));
 
-userRouter.get('/users',LoginValidator, async (req, res, next) => {
+userRouter.get('/users',PermissionLoginValidator([["CENGINE_LISTUSERS"]]), async (req, res, next) => {
     let group = await UserService.getUsers();
     res.status(200).send(group);
 
 });
 
 
-userRouter.put('/user',LoginValidator, async (req, res, next) => {
+userRouter.put('/user',PermissionLoginValidator([["CENGINE_MODIFYUSERS"]]), async (req, res, next) => {
     const uReq = <NewUserDto> req.body;
     if (!uReq||!uReq.username||!uReq.password||!uReq.name||!uReq.firstname) {
         res.status(400).send({err: "Missing Fields"});
@@ -44,7 +45,7 @@ userRouter.put('/user',LoginValidator, async (req, res, next) => {
 });
 
 
-userRouter.delete('/user',LoginValidator, async (req, res, next) => {
+userRouter.delete('/user',PermissionLoginValidator([["CENGINE_MODIFYUSERS"]]), async (req, res, next) => {
     const uReq = <SingleUserDto> req.body;
     if (!uReq||!uReq.username) {
         res.status(400).send({err: "Missing Fields"});
@@ -61,7 +62,7 @@ userRouter.delete('/user',LoginValidator, async (req, res, next) => {
 
 });
 
-userRouter.post('/user',LoginValidator, async (req, res, next) => {
+userRouter.post('/user',PermissionLoginValidator([["CENGINE_LISTUSERS"]]), async (req, res, next) => {
     const uReq = <SingleUserDto> req.body;
     console.log(req.body)
     if (!uReq||!uReq.username) {
@@ -80,7 +81,7 @@ userRouter.post('/user',LoginValidator, async (req, res, next) => {
 });
 
 
-userRouter.post('/users/changePassword',LoginValidator, async (req, res, next) => {
+userRouter.post('/users/changePassword',PermissionLoginValidator([["CENGINE_LOGINABLE"]]), async (req, res, next) => {
     const uReq = <ChangePasswordDto> req.body;
     if (!uReq||!uReq.newPassword||!uReq.oldPassword||!uReq.username) {
         res.status(400).send({err: "Missing Fields"});
@@ -99,7 +100,7 @@ userRouter.post('/users/changePassword',LoginValidator, async (req, res, next) =
     }
 });
 
-userRouter.post('/users/changePasswordByAdmin',LoginValidator, async (req, res, next) => {
+userRouter.post('/users/changePasswordByAdmin',PermissionLoginValidator([["CENGINE_MODIFYUSERS"]]), async (req, res, next) => {
     const uReq = <ChangePasswordDto> req.body;
     if (!uReq||!uReq.newPassword||!uReq.username) {
         res.status(400).send({err: "Missing Fields"});
