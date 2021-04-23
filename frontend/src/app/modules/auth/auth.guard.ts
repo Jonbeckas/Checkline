@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router} from '@angular/router';
 import { Observable } from 'rxjs';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {environment} from "../../environments/environment";
+import {environment} from "../../../environments/environment";
 import {CookieService} from "ngx-cookie-service";
 import {AuthService, LoginResponse} from "./auth.service";
+import jwtDecode from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +17,29 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
     return new Observable((observer)=> {
       let token = this.cookieService.get("token");
       let bearer = "Bearer "+token;
       this.httpClient.get<LoginResponse>(environment.backendUrl+"/isValid",{headers:{Authorization:bearer}}).subscribe({
         next: (data) =>{
           this.cookieService.set("token",data.token)
-          observer.next(true);
+          let permissions = (<any> jwtDecode(token)).permissions;
+          switch (route.url[0].path) {
+            case ("admin"): {
+              observer.next(permissions.includes("CENGINE_LISTUSERS") ||
+                permissions.includes("CENGINE_LISTGROUPS") ||
+                permissions.includes("CENGINE_MODIFYUSERS") ||
+                permissions.includes("CENGINE_MODIFYGROUPS") ||
+                permissions.includes("CENGINE_ADMIN"));
+              break;
+            }
+            case ("welcome"): {
+                observer.next(true);
+                break;
+            } default: {
+              observer.next(permissions.includes("CENGINE_ADMIN"));
+            }
+          }
           observer.complete();
         },
         error: (err:HttpErrorResponse) => {

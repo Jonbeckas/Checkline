@@ -1,14 +1,14 @@
 <div class="clr-row" id="tablezone">
-  <div class="clr-col">
+  <div class="clr-col" *permissionIf="['CENGINE_LISTUSERS','CENGINE_MODIFYUSERS']">
       <h2>Users</h2>
 
 
     <clr-datagrid>
       <clr-dg-column [clrDgField]="'loginName'">Username</clr-dg-column>
       <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
-      <clr-dg-column [clrDgField]="'firstName'">First name</clr-dg-column>
-      <clr-dg-column [clrDgField]="'firstName'">Groups</clr-dg-column>
-      <clr-dg-column>
+      <clr-dg-column [clrDgField]="'firstname'">First name</clr-dg-column>
+      <clr-dg-column [clrDgField]="'groups'">Groups</clr-dg-column>
+      <clr-dg-column *permissionIf="['CENGINE_MODIFYUSERS']">
         Actions
         <button type="button" class="btn btn-icon btn-info btn-sm addButton" aria-label="edit" (click)="onNewUserClick()">
           <cds-icon shape="plus"></cds-icon>
@@ -21,7 +21,7 @@
         <clr-dg-cell>{{user.name}}</clr-dg-cell>
         <clr-dg-cell>{{user.firstname}}</clr-dg-cell>
         <clr-dg-cell>{{user.groups}}</clr-dg-cell>
-        <clr-dg-cell>
+        <clr-dg-cell *permissionIf="['CENGINE_MODIFYUSERS']">
           <button type="button" class="btn btn-icon btn-primary btn-sm" aria-label="edit" (click)="onUserEdit(user.loginName)">
             <cds-icon shape="pencil"></cds-icon>
           </button>
@@ -41,12 +41,12 @@
     </clr-datagrid>
   </div>
 
-  <div class="clr-col">
+  <div class="clr-col" *permissionIf="['CENGINE_LISTGROUPS','CENGINE_MODIFYGROUPS']">
     <h2>Groups</h2>
     <clr-datagrid>
       <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
       <clr-dg-column [clrDgField]="'permissions'">Permissions</clr-dg-column>
-      <clr-dg-column>
+      <clr-dg-column *permissionIf="['CENGINE_MODIFYGROUPS']">
         Actions
         <button type="button" class="btn btn-icon btn-info btn-sm addButton" aria-label="edit" (click)="onNewGroup()">
           <cds-icon shape="plus"></cds-icon>
@@ -56,7 +56,7 @@
       <clr-dg-row *clrDgItems="let group of groups$ " >
         <clr-dg-cell>{{group.name||""}}</clr-dg-cell>
         <clr-dg-cell>{{group.permissions||""}}</clr-dg-cell>
-        <clr-dg-cell>
+        <clr-dg-cell *permissionIf="['CENGINE_MODIFYGROUPS']">
           <button type="button" class="btn btn-icon btn-primary btn-sm" aria-label="edit" (click)="onGroupEdit(group)">
             <cds-icon shape="pencil"></cds-icon>
           </button>

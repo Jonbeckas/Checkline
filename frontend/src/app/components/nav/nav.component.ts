@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../auth/auth.service";
+import {AuthService} from "../../modules/auth/auth.service";
 import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
@@ -11,6 +11,7 @@ export class NavComponent implements OnInit {
 
   username = this.authService.getUsername();
   currTab:string|undefined;
+  ADMIN_PERMISSIONS=["CENGINE_LISTUSERS","CENGINE_LISTGROUPS","CENGINE_MODIFYUSERS","CENGINE_MODIFYGROUPS"];
 
 
   constructor(private authService:AuthService,private router:Router) {

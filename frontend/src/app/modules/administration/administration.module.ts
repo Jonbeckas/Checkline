@@ -9,6 +9,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { NewUserModalComponent } from './new-user-modal/new-user-modal.component';
 import { NewGroupModalComponent } from './new-group-modal/new-group-modal.component';
 import { EditGroupModalComponent } from './edit-group-modal/edit-group-modal.component';
+import {AppModule} from "../../app.module";
+import {PermissionDirectiveModule} from "../../directives/permission-directive/permission-directive.module";
 
 
 @NgModule({
@@ -24,6 +26,7 @@ import { EditGroupModalComponent } from './edit-group-modal/edit-group-modal.com
     AdministrationRoutingModule,
     ClarityModule,
     ReactiveFormsModule,
+    PermissionDirectiveModule,
   ]
 })
 export class AdministrationModule { }

@@ -188,12 +188,12 @@ groupsRouter.get('/groups/permissions',PermissionLoginValidator([["CENGINE_MODIF
     res.status(200).send(permissions);
 });
 
-groupsRouter.get('/groups',PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]]), async (req, res, next) => {
+groupsRouter.get('/groups',PermissionLoginValidator([["CENGINE_LISTGROUPS"]]), async (req, res, next) => {
     let group = await GroupService.getGroups();
     res.status(200).send(group);
 });
 
-groupsRouter.post('/group', async (req, res, next) => {
+groupsRouter.post('/group',PermissionLoginValidator([["CENGINE_LISTGROUPS"],["CENGINE_MODIFYGROUPS"]]), async (req, res, next) => {
     const gReq = req.body;
     if (!gReq || !gReq.groupname) {
         res.status(400).send({err: "Missing Fields"});

@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import {Router} from "@angular/router";
-import {environment} from "../../../environments/environment";
+import {environment} from "../../../../environments/environment";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService, WebResult} from "../../auth/auth.service";
 import {ClarityIcons, exclamationCircleIcon, windowCloseIcon} from "@cds/core/icon";
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.form.value.username,this.form.value.password).subscribe((result:WebResult)=>{
         this.spinner =false;
         if (result.success) {
-          this.router.navigateByUrl("/scanner");
+          this.router.navigateByUrl("/welcome");
         } else {
           this.error = result.error;
         }
