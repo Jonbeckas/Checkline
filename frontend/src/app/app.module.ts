@@ -15,28 +15,31 @@ import {SettingsModule} from "./modules/settings/settings.module";
 import {AdministrationRoutingModule} from "./modules/administration/administration-routing.module";
 import {AdministrationModule} from "./modules/administration/administration.module";
 import { WelcomeComponent } from './components/welcome/welcome.component';
-import { PermissionIf } from './directives/permission-if.directive';
+import {PermissionDirectiveModule} from "./directives/permission-directive/permission-directive.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavComponent,
-    WelcomeComponent,
-    PermissionIf
-  ],
-  imports: [
-    BrowserModule,
-    SettingsRoutingModule,
-    SettingsModule,
-    ScannerRoutingModule,
-    AdministrationRoutingModule,
-    AdministrationModule,
-    AppRoutingModule,
-    LoginModule,
-    BrowserAnimationsModule,
-    HttpClientModule
-  ],
-  providers: [CookieService],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NavComponent,
+        WelcomeComponent,
+    ],
+    imports: [
+        BrowserModule,
+        SettingsRoutingModule,
+        SettingsModule,
+        ScannerRoutingModule,
+        AdministrationRoutingModule,
+        AdministrationModule,
+        AppRoutingModule,
+        LoginModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        PermissionDirectiveModule
+    ],
+    providers: [CookieService],
+    exports: [
+
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

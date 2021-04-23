@@ -11,6 +11,7 @@ export class NavComponent implements OnInit {
 
   username = this.authService.getUsername();
   currTab:string|undefined;
+  ADMIN_PERMISSIONS=["CENGINE_LISTUSERS","CENGINE_LISTGROUPS","CENGINE_MODIFYUSERS","CENGINE_MODIFYGROUPS"];
 
 
   constructor(private authService:AuthService,private router:Router) {
