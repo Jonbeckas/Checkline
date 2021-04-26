@@ -133,6 +133,15 @@ groupsRouter.put('/groups/permission',PermissionLoginValidator([["CENGINE_MODIFY
         res.status(400).send({err: "Missing Fields"});
         return;
     }
+
+    if (gReq.permission =="CENGINE_ADMIN") {
+        let user = await UserService.getUserPermissions((<any>req).userData.userId);
+        if (!user.includes("CENGINE_ADMIN")) {
+            res.status(400).send({err: "Only users with CENGINE_ADMIN can do this"});
+            return;
+        }
+    }
+
     let group = await GroupService.getGroupByName(gReq.groupname)
     if (!group) {
         res.status(404).send({err: "Group does not exists"});
@@ -151,10 +160,16 @@ groupsRouter.put('/groups/permission',PermissionLoginValidator([["CENGINE_MODIFY
 
 groupsRouter.delete('/groups/permission',PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]]), async (req, res, next) => {
     const gReq = <Permission> req.body;
-    console.log(gReq)
     if (!gReq || !gReq.groupname || !gReq.permission ) {
         res.status(400).send({err: "Missing Fields"});
         return;
+    }
+    if (gReq.permission =="CENGINE_ADMIN") {
+        let user = await UserService.getUserPermissions((<any>req).userData.userId);
+        if (!user.includes("CENGINE_ADMIN")) {
+            res.status(400).send({err: "Only users with CENGINE_ADMIN can do this"});
+            return;
+        }
     }
     let group = await GroupService.getGroupByName(gReq.groupname);
     if (!group) {

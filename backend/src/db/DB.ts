@@ -69,7 +69,7 @@ export class DB {
                 command += `${this.connection?.escapeId(keys[index])} =${this.connection?.escape(values[index])}`;
 
                 //@ts-ignore
-                if (index < (keys.length-1)-primaryKeys.length-1) {
+                if (index < keys.length- primaryKeys.length-1) {
                     command +=",";
                 }
             } else {
@@ -155,6 +155,21 @@ export class DB {
         return rows;
     }
 
+    async escapeKey(key:string) {
+        return this.connection?.escapeId(key);
+    }
+
+    async escapeValue(value:string) {
+        return this.connection?.escape(value);
+    }
+
+    async customQuery(query:string) {
+        console.log("Run Command:",query);
+        // @ts-ignore
+        const [rows, fields] = await this.connection?.execute(query);
+        return rows;
+    }
+
 
 
     async  creatUserDb() {
@@ -162,7 +177,8 @@ export class DB {
         const createUserGroups = await this.connection?.execute("CREATE TABLE IF NOT EXISTS `checkline`.`user-groups` ( `groupId` VARCHAR(36) NOT NULL , `userId` VARCHAR(36) NOT NULL );");
         const createGroups = await this.connection?.execute("CREATE TABLE IF NOT EXISTS `checkline`.`groups` ( `groupId` VARCHAR(36) NOT NULL , `name` VARCHAR(50) NOT NULL,PRIMARY KEY (`groupId`));");
         const createGroupPermissions = await this.connection?.execute("CREATE TABLE IF NOT EXISTS `checkline`.`group-permissions` ( `groupId` VARCHAR(36) NOT NULL , `permission` VARCHAR(36) NOT NULL );");
-        const createRunners = await this.connection?.execute("CREATE TABLE IF NOT EXISTS `checkline`.`runners` ( `userId` VARCHAR(36) NOT NULL , `runner-id` VARCHAR(36) NOT NULL , `state` INT NOT NULL , `check-in` TIMESTAMP NOT NULL , `check-out` TIMESTAMP NOT NULL , `round` INT NOT NULL , `timestamp` TIMESTAMP NOT NULL , PRIMARY KEY (`userId`));");
+        const createRunners = await this.connection?.execute("CREATE TABLE IF NOT EXISTS `checkline`.`runners` ( `userId` VARCHAR(36) NOT NULL , `state` VARCHAR(50) DEFAULT NULL , `lastStateChange` VARCHAR(14) DEFAULT NULL , `round` INT DEFAULT NULL , `timestamp` VARCHAR(14) DEFAULT NULL , PRIMARY KEY (`userId`));");
+
     }
 
 }

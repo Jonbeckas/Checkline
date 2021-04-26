@@ -6,8 +6,13 @@ export interface Database {
     database:string;
 }
 
+export interface RunnerConfig {
+    states: string[]
+}
+
 export interface Configuration {
     database:Database;
     jwtSecret: string
     port: number
+    runners: RunnerConfig;
 }

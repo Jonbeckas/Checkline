@@ -95,6 +95,14 @@ export class GroupService {
         return res;
     }
 
+    static  async getGroupsWithPermission(permission:string) {
+        const db = new DB();
+        await db.connect();
+        let groups = await db.innerJoin("group-permissions","groups","groupId",{permission:permission});
+        await db.close()
+        return groups;
+    }
+
     static async changeGroupName(groupname:string,newname:string):Promise<boolean> {
         const db = new DB();
         await db.connect();
