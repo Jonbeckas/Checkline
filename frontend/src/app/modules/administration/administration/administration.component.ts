@@ -1,13 +1,13 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-import {UserService} from "../services/user.service";
-import {UserDto} from "../dtos/user.dto";
-import {ClarityIcons, pencilIcon, plusIcon, trashIcon} from "@cds/core/icon";
-import {BehaviorSubject, Observable} from "rxjs";
-import {ClrDatagrid} from "@clr/angular";
-import {ModalService} from "../services/modal.service";
-import {GroupDto} from "../dtos/group.dto";
-import {GroupService} from "../services/group.service";
-import {AuthService} from "../../auth/auth.service";
+import {UserService} from '../services/user.service';
+import {UserDto} from '../dtos/user.dto';
+import {ClarityIcons, pencilIcon, plusIcon, trashIcon} from '@cds/core/icon';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {ClrDatagrid} from '@clr/angular';
+import {ModalService} from '../services/modal.service';
+import {GroupDto} from '../dtos/group.dto';
+import {GroupService} from '../services/group.service';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-administration',
@@ -15,57 +15,54 @@ import {AuthService} from "../../auth/auth.service";
   styleUrls: ['./administration.component.scss']
 })
 export class AdministrationComponent implements OnInit, OnDestroy{
-  users$:UserDto[]=[];
-  groups$:GroupDto[]=[];
-  openUserDelete: boolean = false;
-  element: string = "";
+  users$: UserDto[] = [];
+  groups$: GroupDto[] = [];
+  openUserDelete = false;
+  element = '';
   interval: number | undefined;
   TIMEOUT = 5000;
 
 
   // @ts-ignore
-  @ViewChild(ClrDatagrid) datagrid:ClrDatagrid;
-  openGroupDelete: boolean =false;
+  @ViewChild(ClrDatagrid) datagrid: ClrDatagrid;
+  openGroupDelete = false;
 
-  constructor(private userService:UserService,private groupService:GroupService, private authService:AuthService,private modalService:ModalService, private viewContainerRef:ViewContainerRef) {
-      if (this.authService.hasPermissionOrAdmin("CENGINE_LISTUSERS")) {
+  constructor(private userService: UserService, private groupService: GroupService, private authService: AuthService, private modalService: ModalService, private viewContainerRef: ViewContainerRef) {
+      if (this.authService.hasPermissionOrAdmin('CENGINE_LISTUSERS')) {
         this.userService.getUsers().subscribe(sub => {
-          this.users$ = sub
+          this.users$ = sub;
         });
       }
-      if (this.authService.hasPermissionOrAdmin("CENGINE_LISTGROUPS")) {
+      if (this.authService.hasPermissionOrAdmin('CENGINE_LISTGROUPS')) {
         this.groupService.getGroups().subscribe(sub => {
-          this.groups$ = sub
-      })
+          this.groups$ = sub;
+      });
     }
   }
 
-  inDeleteUser(userId:string) {
-    console.log(userId);
-  }
 
   ngOnInit(): void {
-    ClarityIcons.addIcons(pencilIcon)
-    ClarityIcons.addIcons(trashIcon)
-    ClarityIcons.addIcons(plusIcon)
+    ClarityIcons.addIcons(pencilIcon);
+    ClarityIcons.addIcons(trashIcon);
+    ClarityIcons.addIcons(plusIcon);
 
     this.interval = setInterval(() => {
-      if (this.authService.hasPermissionOrAdmin("CENGINE_LISTUSERS")) {
+      if (this.authService.hasPermissionOrAdmin('CENGINE_LISTUSERS')) {
         this.userService.getUsers().subscribe(sub => {
-          console.log("Refreshed user Dataset!");
-          this.users$ = sub
+          console.log('Refreshed user Dataset!');
+          this.users$ = sub;
           this.datagrid.dataChanged();
         });
       }
 
-      if (this.authService.hasPermissionOrAdmin("CENGINE_LISTGROUPS")) {
+      if (this.authService.hasPermissionOrAdmin('CENGINE_LISTGROUPS')) {
         this.groupService.getGroups().subscribe(sub => {
-          console.log("Refreshed group Dataset!");
-          this.groups$ = sub
+          console.log('Refreshed group Dataset!');
+          this.groups$ = sub;
           this.datagrid.dataChanged();
-        })
+        });
       }
-    },this.TIMEOUT)
+    }, this.TIMEOUT);
   }
 
 
@@ -74,12 +71,12 @@ export class AdministrationComponent implements OnInit, OnDestroy{
   }
 
   onUserDelete() {
-    this.userService.deleteUser(this.element).subscribe(res =>{
+    this.userService.deleteUser(this.element).subscribe(res => {
       this.userService.getUsers().subscribe(sub => {
-        this.users$ = sub
+        this.users$ = sub;
         this.datagrid.dataChanged();
-      })
-    })
+      });
+    });
     this.openUserDelete = false;
   }
 
@@ -88,25 +85,25 @@ export class AdministrationComponent implements OnInit, OnDestroy{
   }
 
   onUserEdit(loginName: string) {
-    this.modalService.showUserEditModal(loginName,this.users$.filter(user => user.loginName == loginName)[0].groups,this.viewContainerRef)
+    this.modalService.showUserEditModal(loginName, this.users$.filter(user => user.loginName == loginName)[0].groups, this.viewContainerRef);
   }
 
   onNewUserClick() {
-    this.modalService.showNewUserModal(this.viewContainerRef)
+    this.modalService.showNewUserModal(this.viewContainerRef);
   }
 
   onGroupDelete() {
-    this.groupService.deleteGroup(this.element).subscribe(res =>{
+    this.groupService.deleteGroup(this.element).subscribe(res => {
       this.groupService.getGroups().subscribe(sub => {
-        this.groups$ = sub
+        this.groups$ = sub;
         this.datagrid.dataChanged();
-      })
-    })
+      });
+    });
     this.openGroupDelete = false;
   }
 
   onGroupCancel() {
-    this.openGroupDelete = false
+    this.openGroupDelete = false;
   }
 
   onNewGroup() {
@@ -114,6 +111,6 @@ export class AdministrationComponent implements OnInit, OnDestroy{
   }
 
   onGroupEdit(name: GroupDto) {
-    this.modalService.showGroupEditModal(name.name,name.permissions,this.viewContainerRef);
+    this.modalService.showGroupEditModal(name.name, name.permissions, this.viewContainerRef);
   }
 }

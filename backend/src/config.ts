@@ -9,6 +9,9 @@ export const CONFIG:Configuration  = {
         database:"checkline"
     },
     jwtSecret:"fuckthispassword",
-    port: 8000
+    port: 8000,
+    runners: {
+        states: ["Logged in","Logged out","Injured","Injured logged out"]
+    }
 
 }

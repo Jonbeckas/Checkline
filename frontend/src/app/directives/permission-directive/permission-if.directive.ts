@@ -8,30 +8,30 @@ import {
   TemplateRef,
   ViewContainerRef
 } from '@angular/core';
-import {AuthService} from "../../modules/auth/auth.service";
-import {Subscription} from "rxjs";
-import {conditionallyCreateMapObjectLiteral} from "@angular/compiler/src/render3/view/util";
+import {AuthService} from '../../modules/auth/auth.service';
+import {Subscription} from 'rxjs';
+import {conditionallyCreateMapObjectLiteral} from '@angular/compiler/src/render3/view/util';
 
 @Directive({
   selector: '[permissionIf]'
 })
-export class PermissionIf implements OnChanges,OnDestroy,OnInit{
+export class PermissionIf implements OnChanges, OnDestroy, OnInit{
 
   @Input()
-  permissionIf:string[] = []
+  permissionIf: string[] = [];
 
   @HostBinding('class')
-  classes: string = "";
+  classes = '';
 
-  height:number|null = null;
+  height: number|null = null;
   private subscription: Subscription;
 
   constructor(   private viewContainer: ViewContainerRef,
-                 private templateRef: TemplateRef<any>,private authService:AuthService) {
+                 private templateRef: TemplateRef<any>, private authService: AuthService) {
     this.subscription = this.authService.getPermissionObserver().subscribe(pems => {
       let bool = false;
-      for (let pem of this.permissionIf) {
-        if (pems.includes(pem) ||pems.includes("CENGINE_ADMIN")) {
+      for (const pem of this.permissionIf) {
+        if (pems.includes(pem) || pems.includes('CENGINE_ADMIN')) {
           bool =  true;
         }
       }
@@ -41,7 +41,7 @@ export class PermissionIf implements OnChanges,OnDestroy,OnInit{
         this.viewContainer.createEmbeddedView(this.templateRef);
       }
 
-    })
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {

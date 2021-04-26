@@ -11,7 +11,6 @@ export const PermissionLoginValidator = (permissions:string[][]) => {
                 CONFIG.jwtSecret
             );
             req.userData = decoded;
-            console.log(permissions.concat(["CENGINE_ADMIN"]))
             if (await UserService.hasUserPermissions(decoded.userId, permissions.concat([["CENGINE_ADMIN"]]))) {
                 next();
             } else {

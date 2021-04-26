@@ -76,6 +76,17 @@ export class UserService {
         return result;
     }
 
+    static async getUserWithGroupsById(username:string):Promise<UserWithGroups> {
+        const db = new DB();
+        await db.connect();
+        const result =  <UserWithGroups>await this.getUserWithGroups(username);
+        let groups = await db.innerJoin("user-groups","groups","groupId",{userId:result.userId});
+        let strGroup = groups.map((obj: unknown) => (<any>obj).name);
+        result.groups = strGroup;
+        await db.close()
+        return result;
+    }
+
 
 
     static async getUserPermissions(userId:string):Promise<string[]> {

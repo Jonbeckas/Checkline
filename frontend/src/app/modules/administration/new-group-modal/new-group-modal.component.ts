@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {UserService} from "../services/user.service";
-import {checkCircleIcon, ClarityIcons, exclamationCircleIcon} from "@cds/core/icon";
-import {WebResult} from "../../auth/auth.service";
-import {GroupService} from "../services/group.service";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {UserService} from '../services/user.service';
+import {checkCircleIcon, ClarityIcons, exclamationCircleIcon} from '@cds/core/icon';
+import {WebResult} from '../../auth/auth.service';
+import {GroupService} from '../services/group.service';
 
 @Component({
   selector: 'app-new-group-modal',
@@ -18,15 +18,15 @@ export class NewGroupModalComponent implements OnInit {
   error: undefined|string;
   spinner = false;
   showSucces = false;
-  open =true;
+  open = true;
 
 
-  constructor( private router: Router, private formBuilder:FormBuilder,private groupService:GroupService) {
+  constructor( private router: Router, private formBuilder: FormBuilder, private groupService: GroupService) {
     this.form = this.formBuilder.group({
       groupname: ['', [Validators.required]],
     });
-    ClarityIcons.addIcons(exclamationCircleIcon)
-    ClarityIcons.addIcons(checkCircleIcon)
+    ClarityIcons.addIcons(exclamationCircleIcon);
+    ClarityIcons.addIcons(checkCircleIcon);
   }
 
   ngOnInit(): void {
@@ -36,7 +36,7 @@ export class NewGroupModalComponent implements OnInit {
   onOk() {
     if (this.form.valid) {
       this.spinner = true;
-      this.groupService.addGroup(this.form.value.groupname).subscribe((result:WebResult)=>{
+      this.groupService.addGroup(this.form.value.groupname).subscribe((result: WebResult) => {
         if (result.success) {
           this.spinner = false;
           this.open = false;
@@ -45,7 +45,7 @@ export class NewGroupModalComponent implements OnInit {
           this.error = result.error;
         }
 
-      })
+      });
     }
   }
 

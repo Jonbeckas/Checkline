@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ScannerRoutingModule } from './scanner-routing.module';
 import { ScannerComponent } from './scanner/scanner.component';
 import {AuthModule} from "../auth/auth.module";
+import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {AuthModule} from "../auth/auth.module";
   imports: [
     CommonModule,
     AuthModule,
-    ScannerRoutingModule
+    ScannerRoutingModule,
+    NgxQRCodeModule,
   ]
 })
 export class ScannerModule { }

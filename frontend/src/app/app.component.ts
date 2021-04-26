@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import '@cds/core/icon/register.js';
 import {ClarityIcons, videoCameraIcon, flagIcon, cogIcon} from '@cds/core/icon';
-import {AuthService} from "./modules/auth/auth.service";
-import {ActivatedRouteSnapshot, Router} from "@angular/router";
+import {AuthService} from './modules/auth/auth.service';
+import {ActivatedRouteSnapshot, Router} from '@angular/router';
 
 ClarityIcons.addIcons(videoCameraIcon);
 ClarityIcons.addIcons(flagIcon);
-ClarityIcons.addIcons(cogIcon)
+ClarityIcons.addIcons(cogIcon);
 
 @Component({
   selector: 'app-root',

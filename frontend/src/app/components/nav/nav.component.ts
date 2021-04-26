@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../modules/auth/auth.service";
-import {NavigationEnd, Router} from "@angular/router";
+import {AuthService} from '../../modules/auth/auth.service';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -10,11 +10,11 @@ import {NavigationEnd, Router} from "@angular/router";
 export class NavComponent implements OnInit {
 
   username = this.authService.getUsername();
-  currTab:string|undefined;
-  ADMIN_PERMISSIONS=["CENGINE_LISTUSERS","CENGINE_LISTGROUPS","CENGINE_MODIFYUSERS","CENGINE_MODIFYGROUPS"];
+  currTab: string|undefined;
+  ADMIN_PERMISSIONS = ['CENGINE_LISTUSERS', 'CENGINE_LISTGROUPS', 'CENGINE_MODIFYUSERS', 'CENGINE_MODIFYGROUPS'];
 
 
-  constructor(private authService:AuthService,private router:Router) {
+  constructor(private authService: AuthService, private router: Router) {
     this.username = this.authService.getUsername();
   }
 
@@ -24,7 +24,7 @@ export class NavComponent implements OnInit {
         this.username = this.authService.getUsername();
         this.currTab = event.url;
       }
-    })
+    });
   }
 
   logout() {

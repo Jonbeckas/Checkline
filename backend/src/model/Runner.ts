@@ -1,9 +1,7 @@
 export interface Runner {
     userId: string,
-    runnerId: string,
     state: number,
-    checkIn: number,
-    checkOut: number,
+    lastStateChange: number,
     round: number,
     timestamp: number
 }
