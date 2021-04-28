@@ -17,6 +17,9 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import {PermissionDirectiveModule} from './directives/permission-directive/permission-directive.module';
 import {RunnersModule} from './modules/runners/runners.module';
 import {RunnersRoutingModule} from './modules/runners/runners-routing.module';
+import {ZXingScannerModule} from "@zxing/ngx-scanner"
+import {FormsModule} from "@angular/forms";
+import {ScannerModule} from "./modules/scanner/scanner.module";
 
 @NgModule({
     declarations: [
@@ -33,6 +36,7 @@ import {RunnersRoutingModule} from './modules/runners/runners-routing.module';
         RunnersRoutingModule,
         AdministrationRoutingModule,
         AdministrationModule,
+        ScannerModule,
         AppRoutingModule,
         LoginModule,
         BrowserAnimationsModule,
