@@ -13,10 +13,15 @@ export class RunnerService {
         let runnerGroupsName = runnerGroups.map(obj => obj.name);
         let users = await UserService.getUsers();
         let runnersIds:string[] = [];
+        if (runnersIds)
         for (let user of users) {
             if (ArrayUtils.getCommonElements(user.groups,runnerGroupsName).length > 0) {
                 runnersIds.push(user.loginName)
             }
+        }
+        if (runnersIds.length == 0) {
+            await db.close();
+            return [];
         }
         let sqlIf = "WHERE ";
         for (let index in runnersIds) {
@@ -40,6 +45,10 @@ export class RunnerService {
         let runnersIds:string[] = [];
         if (ArrayUtils.getCommonElements(user.groups,runnerGroupsName).length > 0) {
             runnersIds.push(user.loginName)
+        }
+        if (runnersIds.length == 0) {
+            await db.close();
+            return [];
         }
         let sqlIf = "WHERE ";
         for (let index in runnersIds) {
