@@ -42,6 +42,11 @@ export class AuthGuard implements CanActivate {
                 permissions.includes('RUNNER_LIST') ||
                 permissions.includes('CENGINE_ADMIN'));
               break;
+            } case ('scanner'): {
+              observer.next(
+                permissions.includes('RUNNER_MODIFY') ||
+                permissions.includes('CENGINE_ADMIN'));
+              break;
             } default: {
               observer.next(permissions.includes('CENGINE_ADMIN'));
             }

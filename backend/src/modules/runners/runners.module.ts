@@ -22,7 +22,7 @@ runnersRouter.get("/runners",PermissionLoginValidator([["RUNNER_LIST"]]), async 
     res.status(200).send(await RunnerService.getRunners())
 });
 
-runnersRouter.get("/runner",PermissionLoginValidator([["RUNNER_LIST"]]), async (req, res, next) => {
+runnersRouter.post("/runner",PermissionLoginValidator([["RUNNER_LIST"],["RUNNER_MODIFY"]]), async (req, res, next) => {
     if (!req.body || !req.body.username) {
         res.status(400).send({err: "Missing Fields"});
         return;

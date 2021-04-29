@@ -6,6 +6,7 @@ import { ScannerComponent } from './scanner/scanner.component';
 import {AuthModule} from "../auth/auth.module";
 import {ZXingScannerModule} from "@zxing/ngx-scanner";
 import {FormsModule} from "@angular/forms";
+import {ClrCheckboxModule, ClrDatagridModule, ClrIconModule, ClrSelectModule} from "@clr/angular";
 
 
 
@@ -13,12 +14,16 @@ import {FormsModule} from "@angular/forms";
   declarations: [
     ScannerComponent
   ],
-    imports: [
-        CommonModule,
-        AuthModule,
-        ScannerRoutingModule,
-        ZXingScannerModule,
-      FormsModule
-    ]
+  imports: [
+    CommonModule,
+    AuthModule,
+    ScannerRoutingModule,
+    ZXingScannerModule,
+    FormsModule,
+    ClrSelectModule,
+    ClrIconModule,
+    ClrCheckboxModule,
+    ClrDatagridModule
+  ]
 })
 export class ScannerModule { }

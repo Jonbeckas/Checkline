@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start:dev": "nodemon src/server/server.ts",
-        "build:dev": "rimraf ./build && tsc -p tsconfig.json",
+        "build:dev": "rimraf ./build && tsc -p tsconfig.json && mkdir build/modules/runners/template &&   cp src/modules/runners/template/template.ejs build/modules/runners/template/template.ejs",
         "dev": "npm run build:dev && npm run start:dev",
         "test": "mocha -r ts-node/register src/**/*.spec.ts"
     },

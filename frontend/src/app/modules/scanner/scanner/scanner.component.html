@@ -1,4 +1,75 @@
-<p>scanner works!</p>
-<zxing-scanner>
+<div class="clr-row">
+  <div class="clr-col">
+    <div class="alert alert-info" [ngClass]="{'alert-info':!warnIsMessage,'alert-warning':warnIsMessage}" role="alert" *ngIf="showInfo">
+      <div class="alert-items">
+        <div class="alert-item static">
+          <div class="alert-icon-wrapper">
+            <cds-icon class="alert-icon" shape="info-circle"></cds-icon>
+          </div>
+          <span class="alert-text">
+            {{infoMessage}}
+      </span>
+        </div>
+      </div>
+    </div>
 
-</zxing-scanner>
+    <zxing-scanner
+      [formats]="formats"
+      (camerasFound)="onCamerasFound($event)"
+      (camerasNotFound)="onNoCamerasFound($event)"
+      [(device)]="camera"
+      (torchCompatible)="torchCompatible($event)"
+      [torch]="torch"
+      (permissionResponse)="onPermissionResponse($event)"
+      (scanSuccess)="onScanComplete($event)"
+      #scanner>
+    </zxing-scanner>
+    <div class="clr-row" *ngIf="cameraIsEmpty()">
+      <clr-select-container class="clr-col">
+        <label>Camera:</label>
+        <select clrSelect name="options" required (change)="onCameraChange($event)">
+          <ng-container *ngFor="let cam of cameras">
+            <option [value]="cam.deviceId">{{cam.label}}</option>
+          </ng-container>
+        </select>
+      </clr-select-container>
+
+      <clr-toggle-container *ngIf="torchComp" class="clr-col">
+        <label>Torch:</label>
+        <clr-toggle-wrapper>
+          <input type="checkbox" clrToggle name="options" required value="true"  [(ngModel)]="torch"/>
+        </clr-toggle-wrapper>
+      </clr-toggle-container>
+    </div>
+  </div>
+
+  <div class="clr-col">
+    <clr-datagrid #datagrid>
+      <clr-dg-column>Username</clr-dg-column>
+      <clr-dg-column>Last scan</clr-dg-column>
+      <clr-dg-column>Rounds</clr-dg-column>
+      <clr-dg-column>
+        Actions
+      </clr-dg-column>
+
+      <clr-dg-row *clrDgItems="let runner of runners" >
+        <clr-dg-cell>{{runner.loginName}}</clr-dg-cell>
+        <clr-dg-cell>{{timeToString(runner.timestamp)}}</clr-dg-cell>
+        <clr-dg-cell>{{runner.round}}</clr-dg-cell>
+        <clr-dg-cell>
+          <button type="button" class="btn btn-icon btn-primary btn-sm" aria-label="edit" (click)="onUserUndo(runner.loginName,runner.timestamp)">
+            Remove round
+          </button>
+        </clr-dg-cell>
+      </clr-dg-row>
+
+      <clr-dg-footer>
+        <clr-dg-pagination #pagination [clrDgPageSize]="10">
+          <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Logs per page</clr-dg-page-size>
+          {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} users
+        </clr-dg-pagination>
+      </clr-dg-footer>
+    </clr-datagrid>
+  </div>
+</div>
+

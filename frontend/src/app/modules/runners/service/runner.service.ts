@@ -41,6 +41,32 @@ export class RunnerService {
       });
   }
 
+  getRunner(username:string): Observable<Runner> {
+    return new Observable<Runner>(observer => {
+      const token = this.cookieService.get('token');
+      const bearer = 'Bearer ' + token;
+      this.httpService.post<Runner[]>(environment.backendUrl+"/runner",{username:username},{headers: {Authorization: bearer}}).subscribe({
+          next: data => {
+            observer.next(data[0]);
+            observer.complete();
+          },
+          error: (error: HttpErrorResponse) => {
+            if (error.status == 401) {
+              if (error.error.err == 'Invalid session') {
+                this.authService.logout();
+              } else {
+                console.error(error);
+              }
+            }  else {
+              console.error(error);
+            }
+            observer.complete();
+          }
+        }
+      )
+    });
+  }
+
   getStates(): Observable<WebValueResult> {
     return new Observable<WebValueResult>(observer => {
       const token = this.cookieService.get('token');
@@ -114,6 +140,10 @@ export class RunnerService {
               } else {
                 observer.next({success:false,error:"An error occurred"})
                 console.error(error);
+              }
+            } else if (error.status == 404) {
+              if (error.error.err == "User has no defined state") {
+                observer.next({success:false,error:"The user has no defined state"})
               }
             } else {
               observer.next({success:false,error:"An error occurred"})

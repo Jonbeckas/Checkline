@@ -76,7 +76,7 @@ export class UserService {
         return result;
     }
 
-    static async getUserWithGroupsById(username:string):Promise<UserWithGroups> {
+    static async getUserWithGroupsByName(username:string):Promise<UserWithGroups> {
         const db = new DB();
         await db.connect();
         const result =  <UserWithGroups>await this.getUserWithGroups(username);

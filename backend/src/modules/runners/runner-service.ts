@@ -36,12 +36,12 @@ export class RunnerService {
         return result;
     }
 
-    static async getRunnerByName(userId:string) {
+    static async getRunnerByName(username:string) {
         const db = new DB();
         await db.connect();
         let runnerGroups: any[] = await GroupService.getGroupsWithPermission("RUNNER_RUN");
         let runnerGroupsName = runnerGroups.map(obj => obj.name);
-        let user = await UserService.getUserWithGroupsById(userId);
+        let user = await UserService.getUserWithGroupsByName(username);
         let runnersIds:string[] = [];
         if (ArrayUtils.getCommonElements(user.groups,runnerGroupsName).length > 0) {
             runnersIds.push(user.loginName)
@@ -54,8 +54,9 @@ export class RunnerService {
         for (let index in runnersIds) {
             sqlIf += `users.loginName=${await db.escapeValue(runnersIds[index])}`
         }
-        let result = db.customQuery("SELECT loginName,state,`check-in`,`check-out`,timestamp, round FROM `users` LEFT JOIN `runners` ON users.userId = runners.userId "+sqlIf+";");
+        let result = db.customQuery("SELECT loginName,state,`lastStateChange`,timestamp, round FROM `users` LEFT JOIN `runners` ON users.userId = runners.userId "+sqlIf+";");
         await db.close();
+        console.log(result)
         return result;
     }
 
