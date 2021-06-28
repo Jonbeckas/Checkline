@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {UserService} from '../services/user.service';
 import {UserDto} from '../dtos/user.dto';
-import {ClarityIcons, pencilIcon, plusIcon, trashIcon} from '@cds/core/icon';
+import {ClarityIcons, pencilIcon, plusIcon, refreshIcon, trashIcon} from '@cds/core/icon';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {ClrDatagrid} from '@clr/angular';
 import {ModalService} from '../services/modal.service';
@@ -21,7 +21,8 @@ export class AdministrationComponent implements OnInit, OnDestroy{
   element = '';
   interval: number | undefined;
   TIMEOUT = 5000;
-
+  selectedUser:any =null;
+  selectedGroup: any = null;
 
   // @ts-ignore
   @ViewChild(ClrDatagrid) datagrid: ClrDatagrid;
@@ -37,6 +38,8 @@ export class AdministrationComponent implements OnInit, OnDestroy{
         this.groupService.getGroups().subscribe(sub => {
           this.groups$ = sub;
       });
+
+      console.log(this.selectedGroup)
     }
   }
 
@@ -45,33 +48,15 @@ export class AdministrationComponent implements OnInit, OnDestroy{
     ClarityIcons.addIcons(pencilIcon);
     ClarityIcons.addIcons(trashIcon);
     ClarityIcons.addIcons(plusIcon);
-
-    this.interval = setInterval(() => {
-      if (this.authService.hasPermissionOrAdmin('CENGINE_LISTUSERS')) {
-        this.userService.getUsers().subscribe(sub => {
-          console.log('Refreshed user Dataset!');
-          this.users$ = sub;
-          this.datagrid.dataChanged();
-        });
-      }
-
-      if (this.authService.hasPermissionOrAdmin('CENGINE_LISTGROUPS')) {
-        this.groupService.getGroups().subscribe(sub => {
-          console.log('Refreshed group Dataset!');
-          this.groups$ = sub;
-          this.datagrid.dataChanged();
-        });
-      }
-    }, this.TIMEOUT);
+    ClarityIcons.addIcons(refreshIcon);
   }
-
 
   onUserCancel() {
   this.openUserDelete = false;
   }
 
   onUserDelete() {
-    this.userService.deleteUser(this.element).subscribe(res => {
+    this.userService.deleteUser(this.selectedUser.loginName).subscribe(res => {
       this.userService.getUsers().subscribe(sub => {
         this.users$ = sub;
         this.datagrid.dataChanged();
@@ -84,12 +69,22 @@ export class AdministrationComponent implements OnInit, OnDestroy{
     clearInterval(this.interval);
   }
 
-  onUserEdit(loginName: string) {
-    this.modalService.showUserEditModal(loginName, this.users$.filter(user => user.loginName == loginName)[0].groups, this.viewContainerRef);
+  onUserEdit() {
+    this.modalService.showUserEditModal(this.selectedUser.loginName, this.selectedUser.groups, this.viewContainerRef);
   }
 
   onNewUserClick() {
     this.modalService.showNewUserModal(this.viewContainerRef);
+  }
+
+  onUserRefresh() {
+    if (this.authService.hasPermissionOrAdmin('CENGINE_LISTUSERS')) {
+      this.userService.getUsers().subscribe(sub => {
+        console.log('Refreshed user Dataset!');
+        this.users$ = sub;
+        this.datagrid.dataChanged();
+      });
+    }
   }
 
   onGroupDelete() {
@@ -102,6 +97,16 @@ export class AdministrationComponent implements OnInit, OnDestroy{
     this.openGroupDelete = false;
   }
 
+  onGroupRefresh() {
+    if (this.authService.hasPermissionOrAdmin('CENGINE_LISTGROUPS')) {
+      this.groupService.getGroups().subscribe(sub => {
+        console.log('Refreshed group Dataset!');
+        this.groups$ = sub;
+        this.datagrid.dataChanged();
+      });
+    }
+  }
+
   onGroupCancel() {
     this.openGroupDelete = false;
   }
@@ -110,7 +115,7 @@ export class AdministrationComponent implements OnInit, OnDestroy{
     this.modalService.showNewGroupModal(this.viewContainerRef);
   }
 
-  onGroupEdit(name: GroupDto) {
-    this.modalService.showGroupEditModal(name.name, name.permissions, this.viewContainerRef);
+  onGroupEdit() {
+    this.modalService.showGroupEditModal(this.selectedGroup.name, this.selectedGroup.permissions, this.viewContainerRef);
   }
 }

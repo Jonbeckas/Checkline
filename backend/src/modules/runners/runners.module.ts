@@ -103,7 +103,8 @@ runnersRouter.post("/runners/qr",PermissionLoginValidator([["RUNNER_LIST"]]), as
         return;
     }
     try {
-        res.status(200).contentType('application/pdf').send(await RunnerCard.getRunnerCard(rReq.username))
+        let data = await RunnerCard.getRunnerCard(rReq.username);
+        res.status(200).send({data: data})
     } catch (e) {
         res.status(500).send({err:"Unknown error"});
     }
