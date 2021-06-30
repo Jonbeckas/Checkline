@@ -3,7 +3,7 @@ import {AuthService} from "../../auth/auth.service";
 import {Runner} from "../dtos/Runner";
 import {RunnerService} from "../service/runner.service";
 import {ClrDatagrid} from "@clr/angular";
-import {ClarityIcons, minusIcon, plusIcon, qrCodeIcon} from "@cds/core/icon";
+import {ClarityIcons, minusIcon, plusIcon, qrCodeIcon, refreshIcon} from "@cds/core/icon";
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +15,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   runners$:Runner[] =[];
   interval: number | undefined;
   TIMEOUT =10000;
-  states:string[] = []
+  states:string[] = [];
+  selected: any[] = [];
   // @ts-ignore
   @ViewChild(ClrDatagrid) datagrid: ClrDatagrid;
   loadQr = false;
@@ -27,12 +28,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit(): void {
-    ClarityIcons.addIcons(plusIcon,minusIcon,qrCodeIcon);
+    ClarityIcons.addIcons(plusIcon,minusIcon,qrCodeIcon, refreshIcon);
 
     if (this.authService.hasPermissionOrAdmin('RUNNER_LIST')) {
       this.runnerService.getRunners().subscribe(sub => {
         this.runners$ = sub;
       });
+    }
 
     if (this.authService.hasPermissionOrAdmin("RUNNER_MODIFY")) {
       this.runnerService.getStates().subscribe(sub => {
@@ -42,15 +44,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
           console.error(sub.value);
         }
       });
-    }
-
-    this.interval = setInterval(() => {
-      this.runnerService.getRunners().subscribe(sub => {
-        console.log("Refreshed runner dataset")
-        this.runners$ = sub;
-        this.datagrid.dataChanged();
-      });
-    }, this.TIMEOUT);
     }
   }
 

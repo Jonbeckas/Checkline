@@ -20,6 +20,7 @@ import {RunnersRoutingModule} from './modules/runners/runners-routing.module';
 import {ZXingScannerModule} from "@zxing/ngx-scanner"
 import {FormsModule} from "@angular/forms";
 import {ScannerModule} from "./modules/scanner/scanner.module";
+import { ClarityModule } from '@clr/angular';
 
 @NgModule({
     declarations: [
@@ -41,7 +42,8 @@ import {ScannerModule} from "./modules/scanner/scanner.module";
         LoginModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        PermissionDirectiveModule
+        PermissionDirectiveModule,
+        ClarityModule
     ],
     providers: [CookieService],
     exports: [

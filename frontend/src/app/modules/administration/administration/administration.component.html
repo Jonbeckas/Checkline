@@ -4,8 +4,8 @@
 
 
     <clr-datagrid [(clrDgSingleSelected)]="selectedUser">
-      <clr-dg-action-bar *permissionIf="['CENGINE_MODIFYUSERS']">
-        <div class="btn-group">
+      <clr-dg-action-bar >
+        <div class="btn-group" *permissionIf="['CENGINE_MODIFYUSERS']">
           <button type="button" class="btn btn-sm" (click)="onUserEdit()" [disabled]="selectedUser == null">
             <cds-icon shape="pencil"></cds-icon> Edit
           </button>
@@ -48,8 +48,8 @@
   <div class="clr-col" *permissionIf="['CENGINE_LISTGROUPS','CENGINE_MODIFYGROUPS']">
     <h2>Groups</h2>
     <clr-datagrid [(clrDgSingleSelected)]="selectedGroup">
-      <clr-dg-action-bar *permissionIf="['CENGINE_MODIFYGROUPS']">
-        <div class="btn-group">
+      <clr-dg-action-bar>
+        <div class="btn-group" *permissionIf="['CENGINE_MODIFYGROUPS']">
           <button type="button" class="btn btn-sm" (click)="onGroupEdit()" [disabled]="selectedGroup == null">
             <cds-icon shape="pencil"></cds-icon> Edit
           </button>
