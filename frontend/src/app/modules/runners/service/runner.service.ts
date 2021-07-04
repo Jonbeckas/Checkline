@@ -189,10 +189,16 @@ export class RunnerService {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
 
-      this.httpService.post(environment.backendUrl+"/runners/qr",{username:username},{headers: {Authorization: bearer},responseType:'arraybuffer'}).subscribe({
+      this.httpService.post(environment.backendUrl+"/runners/qr",{username:username},{headers: {Authorization: bearer}}).subscribe({
           next: data => {
-            observer.next(new Blob([data], {type: 'application/pdf'}));
-            observer.complete();
+            let url = "data:application/pdf;base64,"+(<any>data).data;
+            fetch(url)
+            .then(res => {
+              res.blob().then(blob => {
+                observer.next(blob);
+                observer.complete();
+              })
+            })
           },
           error: (error: HttpErrorResponse) => {
             if (error.status == 401) {

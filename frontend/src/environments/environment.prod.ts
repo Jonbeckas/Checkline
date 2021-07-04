@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  backendUrl: 'https://www.tetraowl.com/checkline-backend'
+  backendUrl: 'https://checkline.tetraowl.de/api'
 };

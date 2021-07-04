@@ -1,46 +1,61 @@
 <h2>Runners</h2>
-<clr-datagrid>
+<clr-datagrid [(clrDgSelected)]="selected">
+  <clr-dg-action-bar *permissionIf="['CENGINE_MODIFYUSERS']">
+    <div class="clr-row">
+      <div class="btn-group" *permissionIf="['CENGINE_MODIFYGROUPS']">
+        <button type="button" class="btn btn-sm" [disabled]="selected.length == 0" (click)="addRound()">
+          <cds-icon shape="plus"></cds-icon> Round
+        </button>
+        <button type="button" class="btn btn-sm btn-secondary"  [disabled]="selected.length ==0" (click)="decreaseRound()">
+          <cds-icon shape="minus"></cds-icon> Round
+        </button>
+      </div>
+
+      <clr-select-container class="state-select" *permissionIf="['CENGINE_MODIFYUSERS']">
+        <select clrSelect name="options" [disabled]="isDropdownDisabled()" (change)="onStateChange($event)">
+          <ng-container *ngIf="selected.length > 1 || selected.length == 0">
+            <option disabled hidden [attr.selected]="isDropdownNeedsPlaceholder()" [value]="'placeholder'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+          </ng-container>
+          <ng-container *ngIf="selected.length >= 1">
+            <ng-container *ngFor="let state of states">
+              <option [value]="state" [attr.selected]="isDropdowStateSeleted(state)">{{state}}</option>
+            </ng-container>
+          </ng-container>
+        </select>
+        <clr-control-error>This field is required!</clr-control-error>
+      </clr-select-container>
+
+      <div class="grip-group">
+        <button type="button" class="btn btn-sm btn-secondary" [disabled]="selected.length == 0" *permissionIf="['CENGINE_MODIFYGROUPS']" (click)="qr()">
+          <cds-icon shape="qr-code" *ngIf="!loadQr"></cds-icon>
+          <clr-spinner *ngIf="loadQr"></clr-spinner> Card
+        </button>
+
+        <button type="button" class="btn btn-sm btn-secondary" (click)="refreshTable()">
+          <cds-icon shape="refresh"></cds-icon> Refresh
+        </button>
+      </div>
+    </div>
+  </clr-dg-action-bar>
+
   <clr-dg-column [clrDgField]="'loginName'">Username</clr-dg-column>
   <clr-dg-column [clrDgField]="'state'">State</clr-dg-column>
   <clr-dg-column [clrDgField]="'lastStateChange'">Last state change</clr-dg-column>
   <clr-dg-column [clrDgField]="'round'">Rounds</clr-dg-column>
   <clr-dg-column [clrDgField]="'timestamp'">Last round change</clr-dg-column>
-  <clr-dg-column>QR Code</clr-dg-column>
 
-  <clr-dg-row *clrDgItems="let runner of runners$ " >
+  <clr-dg-row *clrDgItems="let runner of runners$ " [clrDgItem]="runner" >
     <clr-dg-cell>{{runner.loginName}}</clr-dg-cell>
-    <clr-dg-cell *permissionIf="['RUNNER_MODIFY']">
-      <clr-select-container>
-        <select clrSelect name="options" [(ngModel)]="runner.state" required (change)="onStateChange($event,runner)">
-          <ng-container *ngFor="let state of states">
-            <option [value]="state">{{state}}</option>
-          </ng-container>
-        </select>
-        <clr-control-error>This field is required!</clr-control-error>
-      </clr-select-container>
-    </clr-dg-cell>
-    <clr-dg-cell *permissionNotIf="['RUNNER_MODIFY']">{{runner.state}}</clr-dg-cell>
+    <clr-dg-cell>{{runner.state ? runner.state: "-"}}</clr-dg-cell>
     <clr-dg-cell>{{timeToString(runner.lastStateChange)}}</clr-dg-cell>
     <clr-dg-cell>{{runner.round||0}}
-        <button *permissionIf="['RUNNER_MODIFY']" type="button" class="btn btn-icon btn-info btn-sm addButton" aria-label="add" (click)="addRound(runner)">
-          <cds-icon shape="plus"></cds-icon>
-        </button>
-        <button type="button" *permissionIf="['RUNNER_MODIFY']" class="btn btn-icon btn-info btn-sm" aria-label="remove" [disabled]="!runner.round" (click)="decreaseRound(runner)">
-          <cds-icon shape="minus"></cds-icon>
-        </button>
     </clr-dg-cell>
     <clr-dg-cell>{{this.timeToString(runner.timestamp)}}</clr-dg-cell>
-    <clr-dg-cell>
-      <button type="button" class="btn btn-icon btn-info btn-sm" aria-label="qr" (click)="qr(runner.loginName)">
-        <cds-icon shape="qr-code" *ngIf="!loadQr"></cds-icon>
-        <clr-spinner *ngIf="loadQr"></clr-spinner>
-      </button>
-    </clr-dg-cell>
   </clr-dg-row>
 
   <clr-dg-footer>
     <clr-dg-pagination #pagination [clrDgPageSize]="10">
-      <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Users per page</clr-dg-page-size>
+      <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Runners per page</clr-dg-page-size>
       {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} users
     </clr-dg-pagination>
   </clr-dg-footer>
