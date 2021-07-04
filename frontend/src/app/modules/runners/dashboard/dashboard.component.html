@@ -3,28 +3,34 @@
   <clr-dg-action-bar *permissionIf="['CENGINE_MODIFYUSERS']">
     <div class="clr-row">
       <div class="btn-group" *permissionIf="['CENGINE_MODIFYGROUPS']">
-        <button type="button" class="btn btn-sm" [disabled]="selected.length == 0">
+        <button type="button" class="btn btn-sm" [disabled]="selected.length == 0" (click)="addRound()">
           <cds-icon shape="plus"></cds-icon> Round
         </button>
-        <button type="button" class="btn btn-sm btn-secondary"  [disabled]="selected.length ==0" >
+        <button type="button" class="btn btn-sm btn-secondary"  [disabled]="selected.length ==0" (click)="decreaseRound()">
           <cds-icon shape="minus"></cds-icon> Round
         </button>
       </div>
-  
+
       <clr-select-container class="state-select" *permissionIf="['CENGINE_MODIFYUSERS']">
-        <select clrSelect name="options" disabled>
-          <ng-container *ngFor="let state of states">
-            <option [value]="state">{{state}}</option>
+        <select clrSelect name="options" [disabled]="isDropdownDisabled()" (change)="onStateChange($event)">
+          <ng-container *ngIf="selected.length > 1 || selected.length == 0">
+            <option disabled hidden [attr.selected]="isDropdownNeedsPlaceholder()" [value]="'placeholder'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+          </ng-container>
+          <ng-container *ngIf="selected.length >= 1">
+            <ng-container *ngFor="let state of states">
+              <option [value]="state" [attr.selected]="isDropdowStateSeleted(state)">{{state}}</option>
+            </ng-container>
           </ng-container>
         </select>
         <clr-control-error>This field is required!</clr-control-error>
       </clr-select-container>
 
       <div class="grip-group">
-        <button type="button" class="btn btn-sm btn-secondary" *permissionIf="['CENGINE_MODIFYGROUPS']">
-          <cds-icon shape="qr-code"></cds-icon> Card
+        <button type="button" class="btn btn-sm btn-secondary" [disabled]="selected.length == 0" *permissionIf="['CENGINE_MODIFYGROUPS']" (click)="qr()">
+          <cds-icon shape="qr-code" *ngIf="!loadQr"></cds-icon>
+          <clr-spinner *ngIf="loadQr"></clr-spinner> Card
         </button>
-    
+
         <button type="button" class="btn btn-sm btn-secondary" (click)="refreshTable()">
           <cds-icon shape="refresh"></cds-icon> Refresh
         </button>
@@ -40,7 +46,7 @@
 
   <clr-dg-row *clrDgItems="let runner of runners$ " [clrDgItem]="runner" >
     <clr-dg-cell>{{runner.loginName}}</clr-dg-cell>
-    <clr-dg-cell *permissionNotIf="['RUNNER_MODIFY']">{{runner.state}}</clr-dg-cell>
+    <clr-dg-cell>{{runner.state ? runner.state: "-"}}</clr-dg-cell>
     <clr-dg-cell>{{timeToString(runner.lastStateChange)}}</clr-dg-cell>
     <clr-dg-cell>{{runner.round||0}}
     </clr-dg-cell>

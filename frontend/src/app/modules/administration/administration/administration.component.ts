@@ -39,7 +39,6 @@ export class AdministrationComponent implements OnInit, OnDestroy{
           this.groups$ = sub;
       });
 
-      console.log(this.selectedGroup)
     }
   }
 
