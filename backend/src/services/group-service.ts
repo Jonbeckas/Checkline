@@ -7,6 +7,7 @@ import {UserGroup} from "../model/UserGroup";
 import {GroupPermission} from "../model/GroupPermission";
 import {UserWithGroups} from "../modules/users/dtos/group-user";
 import {PermissionGroupDto} from "../modules/groups/dtos/permission-group.dto";
+import {UserService} from "./UserService";
 
 export class GroupService {
     static async addGroup(name:string):Promise<Group[]> {
@@ -112,5 +113,33 @@ export class GroupService {
         await db.editObject("groups",["groupId"],res);
         await db.close()
         return true;
+    }
+
+    static async addUserToGroup(username:string, groupname: string):Promise<string| undefined> {
+        const db = new DB()
+        await db.connect()
+        let group = await GroupService.getGroupByName(groupname);
+        let user = await UserService.getUserByLoginName(username);
+
+        console.log(user)
+        let result;
+        if (!group) {
+            result = "Group does not exists"
+        } else {
+            if (!user) {
+                result = "User does not exists"
+            } else {
+                let sql = await GroupService.getUsersInGroup(group.groupId);
+                console.log(sql)
+                if (sql.includes(user.userId)) {
+                    result =  "User is already in group"
+                } else {
+                    await db.insertObject("user-groups",<UserGroup>{userId:user.userId, groupId:group.groupId});
+                }
+            }
+        }
+
+        await db.close()
+        return result;
     }
 }
