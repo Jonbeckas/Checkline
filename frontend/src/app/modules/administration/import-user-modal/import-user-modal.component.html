@@ -1,0 +1,15 @@
+<clr-modal [(clrModalOpen)]="open" [clrModalClosable]="true" [clrModalStaticBackdrop]="false">
+  <h3 class="modal-title">Import users</h3>
+  <div class="modal-body">
+    <cds-file layout="horizontal">
+      <label>Select file (.csv)</label>
+      <input type="file" (change)="onFileUpload($event)"/>
+    </cds-file>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" [disabled]="csvText == undefined" (click)="onOk()">Import Users
+      <clr-spinner clrInline="true" *ngIf="spinner"></clr-spinner>
+    </button>
+  </div>
+</clr-modal>
