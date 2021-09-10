@@ -124,7 +124,7 @@ export class UserService {
             await db.connect();
             const hash = await Argon2.hash(password);
             const id = Uuid.v4();
-            await db.insertObject("users",<User>{userId:id,loginName:username,firstName:firstname,name:name,password:hash})
+            await db.insertObject("users",<User>{userId:id,loginName:username,firstname:firstname,name:name,password:hash})
             await db.close();
             return {success:true,err: ""};
         }

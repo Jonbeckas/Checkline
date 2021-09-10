@@ -12,6 +12,14 @@
           <button type="button" class="btn btn-sm  btn-danger-outline btn-secondary" (click)="this.openUserDelete = true; element= selectedUser.loginName" [disabled]="selectedUser == null" >
             <cds-icon shape="trash"></cds-icon> Delete
           </button>
+
+          <button type="button" class="btn btn-sm btn-secondary" *permissionIf="['CENGINE_IMPORTUSERS']" (click)="onUserImport()">
+            <cds-icon shape="import"></cds-icon> Import
+          </button>
+
+          <button type="button" class="btn btn-sm btn-secondary" *permissionIf="['CENGINE_EXPORTUSERS']" (click)="onUserExport()">
+            <cds-icon shape="export"></cds-icon> Export
+          </button>
         </div>
 
         <button type="button" class="btn btn-sm btn-secondary" *permissionIf="['CENGINE_MODIFYUSERS']" (click)="onNewUserClick()">
@@ -56,6 +64,14 @@
           <button type="button" class="btn btn-sm  btn-danger-outline btn-secondary" (click)="this.openGroupDelete = true; element= selectedGroup.name" [disabled]="selectedGroup == null" >
             <cds-icon shape="trash"></cds-icon> Delete
           </button>
+
+          <button type="button" class="btn btn-sm btn-secondary" *permissionIf="['CENGINE_IMPORTGROUPS']" (click)="onGroupImport()">
+            <cds-icon shape="import"></cds-icon> Import
+          </button>
+
+          <button type="button" class="btn btn-sm btn-secondary" *permissionIf="['CENGINE_EXPORTGROUPS']" (click)="onGroupExpert()">
+            <cds-icon shape="export"></cds-icon> Export
+          </button>
         </div>
 
         <button type="button" class="btn btn-sm btn-secondary" *permissionIf="['CENGINE_MODIFYGROUPS']" (click)="onNewGroup()">
@@ -65,6 +81,7 @@
         <button type="button" class="btn btn-sm btn-secondary" (click)="onGroupRefresh()">
           <cds-icon shape="refresh"></cds-icon> Refresh
         </button>
+
       </clr-dg-action-bar>
       <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
       <clr-dg-column [clrDgField]="'permissions'">Permissions</clr-dg-column>

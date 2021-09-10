@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {UserService} from '../services/user.service';
 import {UserDto} from '../dtos/user.dto';
-import {ClarityIcons, pencilIcon, plusIcon, refreshIcon, trashIcon} from '@cds/core/icon';
+import {ClarityIcons, exportIcon, importIcon, pencilIcon, plusIcon, refreshIcon, trashIcon} from '@cds/core/icon';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {ClrDatagrid} from '@clr/angular';
 import {ModalService} from '../services/modal.service';
@@ -47,6 +47,8 @@ export class AdministrationComponent implements OnInit, OnDestroy{
     ClarityIcons.addIcons(pencilIcon);
     ClarityIcons.addIcons(trashIcon);
     ClarityIcons.addIcons(plusIcon);
+    ClarityIcons.addIcons(importIcon);
+    ClarityIcons.addIcons(exportIcon);
     ClarityIcons.addIcons(refreshIcon);
   }
 
@@ -116,5 +118,21 @@ export class AdministrationComponent implements OnInit, OnDestroy{
 
   onGroupEdit() {
     this.modalService.showGroupEditModal(this.selectedGroup.name, this.selectedGroup.permissions, this.viewContainerRef);
+  }
+
+  onUserImport() {
+    this.modalService.showImportUserModal(this.viewContainerRef)
+  }
+
+  onUserExport() {
+    this.modalService.showExportUserModal(this.viewContainerRef)
+  }
+
+  onGroupExpert() {
+    this.modalService.showExportGroupsModal(this.viewContainerRef)
+  }
+
+  onGroupImport() {
+    this.modalService.showImportGroupsModal(this.viewContainerRef)
   }
 }

@@ -14,6 +14,11 @@ import {UserService} from "../../services/UserService";
 import bodyParser from "body-parser";
 import {authRouter} from "../authentification/authentification.module";
 import {PermissionLoginValidator} from "../../server/permission-login-validator";
+import {CsvGroupImportExportDto} from "./dtos/csv-group-import-export.dto";
+import Papa from "papaparse";
+import {ImportUserDto} from "../users/dtos/import-user.dto";
+import {CsvImportStructureDto} from "../users/dtos/csv-import-structure.dto";
+import {ImportGroupDto} from "./dtos/import-group.dto";
 
 
 export const groupsRouter = express.Router({caseSensitive:false});
@@ -216,12 +221,52 @@ groupsRouter.post('/group',PermissionLoginValidator([["CENGINE_LISTGROUPS"],["CE
     }
     let group = await GroupService.getGroupWithPermissions(gReq.groupname);
     if (group) {
-        console.log(group)
         res.status(200).send(group);
     } else {
         res.status(404).send({err:"Group not found"});
     }
 });
 
+groupsRouter.get('/groups/export',PermissionLoginValidator([["CENGINE_EXPORTGROUPS"]]), async (req, res, next) => {
+    let groups = await GroupService.getGroups();
 
+    let csvGroups: CsvGroupImportExportDto[] = groups.map((group) => {
+        let permissions = ""
 
+        group.permissions.forEach((value, index) => {
+            permissions += value
+            if (index < group.permissions.length - 1) {
+                permissions += ";"
+            }
+        });
+
+        return { name: group.name, permissions: permissions}
+    })
+
+    let result = Papa.unparse(csvGroups);
+    res.contentType("text/csv").status(200).send(result)
+});
+
+groupsRouter.post('/groups/import',PermissionLoginValidator([["CENGINE_IMPORTGROUPS"]]), async (req, res, next) => {
+    const importPost = <ImportGroupDto>req.body;
+
+    const parsedContent = Papa.parse(importPost.fileContent, {header: true, delimiter: ","})
+
+    for (let group of <CsvGroupImportExportDto[]>parsedContent.data) {
+        if (group.name != "" && group.permissions != "") {
+            await GroupService.addGroup(group.name)
+            let permissions = group.permissions.split(";")
+            let groupObject = await GroupService.getGroupByName(group.name)
+            for (let permission of permissions) {
+                if (!groupObject) {
+                    res.status(404).send({err: "Group does not exists"});
+                    return;
+                }
+                if (!await GroupService.hasPermission(groupObject.groupId,permission) && permission != "CENGINE_ADMIN") {
+                    await GroupService.addPermissionToGroup(groupObject.groupId,permission)
+                }
+            }
+        }
+    }
+    res.status(200).send()
+});

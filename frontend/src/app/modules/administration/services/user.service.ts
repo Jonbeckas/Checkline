@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AuthService, WebResult} from '../../auth/auth.service';
 import {Observable} from 'rxjs';
 import {UserDto} from '../dtos/user.dto';
 import {environment} from '../../../../environments/environment';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 
 @Injectable({
@@ -11,7 +11,8 @@ import {CookieService} from 'ngx-cookie-service';
 })
 export class UserService {
 
-  constructor(private authService: AuthService, private cookieService: CookieService, private httpService: HttpClient) { }
+  constructor(private authService: AuthService, private cookieService: CookieService, private httpService: HttpClient) {
+  }
 
   getUsers(): Observable<UserDto[]> {
     return new Observable<UserDto[]>((observer) => {
@@ -67,7 +68,10 @@ export class UserService {
     return new Observable<WebResult>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.request('DELETE', environment.backendUrl + '/user', {headers: {Authorization: bearer}, body: {username}}).subscribe( {
+      this.httpService.request('DELETE', environment.backendUrl + '/user', {
+        headers: {Authorization: bearer},
+        body: {username}
+      }).subscribe({
         next: data => {
           observer.next({success: true, error: ''});
           observer.complete();
@@ -93,7 +97,10 @@ export class UserService {
     return new Observable<WebResult>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.post<any>(environment.backendUrl + '/users/changePasswordByAdmin', {username, newPassword: password}, {headers: {Authorization: bearer}}).subscribe({
+      this.httpService.post<any>(environment.backendUrl + '/users/changePasswordByAdmin', {
+        username,
+        newPassword: password
+      }, {headers: {Authorization: bearer}}).subscribe({
         next: data => {
           observer.next({success: true, error: undefined});
           observer.complete();
@@ -134,11 +141,11 @@ export class UserService {
             } else {
               console.error(error);
             }
-          }else if (error.status == 404){
+          } else if (error.status == 404) {
             observer.next({success: false, error: 'Group not found!'});
           } else if (error.status == 400 && error.error.err == 'User is already in group') {
             observer.next({success: false, error: 'User is already in this group!'});
-          }else {
+          } else {
             observer.next({success: false, error: 'Unknown error!'});
             console.error(error);
           }
@@ -152,7 +159,10 @@ export class UserService {
     return new Observable<WebResult>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.post<any>(environment.backendUrl + '/groups/removeUserFromGroup', {username, groupname}, {headers: {Authorization: bearer}}).subscribe({
+      this.httpService.post<any>(environment.backendUrl + '/groups/removeUserFromGroup', {
+        username,
+        groupname
+      }, {headers: {Authorization: bearer}}).subscribe({
         next: data => {
           observer.next({success: true, error: undefined});
           observer.complete();
@@ -178,7 +188,12 @@ export class UserService {
     return new Observable<WebResult>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.put<any>(environment.backendUrl + '/user', {username, firstname, name, password}, {headers: {Authorization: bearer}}).subscribe({
+      this.httpService.put<any>(environment.backendUrl + '/user', {
+        username,
+        firstname,
+        name,
+        password
+      }, {headers: {Authorization: bearer}}).subscribe({
         next: data => {
           observer.next({success: true, error: undefined});
           observer.complete();
@@ -199,6 +214,46 @@ export class UserService {
             console.error(error);
           }
           observer.complete();
+        }
+      });
+    });
+  }
+
+  importUsers(csvContent: string) {
+    return new Observable<WebResult>((observer) => {
+      const token = this.cookieService.get('token');
+      const bearer = 'Bearer ' + token;
+      this.httpService.post<any>(environment.backendUrl + '/users/import', {fileContent: csvContent}, {headers: {Authorization: bearer}}).subscribe({
+        next: data => {
+          observer.next({success: true, error: undefined});
+          observer.complete();
+        },
+        error: (error: HttpErrorResponse) => {
+          observer.next({success: false, error: 'Unknown error!'});
+          console.error(error);
+          observer.complete();
+        }
+      });
+    });
+  }
+
+  exportUsers() {
+    // ts-ignore because of unexpected exceptions, that should not happen
+    return new Observable<string>((observer) => {
+      const token = this.cookieService.get('token');
+      const bearer = 'Bearer ' + token;
+      this.httpService.get<string>(environment.backendUrl + '/users/export', {
+        // @ts-ignore
+        responseType: 'text',
+        headers: new HttpHeaders({Authorization: bearer}),
+      }).subscribe({
+        next: (data) => {
+          // @ts-ignore
+          observer.next(data);
+          observer.complete();
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error(error);
         }
       });
     });

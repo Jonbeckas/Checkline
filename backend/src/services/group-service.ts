@@ -7,14 +7,22 @@ import {UserGroup} from "../model/UserGroup";
 import {GroupPermission} from "../model/GroupPermission";
 import {UserWithGroups} from "../modules/users/dtos/group-user";
 import {PermissionGroupDto} from "../modules/groups/dtos/permission-group.dto";
+import {UserService} from "./UserService";
+import * as Uuid from "uuid";
 
 export class GroupService {
-    static async addGroup(name:string):Promise<Group[]> {
+    static async addGroup(name:string):Promise<string|void> {
         const db = new DB();
         await db.connect();
         const result = <Group[]>await db.getObject("groups",{name:name});
+        if(result.length >0) {
+            await db.close();
+            return "groupExists"
+        } else {
+            await db.insertObject("groups",<Group>{groupId:Uuid.v4(),name:name});
+        }
         await db.close();
-        return result;
+        return;
     }
 
     static async getUsersInGroup(groupId:string):Promise<string[]> {
@@ -112,5 +120,45 @@ export class GroupService {
         await db.editObject("groups",["groupId"],res);
         await db.close()
         return true;
+    }
+
+    static async addUserToGroup(username:string, groupname: string):Promise<string| undefined> {
+        const db = new DB()
+        await db.connect()
+        let group = await GroupService.getGroupByName(groupname);
+        let user = await UserService.getUserByLoginName(username);
+
+        console.log(user)
+        let result;
+        if (!group) {
+            result = "Group does not exists"
+        } else {
+            if (!user) {
+                result = "User does not exists"
+            } else {
+                let sql = await GroupService.getUsersInGroup(group.groupId);
+                console.log(sql)
+                if (sql.includes(user.userId)) {
+                    result =  "User is already in group"
+                } else {
+                    await db.insertObject("user-groups",<UserGroup>{userId:user.userId, groupId:group.groupId});
+                }
+            }
+        }
+
+        await db.close()
+        return result;
+    }
+
+    static async addPermissionToGroup(groupId: string, permission: string) {
+        let db = new DB()
+        await db.connect()
+        await db.insertObject("group-permissions",<GroupPermission>{groupId:groupId,permission:permission});
+        await db.close()
+    }
+
+    static async hasPermission(groupId: string, permission: string):Promise<boolean> {
+        let permissions: string[] = await GroupService.getPermissionsByGroup(groupId)
+        return permissions.includes(permission)
     }
 }
