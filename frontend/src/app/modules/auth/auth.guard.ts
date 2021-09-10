@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router} from '@angular/router';
-import { Observable } from 'rxjs';
+import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router, CanLoad, Route, UrlSegment} from '@angular/router';
+import {Observable} from 'rxjs';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {CookieService} from 'ngx-cookie-service';
@@ -10,13 +10,22 @@ import jwtDecode from 'jwt-decode';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanLoad {
 
-  constructor(private httpClient: HttpClient, private cookieService: CookieService, private authService: AuthService, private router: Router) {}
+  constructor(private httpClient: HttpClient, private cookieService: CookieService, private authService: AuthService, private router: Router) {
+  }
+
+  canLoad(route: Route, segments: UrlSegment[]): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+        return this.shouldActivate(route.path!)
+    }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+      return this.shouldActivate(route.url[0].path);
+  }
+
+  shouldActivate(route:string): Observable<boolean> {
     return new Observable((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
@@ -24,7 +33,7 @@ export class AuthGuard implements CanActivate {
         next: (data) => {
           this.cookieService.set('token', data.token);
           const permissions = (jwtDecode(token) as any).permissions;
-          switch (route.url[0].path) {
+          switch (route) {
             case ('admin'): {
               observer.next(permissions.includes('CENGINE_LISTUSERS') ||
                 permissions.includes('CENGINE_LISTGROUPS') ||
@@ -34,8 +43,8 @@ export class AuthGuard implements CanActivate {
               break;
             }
             case ('welcome'): {
-                observer.next(true);
-                break;
+              observer.next(true);
+              break;
             } case ('dashboard'): {
               observer.next(
                 permissions.includes('RUNNER_MODIFY') ||
