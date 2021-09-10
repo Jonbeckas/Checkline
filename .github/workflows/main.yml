@@ -34,9 +34,9 @@ jobs:
         draft: false
         prerelease: true
     - name: Generate Backend Name
-      run: echo "NAME_BACKEND=$(echo checkline-backend-$RELEASE_VERSION.jar)" >> $GITHUB_ENV
-    - name: Upload Backend Jar
-      id: upload-backend-jar
+      run: echo "NAME_BACKEND=$(echo checkline-backend-$RELEASE_VERSION.zip)" >> $GITHUB_ENV
+    - name: Upload Backend zip
+      id: upload-backend-zip
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
