@@ -24,7 +24,7 @@ describe('Fill Db with testdata', () => {
         await user.deleteObject("groups",<Group>{ groupId:groupId,name:"LOL"});
         await user.insertObject("groups",<Group>{ groupId:groupId,name:"Admin"});
         await user.getObject("groups",<Group>{ groupId:groupId,name:"Admin"});
-        await user.insertObject("users",<User> {userId:userId,name:"Testname",firstName:"Max",password:hash,loginName:"name1@test"});
+        await user.insertObject("users",<User> {userId:userId,name:"Testname",firstname:"Max",password:hash,loginName:"name1@test"});
         await user.insertObject("user-groups",<UserGroup> {userId:userId,groupId:groupId});
         await user.insertObject("group-permissions",{permission:"CENGINE_ADMIN",groupId:groupId});
 

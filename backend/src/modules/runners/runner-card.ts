@@ -1,7 +1,3 @@
-import * as Ejs from "ejs"
-import * as Pdf from "html-pdf"
-import * as Path from "path"
-import * as QRCode from "qrcode"
 import * as pdfMake from "pdfmake/build/pdfmake";
 //@ts-ignore
 import * as vfs from "../../fonts/vfs_montserrat";

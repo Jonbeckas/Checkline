@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint --fix",
     "e2e": "ng e2e",
-    "buildprod": "ng build --prod"
+    "buildprod": "ng build --prod",
+    "cd-zip": "npm run build && cd dist/frontend && zip -r frontend.zip *"
   },
   "private": true,
   "dependencies": {

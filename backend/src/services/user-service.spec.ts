@@ -13,8 +13,8 @@ describe('Userservices', () => {
         const user = new DB();
         await user.connect();
         try {
-            await user.insertObject("users",<User>{ userId:USER_ID,name:"LOL",password:"123",firstName:"lol",loginName:"name2@test"});
-            await user.insertObject("users",<User>{ userId:USER_ID2,name:"JJ",password:"dd",firstName:"FGV",loginName:"name2@test"});
+            await user.insertObject("users",<User>{ userId:USER_ID,name:"LOL",password:"123",firstname:"lol",loginName:"name2@test"});
+            await user.insertObject("users",<User>{ userId:USER_ID2,name:"JJ",password:"dd",firstname:"FGV",loginName:"name2@test"});
         } catch (e) {
 
         }
