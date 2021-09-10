@@ -46,7 +46,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: "backend/dist/frontend/backend.zip"
+        asset_path: "backend/build/backend.zip"
         asset_name: ${{ env.NAME_BACKEND }}
         asset_content_type: application/zip
     - name: Generate Frontend Name
