@@ -13,6 +13,8 @@ import {PermissionDirectiveModule} from '../../directives/permission-directive/p
 import { ImportUserModalComponent } from './import-user-modal/import-user-modal.component';
 import {CdsFileModule} from "@cds/angular";
 import { ExportUserModalComponent } from './export-user-modal/export-user-modal.component';
+import { ExportGroupModalComponent } from './export-group-modal/export-group-modal.component';
+import { ImportGroupModalComponent } from './import-group-modal/import-group-modal.component';
 
 
 @NgModule({
@@ -24,6 +26,8 @@ import { ExportUserModalComponent } from './export-user-modal/export-user-modal.
     EditGroupModalComponent,
     ImportUserModalComponent,
     ExportUserModalComponent,
+    ExportGroupModalComponent,
+    ImportGroupModalComponent,
   ],
   imports: [
     CommonModule,

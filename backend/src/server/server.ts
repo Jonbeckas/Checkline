@@ -6,10 +6,18 @@ import {userRouter} from "../modules/users/users.module";
 import cors from "cors";
 import {CONFIG} from "../config";
 import {runnersRouter} from "../modules/runners/runners.module";
+import SlowDown from "express-slow-down";
 
 const app = express();
-app.get('/', (req, res) => res.send('Express + TypeScript Server'));
+app.enable("trust proxy")
+const speedLimiter = SlowDown({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    delayAfter: 100, // allow 100 requests per 15 minutes, then...
+    delayMs: 500 // begin adding 500ms of delay per request above 100:
+});
 
+//  apply to all requests
+app.use(speedLimiter);
 app.use(cors())
 app.use(authRouter);
 app.use(groupsRouter);
@@ -17,6 +25,8 @@ app.use(userRouter);
 app.use(runnersRouter)
 
 app.use(express.json());
+
+app.get('/', (req, res) => res.send('Express + TypeScript Server'));
 
 app.use(((err, req, res, next) => {
     res.status(500).send({err: "Unknown Error"})

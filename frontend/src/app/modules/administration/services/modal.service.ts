@@ -6,6 +6,8 @@ import {NewGroupModalComponent} from '../new-group-modal/new-group-modal.compone
 import {EditGroupModalComponent} from '../edit-group-modal/edit-group-modal.component';
 import {ImportUserModalComponent} from "../import-user-modal/import-user-modal.component";
 import {ExportUserModalComponent} from "../export-user-modal/export-user-modal.component";
+import {ExportGroupModalComponent} from "../export-group-modal/export-group-modal.component";
+import {ImportGroupModalComponent} from "../import-group-modal/import-group-modal.component";
 
 @Injectable({
   providedIn: 'root'
@@ -46,5 +48,15 @@ export class ModalService {
   showExportUserModal(viewContainerRef: ViewContainerRef) {
     const factory = this.componentFactory.resolveComponentFactory(ExportUserModalComponent);
     const component: ComponentRef<ExportUserModalComponent> = viewContainerRef.createComponent(factory);
+  }
+
+  showExportGroupsModal(viewContainerRef: ViewContainerRef) {
+    const factory = this.componentFactory.resolveComponentFactory(ExportGroupModalComponent);
+    const component: ComponentRef<ExportGroupModalComponent> = viewContainerRef.createComponent(factory);
+  }
+
+  showImportGroupsModal(viewContainerRef: ViewContainerRef) {
+    const factory = this.componentFactory.resolveComponentFactory(ImportGroupModalComponent);
+    const component: ComponentRef<ImportGroupModalComponent> = viewContainerRef.createComponent(factory);
   }
 }

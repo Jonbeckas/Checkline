@@ -127,4 +127,12 @@ export class AdministrationComponent implements OnInit, OnDestroy{
   onUserExport() {
     this.modalService.showExportUserModal(this.viewContainerRef)
   }
+
+  onGroupExpert() {
+    this.modalService.showExportGroupsModal(this.viewContainerRef)
+  }
+
+  onGroupImport() {
+    this.modalService.showImportGroupsModal(this.viewContainerRef)
+  }
 }

@@ -125,12 +125,11 @@ userRouter.post("/users/import", PermissionLoginValidator([["CENGINE_IMPORTUSERS
     const parsedContent = Papa.parse(importPost.fileContent, {header: true, delimiter: ","})
 
     for (let runner of <CsvImportStructureDto[]>parsedContent.data) {
-        if (runner.name != "" && runner.loginName != "" && runner.password != "" && runner.groups != "" && runner.firstname != "") {
+        if (runner.name && runner.loginName && runner.password && runner.groups && runner.firstname && runner.name != "" && runner.loginName != "" && runner.password != "" && runner.groups != "" && runner.firstname != "") {
             await UserService.addUser(runner.loginName, runner.password, runner.firstname, runner.name)
             let groups = runner.groups.split(";")
             for (let group of groups) {
-                console.log(group)
-                console.log(await GroupService.addUserToGroup(runner.loginName, group))
+                await GroupService.addUserToGroup(runner.loginName, group)
             }
         }
     }
@@ -146,13 +145,13 @@ userRouter.get("/users/export", PermissionLoginValidator([["CENGINE_EXPORTUSERS"
         let groups = ""
         user.groups.forEach((value, index) => {
             groups += value
-            if (index < user.groups.length-1) {
+            if (index < user.groups.length - 1) {
                 groups += ";"
             }
         })
         return {
             name: user.name,
-            firstname: (<any> user).firstname,
+            firstname: (<any>user).firstname,
             loginName: user.loginName,
             password: '**********',
             groups: groups,
@@ -161,9 +160,6 @@ userRouter.get("/users/export", PermissionLoginValidator([["CENGINE_EXPORTUSERS"
     })
 
     let response = Papa.unparse(userCsvArray)
-
-    console.log(response)
-
     res.contentType("text/csv").status(200).send(response)
 
 })

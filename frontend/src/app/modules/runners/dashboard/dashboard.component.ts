@@ -4,6 +4,7 @@ import {Runner} from "../dtos/Runner";
 import {RunnerService} from "../service/runner.service";
 import {ClrDatagrid} from "@clr/angular";
 import {ClarityIcons, minusIcon, plusIcon, qrCodeIcon, refreshIcon} from "@cds/core/icon";
+import {SaveService} from "../../../service/save.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -21,7 +22,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   @ViewChild(ClrDatagrid) datagrid: ClrDatagrid;
   loadQr = false;
 
-  constructor(private authService: AuthService, private runnerService: RunnerService) {
+  constructor(private authService: AuthService, private runnerService: RunnerService, private saveService: SaveService) {
   }
 
   ngOnDestroy(): void {
@@ -122,8 +123,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     for (let element of this.selected) {
       this.loadQr = true;
       this.runnerService.qr(element.loginName).subscribe(res => {
-        let blobURL = URL.createObjectURL(res);
-        window.open(blobURL, element.loginName, 'width=700,height=550,top=70,left=500,resizable=0,menubar=no')
+        this.saveService.save(res,`${element.loginName}-qr.pdf`)
         this.loadQr = false;
       })
     }
