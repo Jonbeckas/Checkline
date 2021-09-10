@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {AuthGuard} from '../auth/auth.guard';
 
-const routes: Routes = [{path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]}];
+const routes: Routes = [{path: '', component: DashboardComponent}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
