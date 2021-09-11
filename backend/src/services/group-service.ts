@@ -128,7 +128,6 @@ export class GroupService {
         let group = await GroupService.getGroupByName(groupname);
         let user = await UserService.getUserByLoginName(username);
 
-        console.log(user)
         let result;
         if (!group) {
             result = "Group does not exists"
@@ -137,7 +136,6 @@ export class GroupService {
                 result = "User does not exists"
             } else {
                 let sql = await GroupService.getUsersInGroup(group.groupId);
-                console.log(sql)
                 if (sql.includes(user.userId)) {
                     result =  "User is already in group"
                 } else {

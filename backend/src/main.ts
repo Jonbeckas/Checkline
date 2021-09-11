@@ -14,22 +14,25 @@ class Main {
     };
 
     private async checkForAdminUser(): Promise<void> {
-        let group:any = await GroupService.addGroup(CONFIG.adminGroup.name);
+        let group:any = await GroupService.getGroupByName(CONFIG.adminGroup.name);
         if (!group) {
             await GroupService.addGroup(CONFIG.adminGroup.name)
             group = await GroupService.getGroupByName(CONFIG.adminGroup.name)
+            console.log("Created new Group "+CONFIG.adminGroup.name)
         }
         if (!await GroupService.hasPermission(group.groupId,"CENGINE_ADMIN")) {
+            console.log("Give group "+CONFIG.adminGroup.name+" the permisssion CENGIN_ADMIN")
             await GroupService.addPermissionToGroup(group.groupId,"CENGINE_ADMIN")
         }
-        let user = await UserService.getUserByLoginName(CONFIG.admin.username)
+
+        let user = await UserService.getUserWithGroups(CONFIG.admin.username)
         if (user) {
-            let userHasGroup = await UserService.getUserWithGroups(CONFIG.admin.name)
-            if (userHasGroup.groups.includes(CONFIG.adminGroup.name)) {
+            if (!user.groups.includes(CONFIG.adminGroup.name)) {
                 await GroupService.addUserToGroup(CONFIG.admin.username,CONFIG.adminGroup.name)
             }
         } else {
             let password = Main.random(14)
+            console.log("Created new admin account")
             console.log("--------------------------------------")
             console.log("New admin password: "+password)
             console.log("--------------------------------------")

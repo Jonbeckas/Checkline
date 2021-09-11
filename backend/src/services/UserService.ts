@@ -65,10 +65,13 @@ export class UserService {
         return result;
     }
 
-    static async getUserWithGroups(username:string):Promise<UserWithGroups> {
+    static async getUserWithGroups(username:string):Promise<UserWithGroups| undefined> {
         const db = new DB();
         await db.connect();
         const result =  <UserWithGroups>await this.getUserByLoginName(username);
+        if (!result) {
+            return undefined
+        }
         let groups = await db.innerJoin("user-groups","groups","groupId",{userId:result.userId});
         let strGroup = groups.map((obj: unknown) => (<any>obj).name);
         result.groups = strGroup;
