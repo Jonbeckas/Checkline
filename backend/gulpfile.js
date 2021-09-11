@@ -4,7 +4,7 @@ var tsProject = ts.createProject("tsconfig.json")
 var sourcemaps = require("gulp-sourcemaps");
 const clean = require('gulp-clean');
 const {task, watch, series, parallel} = require("gulp");
-const {readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync} = require("fs");
+const {readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync} = require("fs");
 const nodemon = require("nodemon");
 
 function loadJson (path) {
@@ -64,8 +64,11 @@ task("nodemon",(done) => {
     })
 })
 
-task("clean",() => {
-    return gulp.src('build', {read: false}).pipe(clean());
+task("clean",(done) => {
+    if (existsSync("build")) {
+        gulp.src('build', {read: false}).pipe(clean())
+    }
+    done()
 })
 
 task("watchCode",() => {
