@@ -5,6 +5,7 @@ import {UserDto} from '../dtos/user.dto';
 import {environment} from '../../../../environments/environment';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
+import { ConfigService } from 'src/app/config/config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class UserService {
     return new Observable<UserDto[]>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.get<UserDto[]>(environment.backendUrl + '/users', {headers: {Authorization: bearer}}).subscribe({
+      this.httpService.get<UserDto[]>(ConfigService.settings.backendUrl + '/users', {headers: {Authorization: bearer}}).subscribe({
         next: data => {
           observer.next(data);
           observer.complete();
@@ -43,7 +44,7 @@ export class UserService {
     return new Observable<UserDto>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.post<UserDto>(environment.backendUrl + '/user', {username}, {headers: {Authorization: bearer}}).subscribe({
+      this.httpService.post<UserDto>(ConfigService.settings.backendUrl + '/user', {username}, {headers: {Authorization: bearer}}).subscribe({
         next: data => {
           observer.next(data);
           observer.complete();
@@ -68,7 +69,7 @@ export class UserService {
     return new Observable<WebResult>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.request('DELETE', environment.backendUrl + '/user', {
+      this.httpService.request('DELETE', ConfigService.settings.backendUrl + '/user', {
         headers: {Authorization: bearer},
         body: {username}
       }).subscribe({
@@ -97,7 +98,7 @@ export class UserService {
     return new Observable<WebResult>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.post<any>(environment.backendUrl + '/users/changePasswordByAdmin', {
+      this.httpService.post<any>(ConfigService.settings.backendUrl + '/users/changePasswordByAdmin', {
         username,
         newPassword: password
       }, {headers: {Authorization: bearer}}).subscribe({
@@ -126,7 +127,7 @@ export class UserService {
     return new Observable<WebResult>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.post<any>(environment.backendUrl + '/groups/addUserToGroup', {
+      this.httpService.post<any>(ConfigService.settings.backendUrl + '/groups/addUserToGroup', {
         username,
         groupname
       }, {headers: {Authorization: bearer}}).subscribe({
@@ -159,7 +160,7 @@ export class UserService {
     return new Observable<WebResult>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.post<any>(environment.backendUrl + '/groups/removeUserFromGroup', {
+      this.httpService.post<any>(ConfigService.settings.backendUrl + '/groups/removeUserFromGroup', {
         username,
         groupname
       }, {headers: {Authorization: bearer}}).subscribe({
@@ -188,7 +189,7 @@ export class UserService {
     return new Observable<WebResult>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.put<any>(environment.backendUrl + '/user', {
+      this.httpService.put<any>(ConfigService.settings.backendUrl + '/user', {
         username,
         firstname,
         name,
@@ -223,7 +224,7 @@ export class UserService {
     return new Observable<WebResult>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.post<any>(environment.backendUrl + '/users/import', {fileContent: csvContent}, {headers: {Authorization: bearer}}).subscribe({
+      this.httpService.post<any>(ConfigService.settings.backendUrl + '/users/import', {fileContent: csvContent}, {headers: {Authorization: bearer}}).subscribe({
         next: data => {
           observer.next({success: true, error: undefined});
           observer.complete();
@@ -242,7 +243,7 @@ export class UserService {
     return new Observable<string>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.get<string>(environment.backendUrl + '/users/export', {
+      this.httpService.get<string>(ConfigService.settings.backendUrl + '/users/export', {
         // @ts-ignore
         responseType: 'text',
         headers: new HttpHeaders({Authorization: bearer}),

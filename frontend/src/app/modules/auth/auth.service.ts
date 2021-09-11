@@ -5,6 +5,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {BehaviorSubject, Observable, Subscriber} from 'rxjs';
 import jwtDecode from 'jwt-decode';
 import {Router} from '@angular/router';
+import {ConfigService} from "../../config/config.service";
 
 
 
@@ -33,7 +34,7 @@ export class AuthService{
 
   login(username: string, password: string): Observable<WebResult> {
     return new Observable<WebResult>((observer) => {
-      this.httpService.post<LoginResponse>(environment.backendUrl + '/login', {username, password}).subscribe({
+      this.httpService.post<LoginResponse>(ConfigService.settings.backendUrl + '/login', {username, password}).subscribe({
         next: data => {
           this.cookieService.set('token', data.token);
           this.pemObservable.next((jwtDecode(data.token) as any).permissions);
@@ -73,7 +74,7 @@ export class AuthService{
     return new Observable<WebResult>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.post<any>(environment.backendUrl + '/users/changePassword', {username: this.getUsername(), oldPassword, newPassword: newPasword}, {headers: {Authorization: bearer}}).subscribe({
+      this.httpService.post<any>(ConfigService.settings.backendUrl + '/users/changePassword', {username: this.getUsername(), oldPassword, newPassword: newPasword}, {headers: {Authorization: bearer}}).subscribe({
         next: data => {
           observer.next({success: true, error: undefined});
           observer.complete();

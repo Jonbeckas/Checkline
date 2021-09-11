@@ -6,6 +6,7 @@ import {environment} from "../../../../environments/environment";
 import {CookieService} from "ngx-cookie-service";
 import {AuthService, WebResult} from "../../auth/auth.service";
 import {WebValueResult} from "../dtos/web-value-result";
+import { ConfigService } from 'src/app/config/config.service';
 
 
 @Injectable({
@@ -19,7 +20,7 @@ export class RunnerService {
       return new Observable<Runner[]>(observer => {
           const token = this.cookieService.get('token');
           const bearer = 'Bearer ' + token;
-          this.httpService.get<Runner[]>(environment.backendUrl+"/runners",{headers: {Authorization: bearer}}).subscribe({
+          this.httpService.get<Runner[]>(ConfigService.settings.backendUrl+"/runners",{headers: {Authorization: bearer}}).subscribe({
               next: data => {
                 observer.next(data);
                 observer.complete();
@@ -45,7 +46,7 @@ export class RunnerService {
     return new Observable<Runner>(observer => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.post<Runner[]>(environment.backendUrl+"/runner",{username:username},{headers: {Authorization: bearer}}).subscribe({
+      this.httpService.post<Runner[]>(ConfigService.settings.backendUrl+"/runner",{username:username},{headers: {Authorization: bearer}}).subscribe({
           next: data => {
             observer.next(data[0]);
             observer.complete();
@@ -71,7 +72,7 @@ export class RunnerService {
     return new Observable<WebValueResult>(observer => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.get<string[]>(environment.backendUrl+"/runners/states",{headers: {Authorization: bearer}}).subscribe({
+      this.httpService.get<string[]>(ConfigService.settings.backendUrl+"/runners/states",{headers: {Authorization: bearer}}).subscribe({
           next: data => {
             observer.next({success:true,value:data});
             observer.complete();
@@ -99,7 +100,7 @@ export class RunnerService {
     return new Observable<WebResult>(observer => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.post<string[]>(environment.backendUrl+"/runner/state",{username:username,state: state},{headers: {Authorization: bearer}}).subscribe({
+      this.httpService.post<string[]>(ConfigService.settings.backendUrl+"/runner/state",{username:username,state: state},{headers: {Authorization: bearer}}).subscribe({
           next: data => {
             observer.next({success:true,error:""});
             observer.complete();
@@ -128,7 +129,7 @@ export class RunnerService {
     return new Observable<WebResult>(observer => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.post<WebResult>(environment.backendUrl+"/runners/addRound",{username:username},{headers: {Authorization: bearer}}).subscribe({
+      this.httpService.post<WebResult>(ConfigService.settings.backendUrl+"/runners/addRound",{username:username},{headers: {Authorization: bearer}}).subscribe({
           next: data => {
             observer.next({success:true,error:""});
             observer.complete();
@@ -160,7 +161,7 @@ export class RunnerService {
     return new Observable<WebResult>(observer => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.post<WebResult>(environment.backendUrl+"/runners/decreaseRound",{username:username},{headers: {Authorization: bearer}}).subscribe({
+      this.httpService.post<WebResult>(ConfigService.settings.backendUrl+"/runners/decreaseRound",{username:username},{headers: {Authorization: bearer}}).subscribe({
           next: data => {
             observer.next({success:true,error:""});
             observer.complete();
@@ -189,7 +190,7 @@ export class RunnerService {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
 
-      this.httpService.post(environment.backendUrl+"/runners/qr",{username:username},{headers: {Authorization: bearer}}).subscribe({
+      this.httpService.post(ConfigService.settings.backendUrl+"/runners/qr",{username:username},{headers: {Authorization: bearer}}).subscribe({
           next: data => {
             let url = "data:application/pdf;base64,"+(<any>data).data;
             fetch(url)
