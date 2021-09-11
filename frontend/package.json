@@ -6,12 +6,11 @@
     "start": "ng serve",
     "start public": "ng serve --open --host 0.0.0.0 --disable-host-check",
     "build": "ng build",
-    "build:productive": "ng build --prod --build-optimizer",
     "test": "ng test",
     "lint": "ng lint --fix",
     "e2e": "ng e2e",
     "buildprod": "ng build --prod",
-    "cd-zip": "npm run build && cd dist/Checkline && zip -r frontend.zip *"
+    "cd-zip": "npm run buildprod && cd dist/Checkline && zip -r frontend.zip *"
   },
   "private": true,
   "dependencies": {

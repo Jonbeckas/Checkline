@@ -11,6 +11,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import {PermissionDirectiveModule} from './directives/permission-directive/permission-directive.module';
 import { ClarityModule } from '@clr/angular';
 import {ConfigService} from "./config/config.service";
+import {ReactiveFormsModule} from "@angular/forms";
 
 export function initializeApp(appConfig: ConfigService) {
   return () => appConfig.load();
@@ -36,7 +37,7 @@ export function initializeApp(appConfig: ConfigService) {
         useFactory: initializeApp,
         deps: [ConfigService], multi: true }],
     exports: [
-
+      ReactiveFormsModule
     ],
     bootstrap: [AppComponent]
 })
