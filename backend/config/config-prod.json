@@ -15,5 +15,13 @@
       "Injured",
       "Injured logged out"
     ]
+  },
+    "admin": {
+    "username": "admin",
+    "firstname": "firstname",
+    "name": "name"
+  },
+  "adminGroup": {
+    "name": "AdminGroup"
   }
 }
