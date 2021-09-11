@@ -4,7 +4,7 @@ var tsProject = ts.createProject("tsconfig.json")
 var uglify = require("gulp-uglify");
 var sourcemaps = require("gulp-sourcemaps");
 const {task} = require("gulp");
-const {readFileSync, writeFileSync} = require("fs");
+const {readFileSync, writeFileSync, existsSync, createDictionary, mkdirSync} = require("fs");
 
 function loadJson (path) {
     try {
@@ -26,6 +26,10 @@ function copyNewMainfest() {
 
 
 task("default", function () {
+
+    if (!existsSync("build")) {
+        mkdirSync("build")
+    }
 
     gulp.src("src/fonts/**/*").pipe(gulp.dest("build/fonts"))
 
