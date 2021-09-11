@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,6 +10,11 @@ import { NavComponent } from './components/nav/nav.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import {PermissionDirectiveModule} from './directives/permission-directive/permission-directive.module';
 import { ClarityModule } from '@clr/angular';
+import {ConfigService} from "./config/config.service";
+
+export function initializeApp(appConfig: ConfigService) {
+  return () => appConfig.load();
+}
 
 @NgModule({
     declarations: [
@@ -25,7 +30,11 @@ import { ClarityModule } from '@clr/angular';
         PermissionDirectiveModule,
         ClarityModule
     ],
-    providers: [CookieService],
+    providers: [CookieService,
+      ConfigService,
+      { provide: APP_INITIALIZER,
+        useFactory: initializeApp,
+        deps: [ConfigService], multi: true }],
     exports: [
 
     ],

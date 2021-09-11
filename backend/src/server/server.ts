@@ -26,16 +26,19 @@ app.use(runnersRouter)
 
 app.use(express.json());
 
-app.get('/', (req, res) => res.send('Express + TypeScript Server'));
+app.get('/', (req, res) => res.send('Server runs!'));
 
 app.use(((err, req, res, next) => {
     res.status(500).send({err: "Unknown Error"})
 }) as ErrorRequestHandler); // ok
 
 
-console.log(listEndpoints(app));
+//console.log(listEndpoints(app));
 
-
-app.listen(CONFIG.port, () => {
-    console.log(`⚡️[server]: Server is running at http://localhost:${CONFIG.port}`);
-});
+export class Server {
+    constructor() {
+        app.listen(CONFIG.port, () => {
+            console.log(`⚡️[server]: Server is running at http://localhost:${CONFIG.port}`);
+        });
+    }
+}

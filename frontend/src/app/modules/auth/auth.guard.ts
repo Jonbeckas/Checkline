@@ -6,6 +6,7 @@ import {environment} from '../../../environments/environment';
 import {CookieService} from 'ngx-cookie-service';
 import {AuthService, LoginResponse} from './auth.service';
 import jwtDecode from 'jwt-decode';
+import {ConfigService} from "../../config/config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class AuthGuard implements CanActivate, CanLoad {
     return new Observable((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpClient.get<LoginResponse>(environment.backendUrl + '/isValid', {headers: {Authorization: bearer}}).subscribe({
+      this.httpClient.get<LoginResponse>(ConfigService.settings.backendUrl + '/isValid', {headers: {Authorization: bearer}}).subscribe({
         next: (data) => {
           this.cookieService.set('token', data.token);
           const permissions = (jwtDecode(token) as any).permissions;

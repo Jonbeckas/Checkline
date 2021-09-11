@@ -6,6 +6,7 @@ import {environment} from '../../../../environments/environment';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 import {GroupDto} from '../dtos/group.dto';
+import {ConfigService} from "../../../config/config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class GroupService {
     return new Observable<GroupDto[]>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.get<GroupDto[]>(environment.backendUrl + '/groups', {headers: {Authorization: bearer}}).subscribe({
+      this.httpService.get<GroupDto[]>(ConfigService.settings.backendUrl + '/groups', {headers: {Authorization: bearer}}).subscribe({
         next: data => {
           observer.next(data);
           observer.complete();
@@ -43,7 +44,7 @@ export class GroupService {
     return new Observable<GroupDto>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.post<GroupDto>(environment.backendUrl + '/group', {groupname}, {headers: {Authorization: bearer}}).subscribe({
+      this.httpService.post<GroupDto>(ConfigService.settings.backendUrl + '/group', {groupname}, {headers: {Authorization: bearer}}).subscribe({
         next: data => {
           observer.next(data);
           observer.complete();
@@ -68,7 +69,7 @@ export class GroupService {
     return new Observable<WebResult>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.request('DELETE', environment.backendUrl + '/group', {headers: {Authorization: bearer}, body: {name: groupname}}).subscribe( {
+      this.httpService.request('DELETE', ConfigService.settings.backendUrl + '/group', {headers: {Authorization: bearer}, body: {name: groupname}}).subscribe( {
         next: data => {
           observer.next({success: true, error: ''});
           observer.complete();
@@ -94,7 +95,7 @@ export class GroupService {
     return new Observable<WebResult>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.post<any>(environment.backendUrl + '/groups/changeName', {groupname, newgroupname: newname}, {headers: {Authorization: bearer}}).subscribe({
+      this.httpService.post<any>(ConfigService.settings.backendUrl + '/groups/changeName', {groupname, newgroupname: newname}, {headers: {Authorization: bearer}}).subscribe({
         next: data => {
           observer.next({success: true, error: undefined});
           observer.complete();
@@ -120,7 +121,7 @@ export class GroupService {
     return new Observable<WebResult>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.put<any>(environment.backendUrl + '/groups/permission', {
+      this.httpService.put<any>(ConfigService.settings.backendUrl + '/groups/permission', {
         permission,
         groupname
       }, {headers: {Authorization: bearer}}).subscribe({
@@ -153,7 +154,7 @@ export class GroupService {
     return new Observable<WebResult>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.request<any>('DELETE', environment.backendUrl + '/groups/permission', {headers: {Authorization: bearer}, body: {permission, groupname}}).subscribe({
+      this.httpService.request<any>('DELETE', ConfigService.settings.backendUrl + '/groups/permission', {headers: {Authorization: bearer}, body: {permission, groupname}}).subscribe({
         next: data => {
           observer.next({success: true, error: undefined});
           observer.complete();
@@ -179,7 +180,7 @@ export class GroupService {
     return new Observable<WebResult>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.put<any>(environment.backendUrl + '/group', {name: groupname}, {headers: {Authorization: bearer}}).subscribe({
+      this.httpService.put<any>(ConfigService.settings.backendUrl + '/group', {name: groupname}, {headers: {Authorization: bearer}}).subscribe({
         next: data => {
           observer.next({success: true, error: undefined});
           observer.complete();
@@ -210,7 +211,7 @@ export class GroupService {
     return new Observable<string>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.get<string>(environment.backendUrl + '/groups/export', {
+      this.httpService.get<string>(ConfigService.settings.backendUrl + '/groups/export', {
         // @ts-ignore
         responseType: 'text',
         headers: new HttpHeaders({Authorization: bearer}),
@@ -231,7 +232,7 @@ export class GroupService {
     return new Observable<WebResult>((observer) => {
       const token = this.cookieService.get('token');
       const bearer = 'Bearer ' + token;
-      this.httpService.post<any>(environment.backendUrl + '/groups/import', {fileContent: csvContent}, {headers: {Authorization: bearer}}).subscribe({
+      this.httpService.post<any>(ConfigService.settings.backendUrl + '/groups/import', {fileContent: csvContent}, {headers: {Authorization: bearer}}).subscribe({
         next: data => {
           observer.next({success: true, error: undefined});
           observer.complete();
