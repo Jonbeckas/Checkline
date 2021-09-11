@@ -1,13 +1,10 @@
-import {Component, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {BarcodeFormat, Result} from "@zxing/library";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {BarcodeFormat} from "@zxing/library";
 import {ClrDatagrid} from "@clr/angular";
 import {ZXingScannerComponent} from "@zxing/ngx-scanner";
-import {$e} from "codelyzer/angular/styles/chars";
 import {ClarityIcons, infoCircleIcon} from "@cds/core/icon";
-import {ClrShapeInfoCircle} from "@clr/icons/shapes/core-shapes";
 import {Runner} from "../../runners/dtos/Runner";
 import {RunnerService} from "../../runners/service/runner.service";
-import Integer from "@zxing/library/es2015/core/util/Integer";
 
 @Component({
   selector: 'app-scanner',
