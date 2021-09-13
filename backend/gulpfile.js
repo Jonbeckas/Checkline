@@ -1,9 +1,9 @@
 var gulp = require("gulp")
 var ts = require("gulp-typescript")
-var tsProject = ts.createProject("tsconfig.json")
 var sourcemaps = require("gulp-sourcemaps");
+const mocha = require("gulp-mocha");
 const clean = require('gulp-clean');
-const {task, watch, series, parallel} = require("gulp");
+const {task, watch, series, parallel, src} = require("gulp");
 const {readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync} = require("fs");
 const nodemon = require("nodemon");
 
@@ -17,8 +17,9 @@ function loadJson (path) {
 }
 
 function buildProject() {
+    const tsProject = ts.createProject("tsconfig.json")
     gulp.src("src/fonts/**/*").pipe(gulp.dest("build/fonts"))
-    return tsProject.src()
+    return src("src/**/*.ts")
         .pipe(tsProject()).js
         .pipe(sourcemaps.init({ loadMaps: true }))
         .pipe(sourcemaps.write("./"))
@@ -55,14 +56,31 @@ task("copyTestConfig",(done) => {
     done()
 })
 
-task("nodemon",(done) => {
+task("test",() => {
+    const tsProject = ts.createProject("tsconfig.json")
+    return gulp.src('./src/**/*.ts')
+        /*transpile*/
+        .pipe(tsProject())
+        /*flush to disk*/
+        .pipe(gulp.dest('build'))
+        /*execute tests*/
+        .pipe(mocha())
+        .on("error", function(err) {
+            console.log(err)
+        })
+        .on("out",(info) => {
+            console.log(info)
+        });
+})
+
+function nodemonFun(done) {
     nodemon({
         script: 'build/main.js'
         , ext: 'js'
         , env: { 'NODE_ENV': 'development' }
         , done: done
     })
-})
+}
 
 task("clean",(done) => {
     if (existsSync("build")) {
@@ -71,13 +89,13 @@ task("clean",(done) => {
     done()
 })
 
-task("watchCode",() => {
+function watchCode() {
     watch("src/**/*",series("compile"))
-})
+}
 
 task("default", series("clean","compile","copyNewManifest","copyProdConfig"))
 
-task("watch",series("compile","copyTestConfig",parallel("nodemon","watchCode")))
+task("watch",series("compile","copyTestConfig",parallel(nodemonFun,watchCode)))
 
 
 

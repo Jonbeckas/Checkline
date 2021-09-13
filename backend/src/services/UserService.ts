@@ -1,171 +1,82 @@
-import {DB} from "../db/DB";
-import {InvalidMysqlData} from "../exception/invalid-mysql-data";
-import {NoUserFoundException} from "../exception/no-user-found.exception";
 import {User} from "../model/User";
-import {GroupService} from "./group-service";
-import * as Argon2 from "argon2";
-import  * as Uuid from "uuid";
-import {UserWithGroups} from "../modules/users/dtos/group-user";
+import {Repository} from "typeorm";
 import {Group} from "../model/Group";
-import {UserGroup} from "../model/UserGroup";
-import {Permission} from "../modules/groups/dtos/permission";
-import {GroupPermission} from "../model/GroupPermission";
+import {UserNotFoundError} from "../exception/UserNotFoundError";
+import * as Argon2 from "argon2";
+import {use} from "chai";
+import {UserExistsError} from "../exception/UserExistsError";
 
 export class UserService {
 
-    static async getUserByLoginNameExceptional(name:string):Promise<User> {
-        const db = new DB();
-        await db.connect();
-        const result = await db.getObject("users",{loginName:name});
-        if (result.length >1){
-            throw new InvalidMysqlData("No unique username "+name+"!");
-        } else if (result.length ==0) {
-            throw new NoUserFoundException();
-        }
-        await db.close();
-        return <User> result[0];
-    }
+    constructor(private userRepository: Repository<User>,private groupRepository: Repository<Group>) {}
 
-    static async getUserByLoginName(name:string):Promise<User|undefined> {
-        const db = new DB();
-        await db.connect();
-        const result = await db.getObject("users",{loginName:name});
-        if (result.length >1){
-            throw new InvalidMysqlData("No unique username "+name+"!");
-        } else if (result.length ==0) {
-            return undefined;
-        }
-        await db.close();
-        return <User> result[0];
-    }
+    /**
+     * @throws {UserNotFoundError}
+     * @param username
+     */
+    async getUserByUsername(username:string) : Promise<User> {
+        let user = await this.userRepository.findOne({where: {username: username},relations:["groups"]})
 
-    static async getUserById(userId:string):Promise<User|undefined> {
-        const db = new DB();
-        await db.connect();
-        const result = await db.getObject("users",{userId:userId});
-        if (result.length >1){
-            throw new InvalidMysqlData("No unique userId "+userId+"!");
-        } else if (result.length ==0) {
-            return undefined;
-        }
-        await db.close();
-        return <User> result[0];
-    }
-
-    static async getUsers():Promise<UserWithGroups[]> {
-        const db = new DB();
-        await db.connect();
-        const result =  <UserWithGroups[]>await db.getObject("users",{});
-        for (let index in result) {
-            let groups = await db.innerJoin("user-groups","groups","groupId",{userId:result[index].userId})
-            let strGroup = groups.map((obj: unknown) => (<any>obj).name);
-            result[index].groups = strGroup;
-        }
-        await db.close();
-        return result;
-    }
-
-    static async getUserWithGroups(username:string):Promise<UserWithGroups| undefined> {
-        const db = new DB();
-        await db.connect();
-        const result =  <UserWithGroups>await this.getUserByLoginName(username);
-        if (!result) {
-            return undefined
-        }
-        let groups = await db.innerJoin("user-groups","groups","groupId",{userId:result.userId});
-        let strGroup = groups.map((obj: unknown) => (<any>obj).name);
-        result.groups = strGroup;
-        await db.close()
-        return result;
-    }
-
-    static async getUserWithGroupsByName(username:string):Promise<UserWithGroups> {
-        const db = new DB();
-        await db.connect();
-        const result =  <UserWithGroups>await this.getUserWithGroups(username);
-        let groups = await db.innerJoin("user-groups","groups","groupId",{userId:result.userId});
-        let strGroup = groups.map((obj: unknown) => (<any>obj).name);
-        result.groups = strGroup;
-        await db.close()
-        return result;
-    }
-
-
-
-    static async getUserPermissions(userId:string):Promise<string[]> {
-        const db = new DB();
-        await db.connect();
-        const groups = await GroupService.getGroupsByUser(userId);
-        if (!groups) return [];
-        let userPermission: string[] = [];
-        for (let group of groups) {
-            const permissions = await GroupService.getPermissionsByGroup(group.groupId);
-            for (const permission of permissions) {
-                if (!userPermission.includes(permission)) {
-                    userPermission.push(permission);
-                }
-            }
-        }
-        await db.close();
-        return userPermission;
-    }
-
-    static async changeUserPasswort(userId:string,newPassword:string) {
-        const db = new DB();
-        await db.connect();
-        const hash = await Argon2.hash(newPassword);
-        await db.editObject("users",["userId"],{password:hash,userId:userId});
-        await db.close();
-    }
-
-    static async addUser(username:string,password:string, firstname:string,name:string):Promise<{ success:boolean,err:string }> {
-        const user = await this.getUserByLoginName(username);
         if (user) {
-            return {success:false,err: "Username exists"};
+            return user
         } else {
-            const db = new DB();
-            await db.connect();
-            const hash = await Argon2.hash(password);
-            const id = Uuid.v4();
-            await db.insertObject("users",<User>{userId:id,loginName:username,firstname:firstname,name:name,password:hash})
-            await db.close();
-            return {success:true,err: ""};
+            throw new UserNotFoundError()
         }
     }
 
-    static async deleteUser(username:string):Promise<{ success:boolean,err:string }> {
-        const user = await this.getUserByLoginName(username);
-        if (!user) {
-            return {success:false,err: "Username does not exists"};
+
+    async getUsers() : Promise<User[]> {
+        return await this.userRepository.find();
+    }
+
+    async changePassword(user: User,newPassword:string) {
+        user.password = await Argon2.hash(newPassword);
+        await this.userRepository.save(user);
+    }
+
+    /**
+     * @throws{UserNotFoundError}
+     * @param username
+     * @param firstname
+     * @param name
+     * @param password
+     */
+    async addUser(username: string, firstname: string, name: string, password: string):Promise<User> {
+        const user = await this.userRepository.findOne({where:{username:username}})
+        if (user) {
+            throw new UserExistsError()
+        }
+        const hash = await Argon2.hash(password);
+        let newUser = User.newUser(name,firstname,username,hash);
+        return await this.userRepository.save(newUser)
+    }
+
+    async deleteUser(user: User): Promise<void> {
+        await this.userRepository.delete(user)
+    }
+
+    /**
+     * @throws{UserNotFoundError}
+     * @param id
+     */
+    async getUserById(id:string): Promise<User> {
+        let user = await this.userRepository.findOne({where: {id:id},relations:["groups"]})
+        if (user) {
+            return user
         } else {
-            const db = new DB();
-            await db.connect();
-            await db.deleteObject("users",{userId:user.userId})
-            await db.close();
-            return {success:true,err: ""};
+            throw new UserNotFoundError();
         }
     }
 
-    static async hasUserPermissions(userId:string,permissions:string[][]):Promise<boolean> {
-        const db = new DB();
-        await db.connect();
-        let groups = await GroupService.getGroupsByUser(userId)
-        if (!groups) return false;
-        let perms = <GroupPermission[]> await db.innerJoin("groups","group-permissions","groupId",{})
-        let pemStr = perms.filter(obj => groups.map(obj2 => obj2.groupId).includes(obj.groupId)).map(obj3 => obj3.permission);
-        let bool:boolean = false;
-        for (let orPem of permissions) {
-            if (!bool) {
-                let founds = 0;
-                for (let andPem of orPem) {
-                    if (pemStr.includes(andPem)) founds++;
-                }
-                if (founds == orPem.length) bool = true;
-            }
-        }
-        await db.close();
-        return bool;
+    async setLastLogin(user:User,lastLogin:string): Promise<void> {
+        user.lastLogin = lastLogin;
+        await this.userRepository.save(user);
     }
+
+    async verifyPassword(user: User,newPassword: string): Promise<boolean> {
+        return await Argon2.verify(user.password,newPassword)
+    }
+
 }
 
 

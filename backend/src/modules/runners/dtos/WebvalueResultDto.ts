@@ -1,4 +1,4 @@
-export interface WebValueResult {
+export interface WebValueResultDto {
     success: boolean,
     value: unknown
 }
