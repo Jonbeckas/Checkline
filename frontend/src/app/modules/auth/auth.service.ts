@@ -140,4 +140,9 @@ export class AuthService{
     });
   }
 
+  getUserId(): string {
+    const token = this.cookieService.get('token');
+    return (jwtDecode(token) as any).userId;
+  }
+
 }

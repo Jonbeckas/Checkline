@@ -58,6 +58,10 @@ export class AdministrationComponent implements OnInit, OnDestroy{
 
   onUserDelete() {
     for (let user of this.selectedUsers) {
+      if (user.id == this.authService.getUserId()) {
+        alert("You can not delete the user you are currently using!");
+        continue;
+      }
       this.userService.deleteUser(user.username).subscribe(res => {
         this.userService.getUsers().subscribe(sub => {
           this.users$ = sub;
