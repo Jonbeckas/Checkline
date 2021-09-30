@@ -1,44 +1,81 @@
-import {Server} from "./server/server";
+import {Database} from "./db/Database";
 import {UserService} from "./services/UserService";
-import {CONFIG} from "./config";
-import {GroupService} from "./services/group-service";
+import {Connection} from "typeorm";
+import {User} from "./model/User";
+import {Group} from "./model/Group";
+import {GroupService} from "./services/GroupService";
+import {Permission} from "./model/Permission";
+import {Server} from "./server/server";
+import { CONFIG } from "./config/Config";
+import { PasswordGenerator } from "./utils/PasswordGenerator";
+
 
 class Main {
     constructor() {
-        this.checkForAdminUser().then((next) => {
-            new Server()
+
+        if (process.argv.includes("--help")) {
+            console.log("-p generate a new Password for the admin")
+        }
+
+        this.initDb().then((connection) => {
+            let userRepository = connection.getRepository(User)
+            let groupRepository = connection.getRepository(Group)
+            let permissionRepository = connection.getRepository(Permission)
+            let userService = new UserService(userRepository,groupRepository);
+            let groupService = new GroupService(userRepository,groupRepository,permissionRepository)
+            this.testForAdmin(userService,groupService).then((then) => {
+                new Server(userService,groupService,connection)
+            })
         })
     }
-    private static random (length: number) {
-        return Math.random().toString(16).substr(2, length);
-    };
 
-    private async checkForAdminUser(): Promise<void> {
-        let group:any = await GroupService.getGroupByName(CONFIG.adminGroup.name);
-        if (!group) {
-            await GroupService.addGroup(CONFIG.adminGroup.name)
-            group = await GroupService.getGroupByName(CONFIG.adminGroup.name)
+    async testForAdmin(userService: UserService, groupService:GroupService) {
+        let group;
+        try {
+            group = await groupService.getGroupByName(CONFIG.adminGroup.name)
+            if (!groupService.hasPermission(group, "CENGINE_ADMIN")) {
+                console.log("Give group " + CONFIG.adminGroup.name + " the permission CENGIN_ADMIN")
+                await groupService.addPermissionToGroup(group, "CENGINE_ADMIN")
+            }
+        }
+         catch (e) {
+            group = await groupService.addGroup(CONFIG.adminGroup.name,["CENGINE_ADMIN"])
             console.log("Created new Group "+CONFIG.adminGroup.name)
         }
-        if (!await GroupService.hasPermission(group.groupId,"CENGINE_ADMIN")) {
-            console.log("Give group "+CONFIG.adminGroup.name+" the permisssion CENGIN_ADMIN")
-            await GroupService.addPermissionToGroup(group.groupId,"CENGINE_ADMIN")
-        }
 
-        let user = await UserService.getUserWithGroups(CONFIG.admin.username)
-        if (user) {
-            if (!user.groups.includes(CONFIG.adminGroup.name)) {
-                await GroupService.addUserToGroup(CONFIG.admin.username,CONFIG.adminGroup.name)
+        try {
+            let user = await userService.getUserByUsername(CONFIG.admin.username)
+            if (!user.groups.some((group) => group.name == CONFIG.adminGroup.name)) {
+                await groupService.addUserToGroup(user, group)
             }
-        } else {
-            let password = Main.random(14)
+
+            if (process.argv.includes("-p")) {
+                let password = await PasswordGenerator.generatePassword(12);
+                console.log("Created new admin account")
+                console.log("--------------------------------------")
+                console.log("New admin password: "+password)
+                console.log("--------------------------------------")
+                userService.changePassword(user,password);
+            }
+
+        } catch (e) {
+            let password = await PasswordGenerator.generatePassword(12);
             console.log("Created new admin account")
             console.log("--------------------------------------")
             console.log("New admin password: "+password)
             console.log("--------------------------------------")
-            await UserService.addUser(CONFIG.admin.username,password,CONFIG.admin.firstname,CONFIG.admin.name)
-            await GroupService.addUserToGroup(CONFIG.admin.username,CONFIG.adminGroup.name)
+            let user = await userService.addUser(CONFIG.admin.username,CONFIG.admin.firstname,CONFIG.admin.name, password)
+            await groupService.addUserToGroup(user, group)
         }
+    }
+
+    async initDb(): Promise<Connection> {
+        let db = new Database();
+        db.loadFromConfig();
+        db.enableWarnLog();
+        db.enableErrorLog();
+        await db.connect();
+        return db.getConnection();
     }
 }
 

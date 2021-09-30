@@ -1,11 +1,15 @@
 var gulp = require("gulp")
 var ts = require("gulp-typescript")
-var tsProject = ts.createProject("tsconfig.json")
 var sourcemaps = require("gulp-sourcemaps");
+const mocha = require("gulp-mocha");
 const clean = require('gulp-clean');
-const {task, watch, series, parallel} = require("gulp");
+const {task, watch, series, parallel, src} = require("gulp");
 const {readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync} = require("fs");
 const nodemon = require("nodemon");
+const run = require('gulp-run');
+const concat = require('gulp-concat-sourcemap');
+
+
 
 function loadJson (path) {
     try {
@@ -17,8 +21,10 @@ function loadJson (path) {
 }
 
 function buildProject() {
+    const tsProject = ts.createProject("tsconfig.json")
     gulp.src("src/fonts/**/*").pipe(gulp.dest("build/fonts"))
-    return tsProject.src()
+
+    return src("src/**/*.ts")
         .pipe(tsProject()).js
         .pipe(sourcemaps.init({ loadMaps: true }))
         .pipe(sourcemaps.write("./"))
@@ -36,33 +42,54 @@ task("compile", ()=> {
     return buildProject()
 })
 
-task( "copyNewManifest",(done)=> {
+function copyNewManifest(done) {
     let manifest = loadJson("package.json")
     let newManifest = {name: "chackline-backend", version: manifest.version, dependencies: manifest.dependencies}
     let manifesString = JSON.stringify(newManifest)
     writeFileSync("build/package.json", manifesString)
     done()
-});
+};
 
 
-task("copyProdConfig",(done) =>{
+function copyProdConfig(done) {
     copyFileSync("config/config-prod.json","build/config.json")
     done()
-})
+}
 
-task("copyTestConfig",(done) => {
+function copyTestConfig(done) {
     copyFileSync("config/config-test.json","build/config.json")
     done()
+}
+
+task("test",() => {
+    const tsProject = ts.createProject("tsconfig.json")
+    return gulp.src('./src/**/*.ts')
+        /*transpile*/
+        .pipe(tsProject())
+        /*flush to disk*/
+        .pipe(gulp.dest('build'))
+        /*execute tests*/
+        .pipe(mocha())
+        .on("error", function(err) {
+            console.log(err)
+        })
+        .on("out",(info) => {
+            console.log(info)
+        });
 })
 
-task("nodemon",(done) => {
+function nodemonFun(done) {
     nodemon({
         script: 'build/main.js'
         , ext: 'js'
         , env: { 'NODE_ENV': 'development' }
         , done: done
     })
-})
+}
+
+function runCode() {
+    return run("node main.js",{cwd:"build","verbosity":3}).exec().pipe(gulp.dest("output"))
+}
 
 task("clean",(done) => {
     if (existsSync("build")) {
@@ -71,13 +98,13 @@ task("clean",(done) => {
     done()
 })
 
-task("watchCode",() => {
-    watch("src/**/*",series("compile"))
-})
+function watchCode() {
+    watch("src/**/*",series("compile",nodemonFun));
+}
 
-task("default", series("clean","compile","copyNewManifest","copyProdConfig"))
+task("default", series("clean","compile",copyProdConfig, copyNewManifest))
 
-task("watch",series("compile","copyTestConfig",parallel("nodemon","watchCode")))
+task("watch",series("compile",copyTestConfig,parallel(watchCode,nodemonFun)))
 
 
 

@@ -1,7 +1,7 @@
 export interface UserDto {
   name: string;
   firstname: string;
-  loginName: string;
+  username: string;
   lastLogin: string;
   groups: string[];
 }

@@ -18,8 +18,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   TIMEOUT = 10000;
   states: string[] = [];
   selected: Runner[] = [];
-  // @ts-ignore
-  @ViewChild(ClrDatagrid) datagrid: ClrDatagrid;
+  @ViewChild(ClrDatagrid) datagrid!: ClrDatagrid;
   loadQr = false;
 
   constructor(private authService: AuthService, private runnerService: RunnerService, private saveService: SaveService) {
@@ -51,14 +50,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   timeToString(time: number): string {
     if (!time) return "-"
-    let date = new Date(time * 1000);
+    let date = new Date(Math.floor(time/1000)*1000);
     return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
   }
 
   onStateChange($event: Event) {
     for (let runner of this.selected) {
-      console.log(runner.state)
-      this.runnerService.setState(runner.loginName, (<any>$event.target).value).subscribe(() => this.refreshTable());
+      this.runnerService.setState(runner.id, (<any>$event.target).value).subscribe(() => this.refreshTable());
     }
     this.refreshTable();
   }
@@ -96,16 +94,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   addRound() {
     for (let i of this.selected) {
-      this.runnerService.addRound(i.loginName).subscribe();
+      this.runnerService.addRound(i.id).subscribe(() => {
+        this.refreshTable();
+      });
     }
-    this.refreshTable()
   }
 
   decreaseRound() {
     for (let i of this.selected) {
-      this.runnerService.decreaseRound(i.loginName).subscribe();
+      this.runnerService.decreaseRound(i.id).subscribe(()=> {
+        this.refreshTable();
+      });
     }
-    this.refreshTable();
   }
 
   refreshTable() {
@@ -122,11 +122,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   qr() {
     for (let element of this.selected) {
       this.loadQr = true;
-      this.runnerService.qr(element.loginName).subscribe(res => {
-        this.saveService.save(res,`${element.loginName}-qr.pdf`)
+      this.runnerService.qr(element.id).subscribe(res => {
+        this.saveService.save(res,`${element.username}-qr.pdf`)
         this.loadQr = false;
       })
     }
   }
 }
-

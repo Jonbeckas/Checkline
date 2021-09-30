@@ -1,6 +1,6 @@
 export interface Runner {
-    userId: string;
-    loginName: string;
+    id: string;
+    username: string;
     state: string;
     lastStateChange: number;
     round: number;

@@ -2,7 +2,7 @@ export interface CsvImportStructureDto {
     firstname: string
     name: string
     password: string
-    loginName: string
+    username: string
     groups: string
 }
 

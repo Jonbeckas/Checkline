@@ -143,7 +143,7 @@ export class UserService {
               console.error(error);
             }
           } else if (error.status == 404) {
-            observer.next({success: false, error: 'Group not found!'});
+            observer.next({success: false, error: 'Group not Found'});
           } else if (error.status == 400 && error.error.err == 'User is already in group') {
             observer.next({success: false, error: 'User is already in this group!'});
           } else {
@@ -207,7 +207,7 @@ export class UserService {
               console.error(error);
               observer.next({success: false, error: 'Unknown error!'});
             }
-          } else if (error.status == 400 && error.error.err == 'Username exists') {
+          } else if (error.status == 400 && error.error.err == 'UserExists') {
             observer.next({success: false, error: 'Another user with that name exists!'});
 
           } else {

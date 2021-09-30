@@ -24,7 +24,7 @@ export class ScannerComponent implements OnInit {
   showInfo = false;
   warnIsMessage = false;
   runners: Runner[] = [];
-  lastResult: { timestamp:number,username:string }|undefined;
+  lastResult: { timestamp:number,id:string }|undefined;
 
 
   constructor(private runnerService:RunnerService) { }
@@ -73,23 +73,25 @@ export class ScannerComponent implements OnInit {
     }
   }
 
-  onScanComplete(result: string) {
+  onScanComplete(id: string) {
     if (this.runners.length > 0) {
-      if (this.lastResult?.username != result || this.lastResult.timestamp +10 <= Date.now()/1000) {
-        this.addRoundToUser(result);
+      if (this.lastResult?.id != id || this.lastResult.timestamp +10 <= Date.now()/1000) {
+        this.addRoundToUser(id);
       }
     } else {
-      this.addRoundToUser(result);
+      this.addRoundToUser(id);
     }
   }
 
-  private addRoundToUser(username:string) {
+  private addRoundToUser(id:string) {
     const timestamp = Date.now() / 1000;
-    this.lastResult ={username:username,timestamp:timestamp}
-    this.runnerService.addRound(username).subscribe(obj => {
+    this.lastResult ={id:id,timestamp:timestamp}
+    this.runnerService.addRound(id).subscribe(obj => {
       if (obj.success) {
-        this.runnerService.getRunner(username).subscribe(obj => {
+        this.runnerService.getRunner(id).subscribe(obj => {
+          console.log(obj)
           this.runners.splice(0,0,obj);
+          console.log(this.runners)
         });
       } else {
         if (obj.error =="The user has no defined state") {
@@ -102,15 +104,15 @@ export class ScannerComponent implements OnInit {
 
   timeToString(time:number): string {
     if (!time) return "-"
-    let date = new Date(time*1000);
+    let date = new Date(Math.floor(time/1000)*1000);
     return `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
   }
 
-  onUserUndo(loginName: string,timestamp:number) {
-    this.runnerService.decreaseRound(loginName).subscribe(obj => {
+  onUserUndo(id: string,timestamp:number) {
+    this.runnerService.decreaseRound(id).subscribe(obj => {
       if (obj.success) {
         for (let index in this.runners) {
-          if (this.runners[index].loginName == loginName && this.runners[index].timestamp == timestamp) {
+          if (this.runners[index].id == id && this.runners[index].timestamp == timestamp) {
             let indexx:number = parseInt(index);
             this.runners.splice(indexx!,1)
           }

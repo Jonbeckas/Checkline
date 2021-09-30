@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
-import {Router} from '@angular/router';
+import {Router, RouteReuseStrategy} from '@angular/router';
 import {environment} from '../../../../environments/environment';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService, WebResult} from '../../auth/auth.service';
@@ -23,6 +23,12 @@ export class LoginComponent implements OnInit {
       username: ['', [Validators.required]],
       password: ['', Validators.required]
     });
+
+    authService.isvalid().subscribe((next) => {
+      if (next) {
+        this.router.navigate(["welcome"]);
+      }
+    })
   }
 
   submit() {
