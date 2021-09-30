@@ -4,7 +4,7 @@ import * as vfs from "../../fonts/vfs_montserrat";
 
 
 export class RunnerCard {
-    static getRunnerCard(username:string):Promise<string> {
+    static getRunnerCard(username:string, id:string):Promise<string> {
 
         return new Promise(async (resolve,reject) => {
 
@@ -29,7 +29,7 @@ export class RunnerCard {
                 content: [
                     {text: "Checkline", fontSize: 80, font:"Montserrat", margin: [ 0, 0, 0, 20 ] },
                     // basic usage
-                    { qr: username,fit: '300' },
+                    { qr: id,fit: '300' },
 
                     {text: username, fontSize: 30, font:"Montserrat", margin: [ 0, 20, 0, 0 ]}
                 ]

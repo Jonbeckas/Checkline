@@ -14,6 +14,7 @@ import { GroupNotFoundError } from "../../exception/GroupNotFoundError";
 import { UserGroupDto } from "./dtos/UserGroupDto";
 import { UserNotFoundError } from "../../exception/UserNotFoundError";
 import { GroupHasPermissionError } from "../../exception/GroupHasPermissionError";
+import { GroupHasNotPermissionError } from "../../exception/GroupNotHasPermissionError";
 
 
 export const groupsRouter = express.Router({ caseSensitive: false });
@@ -22,7 +23,7 @@ groupsRouter.use(bodyParser.json());
 groupsRouter.use(bodyParser.urlencoded({ extended: true }))
 
 groupsRouter.put('/group', PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]]), async (req, res, next) => {
-    const groupService = (<any> res).groupService as GroupService
+    const groupService = (<any> req).groupService as GroupService
 
     const gReq = <AddGroupDto>req.body;
     if (!gReq || !gReq.name) {
@@ -37,13 +38,13 @@ groupsRouter.put('/group', PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]]),
         if (e instanceof GroupExistsError) {
             res.status(400).send({err: "GroupExists"});
         } else {
-            throw new InternalServerError();
+            next(new InternalServerError());
         }
     }
 });
 
 groupsRouter.delete('/group', PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]]), async (req, res, next) => {
-    const groupService = (<any> res).groupService as GroupService
+    const groupService = (<any> req).groupService as GroupService
 
     const gReq = <AddGroupDto>req.body;
     if (!gReq || !gReq.name) {
@@ -59,7 +60,7 @@ groupsRouter.delete('/group', PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]
         if (e instanceof GroupNotFoundError) {
             res.status(400).send({err: "GroupNotFound"})
         } else {
-            throw new InternalServerError();
+            next(e);
         }
     }
 });
@@ -67,7 +68,7 @@ groupsRouter.delete('/group', PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]
 
 groupsRouter.post('/groups/addUserToGroup', PermissionLoginValidator([["CENGINE_MODIFYUSERS"]]), async (req, res, next) => {
     const userService = (<any> req).userService as UserService;
-    const groupService = (<any> res).groupService as GroupService
+    const groupService = (<any> req).groupService as GroupService
 
     const gReq = <UserGroupDto>req.body;
     if (!gReq || !gReq.groupname || !gReq.username) {
@@ -89,14 +90,14 @@ groupsRouter.post('/groups/addUserToGroup', PermissionLoginValidator([["CENGINE_
         } else if (e instanceof GroupNotFoundError) {
             res.status(404).send({err: "GroupNotFound"});
         } else {
-            throw new InternalServerError();
+            next(e);
         }
     }
 });
 
 groupsRouter.post('/groups/removeUserFromGroup', PermissionLoginValidator([["CENGINE_MODIFYUSERS"]]), async (req, res, next) => {
     const userService = (<any> req).userService as UserService;
-    const groupService = (<any> res).groupService as GroupService
+    const groupService = (<any> req).groupService as GroupService
 
     const gReq = <UserGroupDto>req.body;
     if (!gReq || !gReq.groupname || !gReq.username) {
@@ -108,7 +109,7 @@ groupsRouter.post('/groups/removeUserFromGroup', PermissionLoginValidator([["CEN
         let user = await userService.getUserByUsername(gReq.username);
         let group = await groupService.getGroupByName(gReq.groupname);
 
-        await groupService.addUserToGroup(user, group);
+        await groupService.deleteUserFromGroup(user, group);
 
         res.status(200).send();
     } catch(e) {
@@ -117,13 +118,13 @@ groupsRouter.post('/groups/removeUserFromGroup', PermissionLoginValidator([["CEN
         } else if (e instanceof GroupNotFoundError) {
             res.status(404).send({err: "GroupNotFound"});
         } else {
-            throw new InternalServerError();
+            next(new InternalServerError());
         }
     }
 });
 
 groupsRouter.post('/groups/changeName', PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]]), async (req, res, next) => {
-    const groupService = (<any> res).groupService as GroupService
+    const groupService = (<any> req).groupService as GroupService
 
     const gReq = req.body;
     if (!gReq || !gReq.groupname || !gReq.newgroupname) {
@@ -139,14 +140,14 @@ groupsRouter.post('/groups/changeName', PermissionLoginValidator([["CENGINE_MODI
         if (e instanceof GroupNotFoundError) {
             res.status(404).send({err: "GroupNotFound"});
         } else {
-            throw new InternalServerError();
+            next(new InternalServerError());
         }
     }
 });
 
 groupsRouter.put('/groups/permission', PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]]), async (req, res, next) => {
     const userService = (<any> req).userService as UserService;
-    const groupService = (<any> res).groupService as GroupService
+    const groupService = (<any> req).groupService as GroupService
 
     const gReq = <Permission>req.body;
     if (!gReq || !gReq.groupname || !gReq.permission) {
@@ -171,7 +172,7 @@ groupsRouter.put('/groups/permission', PermissionLoginValidator([["CENGINE_MODIF
         } else if (e instanceof GroupHasPermissionError) {
             res.status(400).send({err: "GroupHasPermission"})
         } else {
-            throw new InternalServerError();
+            next(new InternalServerError());
         }
 
     }
@@ -179,7 +180,7 @@ groupsRouter.put('/groups/permission', PermissionLoginValidator([["CENGINE_MODIF
 
 groupsRouter.delete('/groups/permission', PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]]), async (req, res, next) => {
     const userService = (<any> req).userService as UserService;
-    const groupService = (<any> res).groupService as GroupService
+    const groupService = (<any> req).groupService as GroupService
 
     const gReq = <Permission>req.body;
     if (!gReq || !gReq.groupname || !gReq.permission) {
@@ -203,16 +204,16 @@ groupsRouter.delete('/groups/permission', PermissionLoginValidator([["CENGINE_MO
     } catch(e) {
         if (e instanceof GroupNotFoundError) {
             res.status(404).send({err: "GroupNotFound"});
-        } else if (e instanceof GroupHasPermissionError) {
-            res.status(400).send({err: "GroupHasPermission"})
+        } else if (e instanceof GroupHasNotPermissionError) {
+            res.status(400).send({err: "GroupHasNotPermission"})
         } else {
-            throw new InternalServerError();
+            next(e);
         }
     }
 });
 
 groupsRouter.get('/groups/permissions', PermissionLoginValidator([["CENGINE_MODIFYGROUPS"]]), async (req, res, next) => {
-    const groupService = (<any> res).groupService as GroupService
+    const groupService = (<any> req).groupService as GroupService
 
     const gReq = <Permission>req.body;
     if (!gReq || !gReq.groupname) {
@@ -228,21 +229,33 @@ groupsRouter.get('/groups/permissions', PermissionLoginValidator([["CENGINE_MODI
         if (e instanceof GroupNotFoundError) {
             res.status(404).send({err: "GroupNotFound"});
         } else {
-            throw new InternalServerError();
+            next(new InternalServerError());
         }
     }
 });
 
 groupsRouter.get('/groups', PermissionLoginValidator([["CENGINE_LISTGROUPS"]]), async (req, res, next) => {
-    const groupService = (<any> res).groupService as GroupService
+    const groupService = (<any> req).groupService as GroupService
+    const userService = (<any> req).userService as UserService
+    try {
+        let editedGroups = [];
+        let groups = await groupService.getGroups()
+        for (let group of groups) {
+            let mappedGroup = group;
+            // @ts-ignore
+            mappedGroup.permissions = group.permissions.map((pem) => pem.name);
+            editedGroups.push(mappedGroup);
+        }
 
-    let group = await groupService.getGroups()
-    res.status(200).send(group);
+        res.status(200).send(editedGroups);
+    } catch(e) {
+        next(e);
+    }
 });
 
 groupsRouter.post('/group', PermissionLoginValidator([["CENGINE_LISTGROUPS"], ["CENGINE_MODIFYGROUPS"]]), async (req, res, next) => {
     const userService = (<any> req).userService as UserService;
-    const groupService = (<any> res).groupService as GroupService
+    const groupService = (<any> req).groupService as GroupService
 
     const gReq = req.body;
     if (!gReq || !gReq.groupname) {
@@ -250,19 +263,21 @@ groupsRouter.post('/group', PermissionLoginValidator([["CENGINE_LISTGROUPS"], ["
         return;
     }
     try {
-        let group = groupService.getGroupByName(gReq.groupname)
+        let group = await groupService.getGroupByName(gReq.groupname)
+        // @ts-ignore
+        group.permissions = group.permissions.map((pem) => pem.name)
         res.status(200).send(group);
     } catch(e) {
         if (e instanceof GroupNotFoundError) {
             res.status(404).send({err: "GroupNotFound"});
         } else {
-            throw new InternalServerError();
+            next(new InternalServerError());
         }
     }
 });
 
 groupsRouter.get('/groups/export', PermissionLoginValidator([["CENGINE_EXPORTGROUPS"]]), async (req, res, next) => {
-    const groupService = (<any> res).groupService as GroupService
+    const groupService = (<any> req).groupService as GroupService
 
     let groups = await groupService.getGroups();
 
@@ -270,7 +285,7 @@ groupsRouter.get('/groups/export', PermissionLoginValidator([["CENGINE_EXPORTGRO
         let permissions = ""
 
         group.permissions.forEach((value, index) => {
-            permissions += value
+            permissions += value.name
             if (index < group.permissions.length - 1) {
                 permissions += ";"
             }
@@ -285,7 +300,7 @@ groupsRouter.get('/groups/export', PermissionLoginValidator([["CENGINE_EXPORTGRO
 
 groupsRouter.post('/groups/import', PermissionLoginValidator([["CENGINE_IMPORTGROUPS"]]), async (req, res, next) => {
     const userService = (<any> req).userService as UserService;
-    const groupService = (<any> res).groupService as GroupService
+    const groupService = (<any> req).groupService as GroupService
 
     const importPost = <ImportGroupDto>req.body;
 
@@ -293,22 +308,20 @@ groupsRouter.post('/groups/import', PermissionLoginValidator([["CENGINE_IMPORTGR
 
     for (let group of <CsvGroupImportExportDto[]>parsedContent.data) {
         if (group.name != "" && group.permissions != "") {
+            let permissions = group.permissions.split(";");
             try {
-                let permissions = group.permissions.split(";");
                 let groupObj = await groupService.addGroup(group.name);
 
                 for (let pem of permissions) {
-                    if (await groupService.hasPermission(groupObj,pem)) {
+                    if (!await groupService.hasPermission(groupObj,pem)) {
                         await groupService.addPermissionToGroup(groupObj,pem);
                     }
                 }
-
-                await groupService.addGroup(group.name, permissions)
             } catch(e) {
-                if(e instanceof GroupExistsError) {
-                    res.status(400).send({err:"GroupExists"})
+                if (e instanceof GroupExistsError) {
+
                 } else {
-                    throw new InternalServerError()
+                    next(e);
                 }
             }
         }

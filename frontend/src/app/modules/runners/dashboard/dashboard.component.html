@@ -38,14 +38,14 @@
     </div>
   </clr-dg-action-bar>
 
-  <clr-dg-column [clrDgField]="'loginName'">Username</clr-dg-column>
+  <clr-dg-column [clrDgField]="'username'">Username</clr-dg-column>
   <clr-dg-column [clrDgField]="'state'">State</clr-dg-column>
   <clr-dg-column [clrDgField]="'lastStateChange'">Last state change</clr-dg-column>
   <clr-dg-column [clrDgField]="'round'">Rounds</clr-dg-column>
   <clr-dg-column [clrDgField]="'timestamp'">Last round change</clr-dg-column>
 
   <clr-dg-row *clrDgItems="let runner of runners$ " [clrDgItem]="runner" >
-    <clr-dg-cell>{{runner.loginName}}</clr-dg-cell>
+    <clr-dg-cell>{{runner.username}}</clr-dg-cell>
     <clr-dg-cell>{{runner.state ? runner.state: "-"}}</clr-dg-cell>
     <clr-dg-cell>{{timeToString(runner.lastStateChange)}}</clr-dg-cell>
     <clr-dg-cell>{{runner.round||0}}

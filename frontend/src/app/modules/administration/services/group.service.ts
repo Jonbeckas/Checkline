@@ -103,8 +103,8 @@ export class GroupService {
         error: (error: HttpErrorResponse) => {
           if (error.status == 404) {
             console.warn(error.error.err);
-            if (error.error.err == 'Group not found') {
-              observer.next({success: false, error: 'Group not found\''});
+            if (error.error.err == 'GroupNotFound') {
+              observer.next({success: false, error: 'Group not found'});
             } else {
               observer.next({success: false, error: 'Unknown Error'});
             }
@@ -193,7 +193,7 @@ export class GroupService {
               console.error(error);
               observer.next({success: false, error: 'Unknown error!'});
             }
-          } else if (error.status == 400 && error.error.err == 'Group exists') {
+          } else if (error.status == 400 && error.error.err == 'GroupExists') {
             observer.next({success: false, error: 'Another Group with that name exists!'});
 
           } else {

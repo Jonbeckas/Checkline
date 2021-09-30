@@ -11,6 +11,7 @@ export class Database {
             Path.resolve(Path.parse(__dirname).dir,"model").replace(/\\/gi,"/")+"/*.js"
         ],
         synchronize: true,
+        logging: new Array()
     }
 
     constructor() {
@@ -44,5 +45,18 @@ export class Database {
         this.options.username = CONFIG.database.username;
         this.options.password = CONFIG.database.password;
         this.options.database = CONFIG.database.database;
+    }
+
+    enableQueryLog() {
+        console.log(this.options)
+        this.options.logging.push("query")
+    }
+
+    enableErrorLog() {
+        this.options.logging.push("error")
+    }
+
+    enableWarnLog() {
+        this.options.logging.push("warn")
     }
 }

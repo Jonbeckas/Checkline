@@ -7,10 +7,16 @@ import {GroupService} from "./services/GroupService";
 import {Permission} from "./model/Permission";
 import {Server} from "./server/server";
 import { CONFIG } from "./config/Config";
+import { PasswordGenerator } from "./utils/PasswordGenerator";
 
 
 class Main {
     constructor() {
+
+        if (process.argv.includes("--help")) {
+            console.log("-p generate a new Password for the admin")
+        }
+
         this.initDb().then((connection) => {
             let userRepository = connection.getRepository(User)
             let groupRepository = connection.getRepository(Group)
@@ -22,10 +28,6 @@ class Main {
             })
         })
     }
-
-    private static random (length: number) {
-        return Math.random().toString(16).substr(2, length);
-    };
 
     async testForAdmin(userService: UserService, groupService:GroupService) {
         let group;
@@ -46,8 +48,18 @@ class Main {
             if (!user.groups.some((group) => group.name == CONFIG.adminGroup.name)) {
                 await groupService.addUserToGroup(user, group)
             }
+
+            if (process.argv.includes("-p")) {
+                let password = await PasswordGenerator.generatePassword(12);
+                console.log("Created new admin account")
+                console.log("--------------------------------------")
+                console.log("New admin password: "+password)
+                console.log("--------------------------------------")
+                userService.changePassword(user,password);
+            }
+
         } catch (e) {
-            let password = Main.random(14)
+            let password = await PasswordGenerator.generatePassword(12);
             console.log("Created new admin account")
             console.log("--------------------------------------")
             console.log("New admin password: "+password)
@@ -59,7 +71,9 @@ class Main {
 
     async initDb(): Promise<Connection> {
         let db = new Database();
-        db.loadFromConfig()
+        db.loadFromConfig();
+        db.enableWarnLog();
+        db.enableErrorLog();
         await db.connect();
         return db.getConnection();
     }

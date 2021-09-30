@@ -21,8 +21,8 @@ export class AdministrationComponent implements OnInit, OnDestroy{
   element = '';
   interval: number | undefined;
   TIMEOUT = 5000;
-  selectedUser:any =null;
-  selectedGroup: any = null;
+  selectedUsers:any =[];
+  selectedGroups: any = [];
 
   // @ts-ignore
   @ViewChild(ClrDatagrid) datagrid: ClrDatagrid;
@@ -57,13 +57,15 @@ export class AdministrationComponent implements OnInit, OnDestroy{
   }
 
   onUserDelete() {
-    this.userService.deleteUser(this.selectedUser.loginName).subscribe(res => {
-      this.userService.getUsers().subscribe(sub => {
-        this.users$ = sub;
-        this.datagrid.dataChanged();
+    for (let user of this.selectedUsers) {
+      this.userService.deleteUser(user.username).subscribe(res => {
+        this.userService.getUsers().subscribe(sub => {
+          this.users$ = sub;
+          this.datagrid.dataChanged();
+        });
       });
-    });
-    this.openUserDelete = false;
+      this.openUserDelete = false;
+    }
   }
 
   ngOnDestroy(): void {
@@ -71,7 +73,7 @@ export class AdministrationComponent implements OnInit, OnDestroy{
   }
 
   onUserEdit() {
-    this.modalService.showUserEditModal(this.selectedUser.loginName, this.selectedUser.groups, this.viewContainerRef);
+    this.modalService.showUserEditModal(this.selectedUsers[0].username, this.selectedUsers[0].groups, this.viewContainerRef);
   }
 
   onNewUserClick() {
@@ -89,13 +91,15 @@ export class AdministrationComponent implements OnInit, OnDestroy{
   }
 
   onGroupDelete() {
-    this.groupService.deleteGroup(this.element).subscribe(res => {
-      this.groupService.getGroups().subscribe(sub => {
-        this.groups$ = sub;
-        this.datagrid.dataChanged();
+    for (let group of this.selectedGroups) {
+      this.groupService.deleteGroup(group.name).subscribe(res => {
+        this.groupService.getGroups().subscribe(sub => {
+          this.groups$ = sub;
+          this.datagrid.dataChanged();
+        });
       });
-    });
-    this.openGroupDelete = false;
+      this.openGroupDelete = false;
+    }
   }
 
   onGroupRefresh() {
@@ -117,7 +121,7 @@ export class AdministrationComponent implements OnInit, OnDestroy{
   }
 
   onGroupEdit() {
-    this.modalService.showGroupEditModal(this.selectedGroup.name, this.selectedGroup.permissions, this.viewContainerRef);
+    this.modalService.showGroupEditModal(this.selectedGroups[0].name, this.selectedGroups[0].permissions, this.viewContainerRef);
   }
 
   onUserImport() {

@@ -1,1 +1,1 @@
-export class GroupHasNotPermissionError extends Error {}
+export class GroupHasNotPermissionError {}

@@ -1,1 +1,1 @@
-export class RunnerStateNotFoundError extends Error{}
+export class RunnerStateNotFoundError{}

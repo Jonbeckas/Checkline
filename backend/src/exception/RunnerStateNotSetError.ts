@@ -1,1 +1,1 @@
-export class RunnerStateNotSetError extends Error {}
+export class RunnerStateNotSetError {}

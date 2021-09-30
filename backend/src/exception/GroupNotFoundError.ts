@@ -1,3 +1,3 @@
-export class GroupNotFoundError extends Error{
+export class GroupNotFoundError {
 
 }

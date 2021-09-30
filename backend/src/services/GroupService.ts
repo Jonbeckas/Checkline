@@ -89,7 +89,7 @@ export class GroupService {
     }
 
     /**
-     * @throws{GroupExistsError}
+     * @throws{GroupNotFoundError}
      * @param name
      */
     async getGroupByName(name:string): Promise<Group> {
@@ -97,7 +97,7 @@ export class GroupService {
         if (group) {
             return group
         } else {
-            throw new GroupExistsError()
+            throw new GroupNotFoundError()
         }
     }
 
@@ -106,19 +106,21 @@ export class GroupService {
     }
 
     async getGroups() :Promise<Group[]> {
-        return await this.groupRepository.find()
+        return await this.groupRepository.find({relations:["permissions","users"]})
     }
 
     async getGroupsWithPermission(permission: string): Promise<Group[]> {
         let groups = await this.getGroups();
         let all: Group[]= [];
 
-        for (let group of groups) {
-            for (let pem of group.permissions) {
-                if (pem.name == permission) {
-                    all.push(group)
+        if (groups) {
+            for (let group of groups) {
+                for (let pem of group.permissions) {
+                    if (pem.name == permission) {
+                        all.push(group)
+                    }
                 }
-            }
+            }   
         }
         return all;
     }
@@ -133,6 +135,11 @@ export class GroupService {
         user.groups.push(group)
         await this.groupRepository.save(group)
         await this.userRepository.save(user)
+    }
+
+    async deleteUserFromGroup(user: User, group:Group): Promise<void> {
+        user.groups = user.groups.filter((grp) => grp.id != group.id);
+        await this.userRepository.save(user); 
     }
 
     /**
@@ -170,20 +177,37 @@ export class GroupService {
      * @param group
      */
     async deletePermissionFromGroup(group: Group, permission: string): Promise<void> {
-        let permissions: Permission[] = group.permissions.filter((pem) => pem.name != permission)
-
-        if (permission) {
-            throw new GroupHasNotPermissionError();
-        } else {
-            group.permissions = permissions;
+        let permissions: Permission[] = group.permissions.filter((pem) => pem.name == permission)
             this.groupRepository.save(group);
-        }
+            this.permissionReposity.remove(permissions[0])
     }
 
+    /**
+     * @param group 
+     */
     async deleteGroup(group: Group): Promise<void> {
-        this.groupRepository.delete(group);
+        for (let permission of group.permissions) {
+            this.permissionReposity.remove(permission)
+        }
+        this.groupRepository.remove(group);
     }
 
-
+    /**
+     * @param permission 
+     */
+    async getUsersWithPermission(permission: string): Promise<User[]> {
+        let users: User[] = [];
+        let groups = await this.getGroupsWithPermission(permission);
+        if (groups) {
+            for (let group of groups) {
+                for (let user of group.users) {
+                    if (!users.some((usr) => {usr.id == user.id})) {
+                        users.push(user);
+                    }
+                }
+            }
+        }
+        return users;
+    }
 
 }

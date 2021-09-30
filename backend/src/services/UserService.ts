@@ -26,7 +26,7 @@ export class UserService {
 
 
     async getUsers() : Promise<User[]> {
-        return await this.userRepository.find();
+        return await this.userRepository.find({relations:["groups"]});
     }
 
     async changePassword(user: User,newPassword:string) {
@@ -52,7 +52,7 @@ export class UserService {
     }
 
     async deleteUser(user: User): Promise<void> {
-        await this.userRepository.delete(user)
+        await this.userRepository.remove(user)
     }
 
     /**

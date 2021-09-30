@@ -39,7 +39,6 @@ authRouter.post('/login', async (req:any, res, next) => {
         }
 
     } catch (e) {
-        console.log(e)
         res.status(401).send({err: "Unauthorized"});
         return;
     }

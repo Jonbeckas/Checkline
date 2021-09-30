@@ -6,21 +6,25 @@ export class Runner {
     @PrimaryGeneratedColumn("uuid")
     id!: string;
 
-    @Column()
-    state!: number;
+    @Column({nullable: true, type:"text"})
+    state!: string| null;
 
-    @Column()
-    lastStateChange!: number;
+    @Column({nullable: true, type:"int"})
+    lastStateChange!: number| null;
 
-    @Column()
+    @Column({nullable: false, type:"int"})
     round!: number;
 
-    @Column()
-    timestamp!: number;
+    @Column({nullable: true, type:"bigint"})
+    timestamp!: number| null;
 
-    @Column()
-    userId!: string
-
-    @JoinColumn({name: "groupId",referencedColumnName:"id"})
-    user!:User
+    static newRunner(id: string) {
+        let runner = new Runner();
+        runner.id  = id;
+        runner.lastStateChange = null;
+        runner.round = 0;
+        runner.state = null;
+        runner.timestamp = null;
+        return runner;
+    }
 }

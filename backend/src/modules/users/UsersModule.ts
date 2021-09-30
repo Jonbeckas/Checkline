@@ -13,6 +13,7 @@ import { ChangePasswordDto } from "../authentification/dtos/ChangePasswordDto";
 import { ImportUserDto } from "./dtos/ImportUserDto";
 import { GroupService } from "../../services/GroupService";
 import { GroupNotFoundError } from "../../exception/GroupNotFoundError";
+import { TypeFormatFlags } from "typescript";
 
 
 export const userRouter = express.Router({caseSensitive: false});
@@ -23,8 +24,15 @@ userRouter.use(bodyParser.urlencoded({extended: true}))
 
 userRouter.get('/users', PermissionLoginValidator([["CENGINE_LISTUSERS"]]), async (req, res, next) => {
     const userService = (<any>req).userService as UserService;
-    let group = await userService.getUsers();
-    res.status(200).send(group);
+    let users = await userService.getUsers();
+    let mappedUsers = [];
+    for (let user of users) {
+        let mappedUser = user;
+        // @ts-ignore
+        mappedUser.groups = user.groups.map((grp) => grp.name);
+        mappedUsers.push(mappedUser);
+    }
+    res.status(200).send(mappedUsers);
 
 });
 
@@ -38,12 +46,13 @@ userRouter.put('/user', PermissionLoginValidator([["CENGINE_MODIFYUSERS"]]), asy
     }
     try {
         await userService.addUser(uReq.username, uReq.password, uReq.firstname, uReq.name);
+        res.status(200).send();
     } catch(e) {
         if (e instanceof UserExistsError) {
             res.status(400).send({err: "UserExists"});
             return
         } else {
-            throw new InternalServerError()
+            next(e);
         }
     }
 
@@ -62,13 +71,11 @@ userRouter.delete('/user', PermissionLoginValidator([["CENGINE_MODIFYUSERS"]]), 
         let user = await userService.getUserByUsername(uReq.username);
         let result = await userService.deleteUser(user)
         res.status(200).send();
-        return;
     } catch(e) {
         if (e instanceof UserNotFoundError) {
             res.status(400).send({err: "UserNotFound"});
-            return
         } else {
-            throw new InternalServerError()
+            next(e);
         }
     }
 });
@@ -81,20 +88,22 @@ userRouter.post('/user', PermissionLoginValidator([["CENGINE_LISTUSERS"]]), asyn
         return;
     }
     try {
-        let result = userService.getUserByUsername(uReq.username);
+        let result = await userService.getUserByUsername(uReq.username);
+        // @ts-ignore
+        result.groups = result.groups.map((grp) => grp.name)
         res.status(200).send(result)
     } catch(e) {
         if (e instanceof UserNotFoundError) {
             res.status(400).send({err: "UserNotFound"});
             return
         } else {
-            throw new InternalServerError()
+            next(new InternalServerError());
         }
     }
 });
 
 
-userRouter.post('/users/changePassword', PermissionLoginValidator([["CENGINE_LOGINABLE"],["CENGINE_MODIFYUSERS"]]), async (req, res, next) => {
+userRouter.post('/users/changePassword', PermissionLoginValidator([["CENGINE_LOGINABLE"]]), async (req, res, next) => {
     const uReq = <ChangePasswordDto>req.body;
     const userService = (<any>req).userService as UserService;
     if (!uReq || !uReq.newPassword || !uReq.oldPassword || !uReq.username) {
@@ -113,15 +122,36 @@ userRouter.post('/users/changePassword', PermissionLoginValidator([["CENGINE_LOG
         if (e instanceof UserNotFoundError) {
             res.send(400).send({err: "UserNotFound"})
         } else {
-            throw new InternalServerError()
+            next(new InternalServerError());
         }
     }
 });
 
-userRouter.post("/users/import", PermissionLoginValidator([["CENGINE_IMPORTUSERS"]]), async (req, res) => {
+userRouter.post('/users/changePasswordByAdmin', PermissionLoginValidator([["CENGINE_MODIFYUSERS"]]), async (req, res, next) => {
+    const uReq = <ChangePasswordDto>req.body;
+    const userService = (<any>req).userService as UserService;
+    if (!uReq || !uReq.newPassword || !uReq.username) {
+        res.status(400).send({err: "Missing Fields"});
+        return;
+    }
+
+    try {
+        let user = await userService.getUserByUsername(uReq.username);
+        await userService.changePassword(user, uReq.newPassword)
+        res.status(200).send()
+    } catch (e) {
+        if (e instanceof UserNotFoundError) {
+            res.send(400).send({err: "UserNotFound"})
+        } else {
+            next(new InternalServerError());
+        }
+    }
+});
+
+userRouter.post("/users/import", PermissionLoginValidator([["CENGINE_IMPORTUSERS"]]), async (req, res,next) => {
     const importPost = <ImportUserDto>req.body;
     const userService = (<any> req).userService as UserService;
-    const groupService = (<any> req).GroupService as GroupService;
+    const groupService = (<any> req).groupService as GroupService;
 
     const parsedContent = Papa.parse(importPost.fileContent, {header: true, delimiter: ","})
 
@@ -131,21 +161,27 @@ userRouter.post("/users/import", PermissionLoginValidator([["CENGINE_IMPORTUSERS
                 let user = await userService.addUser(runner.username,runner.firstname,runner.name, runner.password);
                 let groups = runner.groups.split(";")
                 for (let group of groups) {
-                    let groupObject = await groupService.getGroupByName(group);
-                    await groupService.addUserToGroup(user, groupObject);
+                    try {
+                        let groupObject = await groupService.getGroupByName(group);
+                        await groupService.addUserToGroup(user, groupObject);
+                    } catch(f) {
+                        if (f instanceof GroupNotFoundError) {
+
+                        } else {
+                            next(f);
+                        }
+                    }
                 }
                 res.status(200).send()
             }catch (e){
                 if (e instanceof UserExistsError) {
-                    res.status(400).send({err: "UserNotFound"})
-                } else if (e instanceof GroupNotFoundError) {
-                    res.status(400).send({err: "GroupNotFound"})
+
                 } else {
-                    throw new InternalServerError()
+                    next(e);
                 }
             }
         } else {
-            res.status(401).send({err: "InvalidCsv"})
+
         }
     }
 
@@ -159,7 +195,7 @@ userRouter.get("/users/export", PermissionLoginValidator([["CENGINE_EXPORTUSERS"
     let userCsvArray: CsvExportStructureDto[] = users.map((user) => {
         let groups = ""
         user.groups.forEach((value, index) => {
-            groups += value
+            groups += value.name
             if (index < user.groups.length - 1) {
                 groups += ";"
             }

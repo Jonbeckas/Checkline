@@ -6,6 +6,10 @@ const clean = require('gulp-clean');
 const {task, watch, series, parallel, src} = require("gulp");
 const {readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync} = require("fs");
 const nodemon = require("nodemon");
+const run = require('gulp-run');
+const concat = require('gulp-concat-sourcemap');
+
+
 
 function loadJson (path) {
     try {
@@ -19,6 +23,7 @@ function loadJson (path) {
 function buildProject() {
     const tsProject = ts.createProject("tsconfig.json")
     gulp.src("src/fonts/**/*").pipe(gulp.dest("build/fonts"))
+
     return src("src/**/*.ts")
         .pipe(tsProject()).js
         .pipe(sourcemaps.init({ loadMaps: true }))
@@ -37,24 +42,24 @@ task("compile", ()=> {
     return buildProject()
 })
 
-task( "copyNewManifest",(done)=> {
+function copyNewManifest(done) {
     let manifest = loadJson("package.json")
     let newManifest = {name: "chackline-backend", version: manifest.version, dependencies: manifest.dependencies}
     let manifesString = JSON.stringify(newManifest)
     writeFileSync("build/package.json", manifesString)
     done()
-});
+};
 
 
-task("copyProdConfig",(done) =>{
+function copyProdConfig(done) {
     copyFileSync("config/config-prod.json","build/config.json")
     done()
-})
+}
 
-task("copyTestConfig",(done) => {
+function copyTestConfig(done) {
     copyFileSync("config/config-test.json","build/config.json")
     done()
-})
+}
 
 task("test",() => {
     const tsProject = ts.createProject("tsconfig.json")
@@ -82,6 +87,10 @@ function nodemonFun(done) {
     })
 }
 
+function runCode() {
+    return run("node main.js",{cwd:"build","verbosity":3}).exec().pipe(gulp.dest("output"))
+}
+
 task("clean",(done) => {
     if (existsSync("build")) {
         gulp.src('build', {read: false}).pipe(clean())
@@ -90,12 +99,12 @@ task("clean",(done) => {
 })
 
 function watchCode() {
-    watch("src/**/*",series("compile"))
+    watch("src/**/*",series("compile",nodemonFun));
 }
 
-task("default", series("clean","compile","copyNewManifest","copyProdConfig"))
+task("default", series("clean","compile",copyProdConfig, copyNewManifest))
 
-task("watch",series("compile","copyTestConfig",parallel(nodemonFun,watchCode)))
+task("watch",series("compile",copyTestConfig,parallel(watchCode,nodemonFun)))
 
 
 

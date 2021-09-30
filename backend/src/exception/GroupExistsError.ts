@@ -1,1 +1,1 @@
-export class GroupExistsError extends Error {}
+export class GroupExistsError {}

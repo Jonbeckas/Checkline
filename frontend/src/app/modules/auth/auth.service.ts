@@ -119,4 +119,25 @@ export class AuthService{
     return this.pemObservable;
   }
 
+  isvalid(): Observable<boolean> {
+    return new Observable((subscriber) => {
+      const token = this.cookieService.get('token');
+      const bearer = 'Bearer ' + token;
+      this.httpService.get<LoginResponse>(ConfigService.settings.backendUrl + '/isValid', {headers: {Authorization: bearer}}).subscribe({
+        next: (data) => {
+          subscriber.next(true);
+          subscriber.complete();
+        },
+        error: (err: HttpErrorResponse) => {
+          if (err.status == 401) {
+            this.logout();
+            this.router.navigateByUrl('/login');
+          }
+          subscriber.next(false);
+          subscriber.complete();
+        }
+      });
+    });
+  }
+
 }

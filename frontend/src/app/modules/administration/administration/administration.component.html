@@ -3,13 +3,13 @@
       <h2>Users</h2>
 
 
-    <clr-datagrid [(clrDgSingleSelected)]="selectedUser">
+    <clr-datagrid [(clrDgSelected)]="selectedUsers">
       <clr-dg-action-bar >
         <div class="btn-group" *permissionIf="['CENGINE_MODIFYUSERS']">
-          <button type="button" class="btn btn-sm" (click)="onUserEdit()" [disabled]="selectedUser == null">
+          <button type="button" class="btn btn-sm" (click)="onUserEdit()" [disabled]="selectedUsers.length != 1">
             <cds-icon shape="pencil"></cds-icon> Edit
           </button>
-          <button type="button" class="btn btn-sm  btn-danger-outline btn-secondary" (click)="this.openUserDelete = true; element= selectedUser.loginName" [disabled]="selectedUser == null" >
+          <button type="button" class="btn btn-sm  btn-danger-outline btn-secondary" (click)="this.openUserDelete = true; element= selectedUsers.username" [disabled]="selectedUsers.length == 0" >
             <cds-icon shape="trash"></cds-icon> Delete
           </button>
 
@@ -31,14 +31,14 @@
         </button>
       </clr-dg-action-bar>
 
-      <clr-dg-column [clrDgField]="'loginName'">Username</clr-dg-column>
+      <clr-dg-column [clrDgField]="'username'">Username</clr-dg-column>
       <clr-dg-column [clrDgField]="'name'">Name</clr-dg-column>
       <clr-dg-column [clrDgField]="'firstname'">First name</clr-dg-column>
       <clr-dg-column [clrDgField]="'groups'">Groups</clr-dg-column>
 
       <clr-dg-row *clrDgItems="let user of users$" [clrDgItem]="user" >
         <p>{{user}}</p>
-        <clr-dg-cell>{{user.loginName}}</clr-dg-cell>
+        <clr-dg-cell>{{user.username}}</clr-dg-cell>
         <clr-dg-cell>{{user.name}}</clr-dg-cell>
         <clr-dg-cell>{{user.firstname}}</clr-dg-cell>
         <clr-dg-cell>{{user.groups}}</clr-dg-cell>
@@ -55,13 +55,13 @@
 
   <div class="clr-col" *permissionIf="['CENGINE_LISTGROUPS','CENGINE_MODIFYGROUPS']">
     <h2>Groups</h2>
-    <clr-datagrid [(clrDgSingleSelected)]="selectedGroup">
+    <clr-datagrid [(clrDgSelected)]="selectedGroups">
       <clr-dg-action-bar>
         <div class="btn-group" *permissionIf="['CENGINE_MODIFYGROUPS']">
-          <button type="button" class="btn btn-sm" (click)="onGroupEdit()" [disabled]="selectedGroup == null">
+          <button type="button" class="btn btn-sm" (click)="onGroupEdit()" [disabled]="selectedGroups.length != 1">
             <cds-icon shape="pencil"></cds-icon> Edit
           </button>
-          <button type="button" class="btn btn-sm  btn-danger-outline btn-secondary" (click)="this.openGroupDelete = true; element= selectedGroup.name" [disabled]="selectedGroup == null" >
+          <button type="button" class="btn btn-sm  btn-danger-outline btn-secondary" (click)="this.openGroupDelete = true" [disabled]="selectedGroups.length == 0" >
             <cds-icon shape="trash"></cds-icon> Delete
           </button>
 
@@ -106,7 +106,7 @@
 <clr-modal [(clrModalOpen)]="openUserDelete" [clrModalClosable]="true" [clrModalStaticBackdrop]="false">
   <h3 class="modal-title">Question</h3>
   <div class="modal-body">
-    <p>Do you want to delete the User {{element}}?</p>
+    <p>Do you want to delete the selected users?</p>
   </div>
   <div  class="modal-footer">
     <button type="button" class="btn btn-outline" (click)="onUserCancel()">Cancel</button>
@@ -117,7 +117,7 @@
 <clr-modal [(clrModalOpen)]="openGroupDelete" [clrModalClosable]="true" [clrModalStaticBackdrop]="false">
   <h3 class="modal-title">Question</h3>
   <div class="modal-body">
-    <p>Do you want to delete the Group {{element}}?</p>
+    <p>Do you want to delete the selected groups?</p>
   </div>
   <div  class="modal-footer">
     <button type="button" class="btn btn-outline" (click)="onGroupCancel()">Cancel</button>
