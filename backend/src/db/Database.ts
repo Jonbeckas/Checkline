@@ -10,6 +10,9 @@ export class Database {
         entities: [
             Path.resolve(Path.parse(__dirname).dir,"model").replace(/\\/gi,"/")+"/*.js"
         ],
+        migrations: [
+            Path.resolve(Path.parse(__dirname).dir,"migrations").replace(/\\/gi,"/")+"/*.js"
+        ],
         synchronize: true,
         logging: new Array()
     }
@@ -58,5 +61,9 @@ export class Database {
 
     enableWarnLog() {
         this.options.logging.push("warn")
+    }
+
+    enableMigration(op: boolean) {
+        this.options.migrationsRun = op;
     }
 }

@@ -34,12 +34,23 @@
         </select>
       </clr-select-container>
 
+      <clr-select-container class="clr-col">
+        <label>Station:</label>
+        <select clrSelect name="options" required [(ngModel)]="station">
+          <ng-container *ngFor="let station of $stations|async">
+            <option [value]="station">{{station}}</option>
+          </ng-container>
+        </select>
+      </clr-select-container>
+
       <clr-toggle-container *ngIf="torchComp" class="clr-col">
         <label>Torch:</label>
         <clr-toggle-wrapper>
           <input type="checkbox" clrToggle name="options" required value="true"  [(ngModel)]="torch"/>
         </clr-toggle-wrapper>
       </clr-toggle-container>
+
+
     </div>
   </div>
 

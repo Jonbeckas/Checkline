@@ -18,6 +18,9 @@ export class Runner {
     @Column({nullable: true, type:"bigint"})
     timestamp!: number| null;
 
+    @Column({nullable: true, type:"text"})
+    station!: string|null
+
     static newRunner(id: string) {
         let runner = new Runner();
         runner.id  = id;
@@ -25,6 +28,7 @@ export class Runner {
         runner.round = 0;
         runner.state = null;
         runner.timestamp = null;
+        runner.station = null;
         return runner;
     }
 }

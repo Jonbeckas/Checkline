@@ -5,6 +5,8 @@ import {RunnerService} from "../service/runner.service";
 import {ClrDatagrid} from "@clr/angular";
 import {ClarityIcons, minusIcon, plusIcon, qrCodeIcon, refreshIcon} from "@cds/core/icon";
 import {SaveService} from "../../../service/save.service";
+import {catchError, takeUntil} from "rxjs/operators"
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +22,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   selected: Runner[] = [];
   @ViewChild(ClrDatagrid) datagrid!: ClrDatagrid;
   loadQr = false;
+
+  $stations = this.runnerService.getStations().pipe(
+
+  )
 
   constructor(private authService: AuthService, private runnerService: RunnerService, private saveService: SaveService) {
   }
@@ -61,6 +67,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.refreshTable();
   }
 
+  onStationChange($event: Event) {
+    for (let runner of this.selected) {
+      if (runner.state== null) {
+        alert("The user must be logged in!");
+        return;
+      }
+      this.runnerService.setStation(runner.id, (<any>$event.target).value).subscribe(() => this.refreshTable());
+    }
+    this.refreshTable();
+  }
+
   isDropdowStateSeleted(state: string) {
     if (this.selected.length == 1) {
       return (this.selected[0].state == state)?true: null;
@@ -79,11 +96,42 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  isDropdownNeedsPlaceholder() {
+  isDropdowStationSeleted(station: string) {
+    if (this.selected.length == 1) {
+      return (this.selected[0].station == station)?true: false;
+    } else {
+      let lastValue = this.selected[0].station;
+      for (let element of this.selected) {
+        if (element.state != lastValue) {
+          return false;
+        }
+      }
+      if (lastValue == station) {
+        return true;
+      } else{
+        return false;
+      }
+    }
+  }
+
+  isDropdownStateNeedsPlaceholder() {
     if (this.selected.length > 0) {
       let lastValue = this.selected[0].state;
       for (let element of this.selected) {
         if (element.state != lastValue) {
+          return true;
+        }
+      }
+      return null;
+    }
+    return true;
+  }
+
+  isDropdownStationNeedsPlaceholder() {
+    if (this.selected.length > 0) {
+      let lastValue = this.selected[0].station;
+      for (let element of this.selected) {
+        if (element.station != lastValue) {
           return true;
         }
       }

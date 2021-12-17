@@ -63,4 +63,7 @@ export class Configuration {
 
     @jsonMember(DefaultGroup,{isRequired: true})
     adminGroup!: DefaultGroup
+
+    @jsonArrayMember(String, {isRequired: true})
+    stations!: string[]
 }

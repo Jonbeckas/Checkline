@@ -13,6 +13,7 @@ import { RunnerService } from '../modules/runners/RunnerService';
 import { Runner } from '../model/Runner';
 import { runnersRouter } from '../modules/runners/RunnersModule';
 import * as req from "express-async-handler"
+import listEndpoints from 'express-list-endpoints';
 
 //console.log(listEndpoints(app));
 
@@ -57,6 +58,7 @@ export class Server {
         }) as ErrorRequestHandler); 
 
         app.listen(CONFIG.port, () => {
+            console.log(listEndpoints(app))
             console.log(`⚡️[server]: Server is running at http://localhost:${CONFIG.port}`);
         });
     }

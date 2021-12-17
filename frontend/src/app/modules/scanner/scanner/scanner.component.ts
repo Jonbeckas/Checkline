@@ -5,6 +5,7 @@ import {ZXingScannerComponent} from "@zxing/ngx-scanner";
 import {ClarityIcons, infoCircleIcon} from "@cds/core/icon";
 import {Runner} from "../../runners/dtos/Runner";
 import {RunnerService} from "../../runners/service/runner.service";
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-scanner',
@@ -25,6 +26,9 @@ export class ScannerComponent implements OnInit {
   warnIsMessage = false;
   runners: Runner[] = [];
   lastResult: { timestamp:number,id:string }|undefined;
+
+  $stations = this.runnerService.getStations().pipe();
+  station!:string;
 
 
   constructor(private runnerService:RunnerService) { }
@@ -89,6 +93,9 @@ export class ScannerComponent implements OnInit {
     this.runnerService.addRound(id).subscribe(obj => {
       if (obj.success) {
         this.runnerService.getRunner(id).subscribe(obj => {
+          if (this.station) {
+            this.runnerService.setStation(id,this.station).subscribe();
+          }
           console.log(obj)
           this.runners.splice(0,0,obj);
           console.log(this.runners)

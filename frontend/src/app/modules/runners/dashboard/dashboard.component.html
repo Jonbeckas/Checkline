@@ -14,11 +14,25 @@
       <clr-select-container class="state-select" *permissionIf="['CENGINE_MODIFYUSERS']">
         <select clrSelect name="options" [disabled]="isDropdownDisabled()" (change)="onStateChange($event)">
           <ng-container *ngIf="selected.length > 1 || selected.length == 0">
-            <option disabled hidden [attr.selected]="isDropdownNeedsPlaceholder()" [value]="'placeholder'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+            <option disabled hidden [attr.selected]="isDropdownStateNeedsPlaceholder()" [value]="'placeholder'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
           </ng-container>
           <ng-container *ngIf="selected.length >= 1">
             <ng-container *ngFor="let state of states">
               <option [value]="state" [attr.selected]="isDropdowStateSeleted(state)">{{state}}</option>
+            </ng-container>
+          </ng-container>
+        </select>
+        <clr-control-error>This field is required!</clr-control-error>
+      </clr-select-container>
+
+      <clr-select-container class="state-select" *permissionIf="['CENGINE_MODIFYUSERS']">
+        <select clrSelect name="options" [disabled]="isDropdownDisabled()" (change)="onStationChange($event)">
+          <ng-container *ngIf="selected.length > 1 || selected.length == 1">
+            <option disabled hidden [attr.selected]="isDropdownStationNeedsPlaceholder()" [value]="'placeholder'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+          </ng-container>
+          <ng-container *ngIf="selected.length >= 1">
+            <ng-container *ngFor="let station of $stations|async">
+              <option [value]="station" [attr.selected]="isDropdowStationSeleted(station)">{{station}}</option>
             </ng-container>
           </ng-container>
         </select>
@@ -43,6 +57,7 @@
   <clr-dg-column [clrDgField]="'lastStateChange'">Last state change</clr-dg-column>
   <clr-dg-column [clrDgField]="'round'">Rounds</clr-dg-column>
   <clr-dg-column [clrDgField]="'timestamp'">Last round change</clr-dg-column>
+  <clr-dg-column [clrDgField]="'station'">Station</clr-dg-column>
 
   <clr-dg-row *clrDgItems="let runner of runners$ " [clrDgItem]="runner" >
     <clr-dg-cell>{{runner.username}}</clr-dg-cell>
@@ -51,6 +66,7 @@
     <clr-dg-cell>{{runner.round||0}}
     </clr-dg-cell>
     <clr-dg-cell>{{this.timeToString(runner.timestamp)}}</clr-dg-cell>
+    <clr-dg-cell>{{runner.station ? runner.station: "-"}}</clr-dg-cell>
   </clr-dg-row>
 
   <clr-dg-footer>

@@ -72,6 +72,7 @@ class Main {
     async initDb(): Promise<Connection> {
         let db = new Database();
         db.loadFromConfig();
+        db.enableQueryLog();
         db.enableWarnLog();
         db.enableErrorLog();
         await db.connect();

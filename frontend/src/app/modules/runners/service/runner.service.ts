@@ -215,4 +215,18 @@ export class RunnerService {
       )
     });
   }
+
+  getStations(): Observable<string[]> {
+    const token = this.cookieService.get('token');
+    const bearer = 'Bearer ' + token;
+
+    return this.httpService.get<string[]>(ConfigService.settings.backendUrl+"/runners/stations",{headers: {Authorization: bearer}});
+  }
+
+    setStation(id:string, station: string) {
+    const token = this.cookieService.get('token');
+    const bearer = 'Bearer ' + token;
+
+    return this.httpService.post(ConfigService.settings.backendUrl+"/runners/station",{id:id, station:station},{headers: {Authorization: bearer}});
+  }
 }
