@@ -23,5 +23,9 @@
   },
   "adminGroup": {
     "name": "AdminGroup"
-  }
+  },
+  "stations": [
+    "station1",
+    "station2"
+  ]
 }

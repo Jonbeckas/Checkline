@@ -1,8 +1,6 @@
 ﻿import {UserService} from "../../services/UserService";
 import {Runner} from "../../model/Runner";
 import { GroupService } from "../../services/GroupService";
-import { Group } from "../../model/Group";
-import { ArrayUtils } from "../../utils/ArrayUtils";
 import { Repository } from "typeorm";
 import { RunnerNotFoundError } from "../../exception/RunnerNotFoundError";
 import { CONFIG } from "../../config/Config";
@@ -124,8 +122,32 @@ export class RunnerService {
 
     }
 
+    /* 
+     * Set timestamp to current time
+     */
     async changeTimestampToNow(runner:Runner) {
         runner.timestamp = new Date().getTime();
         this.runnerRepository.save(runner);
+    }
+
+    /**
+     * Set round
+     * @param round
+     */
+    async setStation(runner:Runner,station: string) {
+        if (CONFIG.stations.includes(station)) {
+            runner.station = station;
+            this.runnerRepository.save(runner);
+        } else {
+
+        }
+    }
+
+    /**
+     * Get Station 
+     * @throws{StationNotFoundError}
+     */
+    async getStation(runner:Runner): Promise<string|null> {
+        return runner.station;
     }
 }

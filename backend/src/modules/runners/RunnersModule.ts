@@ -123,7 +123,7 @@ runnersRouter.post("/runners/decreaseRound",PermissionLoginValidator([["RUNNER_M
 });
 
 runnersRouter.post("/runners/qr",PermissionLoginValidator([["RUNNER_LIST"]]), async (req, res, next) => {
-
+    let runnerService = (<any> req).runnerService as RunnerService
     let userService = (<any> req).userService as UserService;
     let rReq = <UsernameDto> req.body;
     if (!req.body || !rReq.id) {
@@ -141,4 +141,60 @@ runnersRouter.post("/runners/qr",PermissionLoginValidator([["RUNNER_LIST"]]), as
             next(new InternalServerError());;
         }
     }
+});
+
+/*
+    Section for Runner Stations
+*/
+runnersRouter.post("/runners/station",PermissionLoginValidator([["RUNNER_MODIFY"]]), async (req,res,next) => {
+    let runnerService = (<any> req).runnerService as RunnerService;
+
+    let station = <string> req.body.station;
+    let id = <string> req.body.id;
+    if (!req.body || !id ||!station ) {
+        res.status(400).send({err: "Missing Fields"});
+        return;
+    }
+
+    try {
+        let runner = await runnerService.getRunnerById(id);
+        runnerService.setStation(runner, station);
+        res.status(200).send();
+    } catch(e) {
+        if (e instanceof RunnerNotFoundError) {
+            res.status(404).send({err:"RunnerNotFound"})
+        } else {
+            next(new InternalServerError());
+        }
+    }
+});
+
+/**
+ * Get station
+ */
+runnersRouter.get("/runners/station",PermissionLoginValidator([["RUNNER_MODIFY"]]), async (req,res,next) => {
+    let runnerService = (<any> req).runnerService as RunnerService;
+
+    let station = <string> req.body.station;
+    let uid = <string> req.body.uid;
+    if (!req.body || !uid ||!station ) {
+        res.status(400).send({err: "Missing Fields"});
+        return;
+    }
+
+    try {
+        let runner = await runnerService.getRunnerById(uid);
+        let station = runnerService.getStation(runner);
+        res.status(200).send(station)
+    } catch(e) {
+        if (e instanceof RunnerNotFoundError) {
+            res.status(404).send({err:"RunnerNotFound"})
+        } else {
+            next(new InternalServerError());
+        }
+    }
+});
+
+runnersRouter.get("/runners/stations",PermissionLoginValidator([["RUNNER_MODIFY"]]), async (req, res, next) => {
+    res.status(200).send(CONFIG.stations)
 });

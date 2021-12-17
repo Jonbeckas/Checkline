@@ -5,4 +5,5 @@ export interface Runner {
     lastStateChange: number;
     round: number;
     timestamp: number;
+    station: string;
 }
