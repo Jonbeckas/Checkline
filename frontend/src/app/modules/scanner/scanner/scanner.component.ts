@@ -26,6 +26,7 @@ export class ScannerComponent implements OnInit {
   warnIsMessage = false;
   runners: Runner[] = [];
   lastResult: { timestamp:number,id:string }|undefined;
+  scannerReady = false;
 
   $stations = this.runnerService.getStations().pipe();
   station!:string;
@@ -39,6 +40,7 @@ export class ScannerComponent implements OnInit {
 
   onCamerasFound($event: MediaDeviceInfo[]) {
     this.cameras = $event.reverse();
+    setTimeout(()=> {this.scannerReady = true},300);
   }
 
   onNoCamerasFound($event: any) {

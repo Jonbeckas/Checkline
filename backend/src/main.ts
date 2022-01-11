@@ -14,7 +14,8 @@ class Main {
     constructor() {
 
         if (process.argv.includes("--help")) {
-            console.log("-p generate a new Password for the admin")
+            console.log("-p generate a new Password for the admin");
+            process.exit(0);
         }
 
         this.initDb().then((connection) => {

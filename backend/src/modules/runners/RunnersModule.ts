@@ -198,3 +198,26 @@ runnersRouter.get("/runners/station",PermissionLoginValidator([["RUNNER_MODIFY"]
 runnersRouter.get("/runners/stations",PermissionLoginValidator([["RUNNER_MODIFY"]]), async (req, res, next) => {
     res.status(200).send(CONFIG.stations)
 });
+
+/**
+ * self runner overview
+ */
+ runnersRouter.get("/runner",PermissionLoginValidator([["RUNNER_SELF_OVERVIEW"]]), async (req, res, next) => {
+    let runnerService = (<any> req).runnerService as RunnerService;
+    let uid = <string> req.body.uid;
+    if (!req.body || !uid) {
+        res.status(400).send({err: "Missing Fields"});
+        return;
+    }
+
+    try {
+        let runner = await runnerService.getRunnerById(uid);
+        res.status(200).send(runner)
+    } catch(e) {
+        if (e instanceof RunnerNotFoundError) {
+            res.status(200).send({err:"RunnerNotFound"})
+        } else {
+            next(new InternalServerError());
+        }
+    }
+});

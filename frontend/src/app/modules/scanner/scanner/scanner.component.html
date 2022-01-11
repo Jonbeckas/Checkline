@@ -1,3 +1,5 @@
+<h2>Scanner</h2>
+
 <div class="clr-row">
   <div class="clr-col">
     <div class="alert alert-info" [ngClass]="{'alert-info':!warnIsMessage,'alert-warning':warnIsMessage}" role="alert" *ngIf="showInfo">
@@ -12,7 +14,9 @@
         </div>
       </div>
     </div>
-
+  <div>
+    <clr-spinner class="scanner-spinner" *ngIf="!scannerReady"></clr-spinner>
+  </div>
     <zxing-scanner
       [formats]="formats"
       (camerasFound)="onCamerasFound($event)"

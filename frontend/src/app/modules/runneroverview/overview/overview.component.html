@@ -1,0 +1,24 @@
+<h2>My statistics</h2>
+
+<clr-stack-view>
+    <clr-stack-block>
+        <clr-stack-label>Rounds</clr-stack-label>
+        <clr-step-content>{{(runner|async)?.round}}</clr-step-content>
+    </clr-stack-block>
+    <clr-stack-block>
+        <clr-stack-label>Current State</clr-stack-label>
+        <clr-step-content>{{(runner|async)?.state}}</clr-step-content>
+    </clr-stack-block>
+    <clr-stack-block>
+        <clr-stack-label>Last station</clr-stack-label>
+        <clr-step-content>{{(runner|async)?.station}}</clr-step-content>
+    </clr-stack-block>
+    <clr-stack-block>
+        <clr-stack-label>Last scan at</clr-stack-label>
+        <clr-step-content>{{(runner|async)?.timestamp | date:"dd.MM.yyyy HH:mm"}}</clr-step-content>
+    </clr-stack-block>
+    <clr-stack-block>
+        <clr-stack-label>Last state change at</clr-stack-label>
+        <clr-step-content>{{(runner|async)?.lastStateChange| date:"dd.MM.yyyy HH:mm" }}</clr-step-content>
+    </clr-stack-block>
+</clr-stack-view>

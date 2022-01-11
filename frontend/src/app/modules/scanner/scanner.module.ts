@@ -6,7 +6,7 @@ import { ScannerComponent } from './scanner/scanner.component';
 import {AuthModule} from "../auth/auth.module";
 import {ZXingScannerModule} from "@zxing/ngx-scanner";
 import {FormsModule} from "@angular/forms";
-import {ClrCheckboxModule, ClrDatagridModule, ClrIconModule, ClrSelectModule} from "@clr/angular";
+import {ClrCheckboxModule, ClrDatagridModule, ClrIconModule, ClrSelectModule, ClrSpinnerModule} from "@clr/angular";
 
 
 
@@ -23,7 +23,8 @@ import {ClrCheckboxModule, ClrDatagridModule, ClrIconModule, ClrSelectModule} fr
     ClrSelectModule,
     ClrIconModule,
     ClrCheckboxModule,
-    ClrDatagridModule
+    ClrDatagridModule,
+    ClrSpinnerModule,
   ]
 })
 export class ScannerModule { }
