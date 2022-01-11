@@ -32,7 +32,7 @@ export class RunnerService {
 
     /**
      * @throws{RunnerNotFoundError}
-     * @param username
+     * @param id
      */
     async getRunnerById(id:string):Promise<RunnerDto> {
         let runner = await this.runnerRepository.findOne({where:{id:id}});

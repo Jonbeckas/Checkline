@@ -7,6 +7,7 @@ import {CookieService} from "ngx-cookie-service";
 import {AuthService, WebResult} from "../../auth/auth.service";
 import {WebValueResult} from "../dtos/web-value-result";
 import { ConfigService } from 'src/app/config/config.service';
+import { TestBed } from '@angular/core/testing';
 
 
 @Injectable({
@@ -223,7 +224,7 @@ export class RunnerService {
     return this.httpService.get<string[]>(ConfigService.settings.backendUrl+"/runners/stations",{headers: {Authorization: bearer}});
   }
 
-    setStation(id:string, station: string) {
+  setStation(id:string, station: string) {
     const token = this.cookieService.get('token');
     const bearer = 'Bearer ' + token;
 

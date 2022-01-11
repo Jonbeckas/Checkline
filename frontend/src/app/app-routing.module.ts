@@ -17,6 +17,11 @@ const routes: Routes = [
     canLoad: [AuthGuard]
   },
   {
+    path: 'runner-overview',
+    loadChildren: () => import('./modules/runneroverview/runneroverview.module').then(m => m.RunnerOverviewModule),
+    canLoad: [AuthGuard]
+  },
+  {
     path: 'admin',
     loadChildren: () => import('./modules/administration/administration.module').then(m => m.AdministrationModule),
     canLoad: [AuthGuard]
