@@ -122,8 +122,9 @@ runnersRouter.post("/runners/decreaseRound",PermissionLoginValidator([["RUNNER_M
     }
 });
 
-runnersRouter.post("/runners/qr",PermissionLoginValidator([["RUNNER_LIST"]]), async (req, res, next) => {
-    let runnerService = (<any> req).runnerService as RunnerService
+runnersRouter.post("/runners/qr",PermissionLoginValidator([["RUNNER_LIST"],["RUNNER_SELF_OVERVIEW"]]), async (req, res, next) => {
+    let runnerService = (<any> req).runnerService as RunnerService;
+    let groupService = (<any> req).groupService as GroupService;
     let userService = (<any> req).userService as UserService;
     let rReq = <UsernameDto> req.body;
     if (!req.body || !rReq.id) {
@@ -133,7 +134,16 @@ runnersRouter.post("/runners/qr",PermissionLoginValidator([["RUNNER_LIST"]]), as
     try {
         let user = await userService.getUserById(rReq.id);
         let data = await RunnerCard.getRunnerCard(user.username, user.id);
-        res.status(200).send({data: data})
+        if (await  groupService.userHasPermission(user, [["RUNNER_SELF_OVERVIEW"]])) {
+            if (rReq.id ==(<any>req).userData.userId) {
+                res.status(200).send({data: data})
+            } else {
+                res.status(403).send({err:"Forbidden"});
+            }
+        } else {
+            res.status(200).send({data: data})
+        }
+
     } catch (e) {
         if (e instanceof UserNotFoundError) {
             res.status(404).send({err:"UserNotFound"});

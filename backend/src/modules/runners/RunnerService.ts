@@ -83,6 +83,7 @@ export class RunnerService {
     async setRunneState(runner: Runner,state:string):Promise<void> {
         if (CONFIG.runners.states.includes(state)) {
             runner.state = state;
+            runner.lastStateChange = Date.now();
             this.runnerRepository.save(runner);
         } else {
             throw new RunnerStateNotFoundError();
