@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import {AuthService} from '../../modules/auth/auth.service';
 import {Subscription} from 'rxjs';
-import {conditionallyCreateMapObjectLiteral} from '@angular/compiler/src/render3/view/util';
 
 @Directive({
   selector: '[permissionIf]'

@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../services/user.service';
 import {WebResult} from '../../auth/auth.service';
 import {ClrDatagrid} from '@clr/angular';
@@ -24,7 +24,7 @@ export class UserEditModalComponent implements OnInit {
   permissionForm: any;
   spinnerPem = false;
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService) { }
+  constructor(private formBuilder: UntypedFormBuilder, private userService: UserService) { }
 
   ngOnInit(): void {
     console.log(this.username);
