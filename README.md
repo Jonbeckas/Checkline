@@ -2,7 +2,7 @@
 
 Checkline is a tool to manage your runs
 
-## Gettiting Involved
+## Getting Involved
 
  - Question: Open a Discussion unde 'Discussions'
  - Issue: Open an issue under 'Issues'
