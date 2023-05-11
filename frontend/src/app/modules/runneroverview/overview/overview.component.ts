@@ -13,7 +13,7 @@ import { RunnerService } from '../../runners/service/runner.service';
 export class OverviewComponent implements OnInit {
 
   id = this.authService.getUserId();
-  runner = this.runnerService.getRunner(this.id).pipe(take(1));
+  runner = this.runnerService.getSelfRunner().pipe(take(1));
   loadingQr = false;
 
   constructor(private runnerService: RunnerService, private authService: AuthService, private saveService: SaveService) {}

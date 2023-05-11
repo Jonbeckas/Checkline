@@ -31,11 +31,13 @@ runnersRouter.get("/runners",PermissionLoginValidator([["RUNNER_LIST"]]), async 
     }
 });
 
-runnersRouter.post("/runner",PermissionLoginValidator([["RUNNER_LIST"],["RUNNER_MODIFY"]]), async (req, res, next) => {
+runnersRouter.post("/runner",PermissionLoginValidator([["RUNNER_LIST"],["RUNNER_MODIFY"], ["RUNNER_SELF_OVERVIEW"]]), async (req, res, next) => {
     let runnerService = (<any> req).runnerService as RunnerService
     if (!req.body || !req.body.id) {
         res.status(400).send({err: "Missing Fields"});
+        return;
     }
+
     try {
         res.status(200).send(await runnerService.getRunnerById(req.body.id));
     } catch (e) {
@@ -47,6 +49,19 @@ runnersRouter.post("/runner",PermissionLoginValidator([["RUNNER_LIST"],["RUNNER_
     }
 });
 
+runnersRouter.post("/selfrunner",PermissionLoginValidator([["RUNNER_SELF_OVERVIEW"]]), async (req, res, next) => {
+    let runnerService = (<any> req).runnerService as RunnerService
+
+    try {
+        res.status(200).send(await runnerService.getRunnerById((req as any).userData.userId));
+    } catch (e) {
+        if (e instanceof RunnerNotFoundError) {
+            res.status(404).send("RunnerNotFound")
+        } else {
+            next(new InternalServerError());
+        }
+    }
+});
 runnersRouter.post("/runner/state",PermissionLoginValidator([["RUNNER_MODIFY"]]), async (req, res, next) => {
     let runnerService = (<any> req).runnerService as RunnerService
     if (!req.body || !req.body.id || !req.body.state) {
@@ -58,12 +73,16 @@ runnersRouter.post("/runner/state",PermissionLoginValidator([["RUNNER_MODIFY"]])
         let result = await runnerService.setRunneState(runner,req.body.state);
         res.status(200).send()
     } catch (e) {
-        if (e instanceof RunnerNotFoundError) {
-            res.status(404).send({err:"RunnerNotFound"})
-        } else if (e instanceof RunnerStateNotFoundError) {
-            res.status(404).send({err: "RunnerStateNotFound"})
-        } else {
-            next(new InternalServerError());                    
+        try {
+            if (e instanceof RunnerNotFoundError) {
+                res.status(404).send({err:"RunnerNotFound"})
+            } else if (e instanceof RunnerStateNotFoundError) {
+                res.status(404).send({err: "RunnerStateNotFound"})
+            } else {
+                next(new InternalServerError());                    
+            }
+        } catch(f) {
+            console.error(f);
         }
     }
 });
@@ -132,18 +151,20 @@ runnersRouter.post("/runners/qr",PermissionLoginValidator([["RUNNER_LIST"],["RUN
         return;
     }
     try {
+        let authUser = await userService.getUserById((req as any).userData.userId)
         let user = await userService.getUserById(rReq.id);
         let data = await RunnerCard.getRunnerCard(user.username, user.id);
-        if (await  groupService.userHasPermission(user, [["RUNNER_SELF_OVERVIEW"]])) {
+        if (await groupService.userHasPermission(authUser, [["RUNNER_LIST"],["CENGINE_ADMIN"]])) {
+            res.status(200).send({data: data})
+        } else if (await  groupService.userHasPermission(authUser, [["RUNNER_SELF_OVERVIEW"]])) {
             if (rReq.id ==(<any>req).userData.userId) {
                 res.status(200).send({data: data})
             } else {
-                res.status(403).send({err:"Forbidden"});
+                res.status(403).send({err:"ForbiddenA"});
             }
         } else {
-            res.status(200).send({data: data})
+            res.status(403).send({err: "ForbiddenB"});
         }
-
     } catch (e) {
         if (e instanceof UserNotFoundError) {
             res.status(404).send({err:"UserNotFound"});

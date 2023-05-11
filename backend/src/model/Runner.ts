@@ -9,14 +9,14 @@ export class Runner {
     @Column({nullable: true, type:"text"})
     state!: string| null;
 
-    @Column({nullable: true, type:"int"})
-    lastStateChange!: number| null;
+    @Column({nullable: true, type:"text"})
+    lastStateChange!: string| null;
 
     @Column({nullable: false, type:"int"})
     round!: number;
 
-    @Column({nullable: true, type:"bigint"})
-    timestamp!: number| null;
+    @Column({nullable: true, type:"text"})
+    timestamp!: string| null;
 
     @Column({nullable: true, type:"text"})
     station!: string|null
