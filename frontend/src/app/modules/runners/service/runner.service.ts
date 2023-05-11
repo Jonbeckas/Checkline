@@ -69,6 +69,33 @@ export class RunnerService {
     });
   }
 
+  getSelfRunner(): Observable<Runner> {
+    return new Observable<Runner>(observer => {
+      const token = this.cookieService.get('token');
+      const bearer = 'Bearer ' + token;
+      this.httpService.post<Runner>(ConfigService.settings.backendUrl+"/selfrunner",{},{headers: {Authorization: bearer}}).subscribe({
+          next: data => {
+            observer.next(data);
+            observer.complete();
+          },
+          error: (error: HttpErrorResponse) => {
+            if (error.status == 401) {
+              if (error.error.err == 'Invalid session') {
+                this.authService.logout();
+              } else {
+                console.error(error);
+              }
+            }  else {
+              console.error(error);
+            }
+            observer.complete();
+          }
+        }
+      )
+    });
+  }
+
+
   getStates(): Observable<WebValueResult> {
     return new Observable<WebValueResult>(observer => {
       const token = this.cookieService.get('token');

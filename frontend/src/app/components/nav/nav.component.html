@@ -10,6 +10,7 @@
     <a *permissionIf="['RUNNER_LIST','RUNNER_MODIFY']" class="nav-link nav-text" routerLink="/dashboard" [ngClass]="{'active':this.currTab=='/dashboard'}" >Dashboard</a>
     <a *permissionIf="['RUNNER_SELF_OVERVIEW']" class="nav-link nav-text" routerLink="/runner-overview" [ngClass]="{'active':this.currTab=='/runner-overview'}">My statistics</a>
     <a *permissionIf="ADMIN_PERMISSIONS" class="nav-link nav-text" routerLink="/admin" [ngClass]="{'active':this.currTab=='/admin'}">Administration</a>
+    <a *permissionIf="ADMIN_PERMISSIONS" class="nav-link nav-text" routerLink="/system" [ngClass]="{'active':this.currTab=='/system'}">System</a>
   </div>
   <div class="header-actions header-actions--overflow" *ngIf="username!=undefined">
     <clr-dropdown  id="userMenu">

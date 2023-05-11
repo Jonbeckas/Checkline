@@ -8,6 +8,8 @@ import {Permission} from "./model/Permission";
 import {Server} from "./server/server";
 import { CONFIG } from "./config/Config";
 import { PasswordGenerator } from "./utils/PasswordGenerator";
+import { SqlLogger } from "./logger/SqlLogger";
+import { Log } from "./model/Log";
 
 
 class Main {
@@ -19,6 +21,7 @@ class Main {
         }
 
         this.initDb().then((connection) => {
+            SqlLogger.initLogger(connection.getRepository(Log))
             let userRepository = connection.getRepository(User)
             let groupRepository = connection.getRepository(Group)
             let permissionRepository = connection.getRepository(Permission)
