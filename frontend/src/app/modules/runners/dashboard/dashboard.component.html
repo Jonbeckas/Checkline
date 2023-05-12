@@ -52,6 +52,9 @@
           <cds-icon shape="refresh"></cds-icon> Refresh
         </button>
       </div>
+      <button type="button" class="btn btn-sm btn-secondary" *permissionIf="['RUNNER_EXPORT']" (click)="onRunnerExport()">
+            <cds-icon shape="export"></cds-icon> Export
+      </button>
     </div>
   </clr-dg-action-bar>
 

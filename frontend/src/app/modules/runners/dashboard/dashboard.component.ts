@@ -3,7 +3,7 @@ import {AuthService} from "../../auth/auth.service";
 import {Runner} from "../dtos/Runner";
 import {RunnerService} from "../service/runner.service";
 import {ClrDatagrid} from "@clr/angular";
-import {ClarityIcons, minusIcon, plusIcon, qrCodeIcon, refreshIcon} from "@cds/core/icon";
+import {ClarityIcons, exportIcon, minusIcon, plusIcon, qrCodeIcon, refreshIcon} from "@cds/core/icon";
 import {SaveService} from "../../../service/save.service";
 import {catchError, takeUntil} from "rxjs/operators"
 import { of } from 'rxjs';
@@ -13,8 +13,7 @@ import { of } from 'rxjs';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit, OnDestroy {
-
+export class DashboardComponent implements OnInit, OnDestroy { 
   runners$: Runner[] = [];
   interval: number | undefined;
   TIMEOUT = 10000;
@@ -32,7 +31,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    ClarityIcons.addIcons(plusIcon, minusIcon, qrCodeIcon, refreshIcon);
+    ClarityIcons.addIcons(plusIcon, minusIcon, qrCodeIcon, refreshIcon, exportIcon);
 
     if (this.authService.hasPermissionOrAdmin('RUNNER_LIST')) {
       this.runnerService.getRunners().subscribe(sub => {
@@ -186,5 +185,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.loadQr = false;
       })
     }
+  }
+
+  onRunnerExport() {
+    this.runnerService.exportRunners().subscribe((data) => {
+      const blob = new Blob([data], { type: 'text/csv' });
+      this.saveService.save(blob,"export-runners.csv")
+    })
   }
 }

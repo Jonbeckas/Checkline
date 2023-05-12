@@ -15,6 +15,7 @@ import { RunnerStateNotFoundError } from "../../exception/RunnerStateNotFound";
 import { RunnerStateNotSetError } from "../../exception/RunnerStateNotSetError";
 import { CONFIG } from "../../config/Config";
 import { UserNotFoundError } from "../../exception/UserNotFoundError";
+import Papa from "papaparse";
 
 
 export const runnersRouter = express.Router({caseSensitive:false});
@@ -261,3 +262,13 @@ runnersRouter.get("/runners/conspicous", PermissionLoginValidator([["RUNNER_CONS
     let runnerService = (<any> req).runnerService as RunnerService;
     res.status(200).send(await runnerService.getConspicousUsers())
 });
+
+/**
+ * Export runners as csv
+ */
+runnersRouter.get("/runners/export", PermissionLoginValidator([["RUNNER_EXPORT"]]), async (req, res) => {
+    const runnerService = (<any> req).runnerService as RunnerService;
+
+    let response = Papa.unparse(await runnerService.getRunners())
+    res.contentType("text/csv").status(200).send(response)
+})
