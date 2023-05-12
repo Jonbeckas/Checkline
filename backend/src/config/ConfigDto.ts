@@ -23,6 +23,12 @@ export class  Database {
 export class RunnerConfig {
     @jsonArrayMember(String, {isRequired: true})
     states!: string[]
+
+    @jsonArrayMember(String, {isRequired: true})
+    stations!: string[]
+
+    @jsonMember(Number, {isRequired: true})
+    conspicousAfterSeconds!: number
 }
 
 @jsonObject
@@ -41,6 +47,7 @@ export class DefaultUser {
 export class DefaultGroup {
     @jsonMember(String,{isRequired: true})
     name!: string
+
 }
 
 @jsonObject
@@ -63,7 +70,4 @@ export class Configuration {
 
     @jsonMember(DefaultGroup,{isRequired: true})
     adminGroup!: DefaultGroup
-
-    @jsonArrayMember(String, {isRequired: true})
-    stations!: string[]
 }
