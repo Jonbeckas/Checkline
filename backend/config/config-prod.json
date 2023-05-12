@@ -14,7 +14,12 @@
       "Logged out",
       "Injured",
       "Injured logged out"
-    ]
+    ],
+    "stations":[
+    "station1",
+    "station2"
+    ],
+    "conspicousAfterSeconds": 30
   },
     "admin": {
     "username": "admin",
@@ -23,9 +28,5 @@
   },
   "adminGroup": {
     "name": "AdminGroup"
-  },
-  "stations":[
-    "station1",
-    "station2"
-  ]
+  }
 }

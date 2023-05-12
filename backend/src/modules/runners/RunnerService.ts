@@ -83,7 +83,7 @@ export class RunnerService {
     async setRunneState(runner: Runner,state:string):Promise<void> {
         if (CONFIG.runners.states.includes(state)) {
             runner.state = state;
-            runner.lastStateChange = Date.now().toString();
+    runner.lastStateChange = new Date();
             this.runnerRepository.save(runner);
         } else {
             throw new RunnerStateNotFoundError();
@@ -127,7 +127,7 @@ export class RunnerService {
      * Set timestamp to current time
      */
     async changeTimestampToNow(runner:Runner) {
-        runner.timestamp = new Date().getTime().toString();
+        runner.timestamp = new Date();
         this.runnerRepository.save(runner);
     }
 
@@ -136,7 +136,7 @@ export class RunnerService {
      * @param round
      */
     async setStation(runner:Runner,station: string) {
-        if (CONFIG.stations.includes(station)) {
+        if (CONFIG.runners.stations.includes(station)) {
             runner.station = station;
             this.runnerRepository.save(runner);
         } else {
@@ -150,5 +150,26 @@ export class RunnerService {
      */
     async getStation(runner:Runner): Promise<string|null> {
         return runner.station;
+    }
+
+    /**
+     * Get conspicous users
+     */
+    async getConspicousUsers(): Promise<Runner[]> {
+        let date = new Date();
+        return (await this.runnerRepository.createQueryBuilder("runner")
+        .where(`(runner.timestamp + INTERVAL ${CONFIG.runners.conspicousAfterSeconds} SECOND) < '${new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString()}'`)
+        .innerJoinAndSelect("user", "u", "runner.id = u.id")
+        .getRawMany()).map((it) => {
+            let runner = new RunnerDto()
+            runner.username = it.u_username
+            runner.id = it.runner_id
+            runner.lastStateChange = it.runner_lastStateChange
+            runner.round = it.runner_round
+            runner.state = it.runner_state
+            runner.station = it.runner_station
+            runner.timestamp = it.runner_timestamp
+            return runner
+        })
     }
 }

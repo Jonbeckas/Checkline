@@ -22,6 +22,11 @@ const routes: Routes = [
     canLoad: [AuthGuard]
   },
   {
+    path: 'runner-conspicous',
+    loadChildren: () => import("./modules/runnerconspicous/runnerconspicous.module").then(m => m.RunnerconspicousModule),
+    canLoad: [AuthGuard]
+  },
+  {
     path: 'admin',
     loadChildren: () => import('./modules/administration/administration.module').then(m => m.AdministrationModule),
     canLoad: [AuthGuard]

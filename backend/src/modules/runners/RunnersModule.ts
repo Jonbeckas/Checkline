@@ -227,7 +227,7 @@ runnersRouter.get("/runners/station",PermissionLoginValidator([["RUNNER_MODIFY"]
 });
 
 runnersRouter.get("/runners/stations",PermissionLoginValidator([["RUNNER_MODIFY"]]), async (req, res, next) => {
-    res.status(200).send(CONFIG.stations)
+    res.status(200).send(CONFIG.runners.stations)
 });
 
 /**
@@ -251,4 +251,13 @@ runnersRouter.get("/runners/stations",PermissionLoginValidator([["RUNNER_MODIFY"
             next(new InternalServerError());
         }
     }
+});
+
+/**
+ * List conspicous runners
+ */
+
+runnersRouter.get("/runners/conspicous", PermissionLoginValidator([["RUNNER_CONSPICOUS"]]), async (req, res, next) => {
+    let runnerService = (<any> req).runnerService as RunnerService;
+    res.status(200).send(await runnerService.getConspicousUsers())
 });

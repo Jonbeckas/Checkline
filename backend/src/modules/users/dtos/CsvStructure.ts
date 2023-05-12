@@ -7,5 +7,5 @@ export interface CsvImportStructureDto {
 }
 
 export interface CsvExportStructureDto extends CsvImportStructureDto {
-    lastLogin: string
+    lastLogin: Date
 }
