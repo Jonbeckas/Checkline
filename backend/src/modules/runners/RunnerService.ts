@@ -83,7 +83,7 @@ export class RunnerService {
     async setRunneState(runner: Runner,state:string):Promise<void> {
         if (CONFIG.runners.states.includes(state)) {
             runner.state = state;
-            runner.lastStateChange = Date.now().toString();
+    runner.lastStateChange = new Date();
             this.runnerRepository.save(runner);
         } else {
             throw new RunnerStateNotFoundError();
@@ -127,7 +127,7 @@ export class RunnerService {
      * Set timestamp to current time
      */
     async changeTimestampToNow(runner:Runner) {
-        runner.timestamp = new Date().getTime().toString();
+        runner.timestamp = new Date();
         this.runnerRepository.save(runner);
     }
 

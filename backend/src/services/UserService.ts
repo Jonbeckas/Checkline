@@ -68,7 +68,7 @@ export class UserService {
         }
     }
 
-    async setLastLogin(user:User,lastLogin:string): Promise<void> {
+    async setLastLogin(user:User,lastLogin: Date): Promise<void> {
         user.lastLogin = lastLogin;
         await this.userRepository.save(user);
     }

@@ -2,8 +2,8 @@ export interface Runner {
     id: string;
     username: string;
     state: string | null;
-    lastStateChange: number;
+    lastStateChange: Date;
     round: number;
-    timestamp: number;
+    timestamp: Date;
     station: string | null;
 }

@@ -117,7 +117,7 @@ export class ScannerComponent implements OnInit {
     return `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
   }
 
-  onUserUndo(id: string,timestamp:number) {
+  onUserUndo(id: string,timestamp: Date) {
     this.runnerService.decreaseRound(id).subscribe(obj => {
       if (obj.success) {
         for (let index in this.runners) {
