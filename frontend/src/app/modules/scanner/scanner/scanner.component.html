@@ -69,7 +69,7 @@
 
       <clr-dg-row *clrDgItems="let runner of runners" >
         <clr-dg-cell>{{runner.username}}</clr-dg-cell>
-        <clr-dg-cell>{{timeToString(runner.timestamp)}}</clr-dg-cell>
+        <clr-dg-cell>{{runner.timestamp |date:'short'}}</clr-dg-cell>
         <clr-dg-cell>{{runner.round}}</clr-dg-cell>
         <clr-dg-cell>
           <button type="button" class="btn btn-icon btn-primary btn-sm" aria-label="edit" (click)="onUserUndo(runner.id,runner.timestamp)">
