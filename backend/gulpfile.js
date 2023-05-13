@@ -61,6 +61,13 @@ function copyTestConfig(done) {
     done()
 }
 
+function copyFonts(done) {
+    //mkdirSync("build/fonts")
+    copyFileSync("src/fonts/Montserrat-Regular.ttf", "build/fonts/Montserrat-Regular.ttf")
+    copyFileSync("src/fonts/vfs_montserrat.js", "build/fonts/vfs_montserrat.js")
+    done()
+}
+
 task("test",() => {
     const tsProject = ts.createProject("tsconfig.json")
     return gulp.src('./src/**/*.ts')
@@ -102,7 +109,7 @@ function watchCode() {
     watch("src/**/*",series("compile",nodemonFun));
 }
 
-task("default", series("clean","compile",copyProdConfig, copyNewManifest))
+task("default", series("clean","compile",copyProdConfig, copyNewManifest, copyFonts))
 
 task("watch",series("compile",copyTestConfig,parallel(watchCode,nodemonFun)))
 
