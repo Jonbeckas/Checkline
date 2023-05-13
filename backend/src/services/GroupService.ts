@@ -6,12 +6,13 @@ import {GroupExistsError} from "../exception/GroupExistsError";
 import {GroupNotFoundError} from "../exception/GroupNotFoundError";
 import { GroupHasPermissionError } from "../exception/GroupHasPermissionError";
 import { GroupHasNotPermissionError } from "../exception/GroupNotHasPermissionError";
+import { SqlLogger } from "../logger/SqlLogger";
 
 export class GroupService {
     constructor(private userRepository: Repository<User>, private groupRepository: Repository<Group>, private permissionReposity: Repository<Permission>) {
     }
 
-    async addGroup(name: string, permissions: string[] = []): Promise<Group> {
+    async addGroup(name: string, permissions: string[] = [], byUserId: string): Promise<Group> {
         let existUser = await this.groupRepository.findOne({where:{name:name}})
 
         if (existUser) {
@@ -24,12 +25,14 @@ export class GroupService {
         group.users = []
         group = await this.groupRepository.save(group)
 
+        SqlLogger.logI(`Added group ${group.name}`,'group', byUserId)
         for (let permission of permissions) {
             let permissionObject = new Permission();
             permissionObject.name = permission;
             permissionObject.group = group;
             permissionObject = await this.permissionReposity.save(permissionObject)
             group.permissions.push(permissionObject)
+            SqlLogger.logI(`Added permission ${permission} to ${group.name}`, 'group', byUserId)
         }
 
         return await this.groupRepository.save(group)
@@ -130,16 +133,18 @@ export class GroupService {
         return await this.groupRepository.save(group)
     }
 
-    async addUserToGroup(user:User, group:Group): Promise<void> {
+    async addUserToGroup(user:User, group:Group, byUserId: string): Promise<void> {
         group.users.push(user)
         user.groups.push(group)
         await this.groupRepository.save(group)
         await this.userRepository.save(user)
+        SqlLogger.logI(`Add user ${user.username} to group ${group.name}`, 'user', byUserId)
     }
 
-    async deleteUserFromGroup(user: User, group:Group): Promise<void> {
+    async deleteUserFromGroup(user: User, group:Group, byUserId: string): Promise<void> {
         user.groups = user.groups.filter((grp) => grp.id != group.id);
         await this.userRepository.save(user); 
+        SqlLogger.logI(`Delete user ${user.username} from group ${group.name}`, 'user', byUserId)
     }
 
     /**
@@ -148,7 +153,7 @@ export class GroupService {
      * @param group 
      * @param permission 
      */
-    async addPermissionToGroup(group:Group, permission:string): Promise<void> {
+    async addPermissionToGroup(group:Group, permission:string, byUserId: string): Promise<void> {
         if (await this.hasPermission(group,permission)) {
             throw new GroupHasPermissionError();
         }
@@ -158,6 +163,7 @@ export class GroupService {
         permissionObject = await this.permissionReposity.save(permissionObject)
         group.permissions.push(permissionObject)
         await this.groupRepository.save(group)
+        SqlLogger.logI(`Add Permission ${permission} to group ${group.name}`, 'group', byUserId)
     }
 
     hasPermission(group:Group, permission:string) {
@@ -176,10 +182,11 @@ export class GroupService {
      * @throws{GroupNotHasPermissionError}
      * @param group
      */
-    async deletePermissionFromGroup(group: Group, permission: string): Promise<void> {
+    async deletePermissionFromGroup(group: Group, permission: string, byUserId: string): Promise<void> {
         let permissions: Permission[] = group.permissions.filter((pem) => pem.name == permission)
             this.groupRepository.save(group);
             this.permissionReposity.remove(permissions[0])
+            SqlLogger.logI(`Remove permission ${permission} from group ${group.name}`, 'group', byUserId)
     }
 
     /**

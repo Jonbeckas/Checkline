@@ -14,6 +14,9 @@ import { Runner } from '../model/Runner';
 import { runnersRouter } from '../modules/runners/RunnersModule';
 import * as req from "express-async-handler"
 import listEndpoints from 'express-list-endpoints';
+import { SystemService } from '../modules/system/SystemService';
+import { Log } from '../model/Log';
+import { systemRouter } from '../modules/system/SystemModule';
 
 //console.log(listEndpoints(app));
 
@@ -34,7 +37,8 @@ export class Server {
         app.use(((req, res, next) => {
             (<any>req).userService = userService;
             (<any>req).groupService = groupService;
-            (<any>req).runnerService = new RunnerService(userService,groupService,connection.getRepository(Runner))
+            (<any>req).runnerService = new RunnerService(userService,groupService,connection.getRepository(Runner));
+            (req as any).systemService = new SystemService(connection.getRepository(Log));
 
             next()
         }))
@@ -43,6 +47,7 @@ export class Server {
         app.use(groupsRouter);
         app.use(userRouter);
         app.use(runnersRouter);
+        app.use(systemRouter);
 
         app.use(express.json());
 

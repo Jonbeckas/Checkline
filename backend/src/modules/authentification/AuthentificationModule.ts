@@ -31,7 +31,7 @@ authRouter.post('/login', async (req:any, res, next) => {
         if (await userService.verifyPassword(user, logReq.password)) {
             const permissions = await groupService.getPermissionsByUser(user);
             const token = Jwt.sign({username:user.username, userId:user.id,permissions:permissions},CONFIG.jwtSecret,{expiresIn:"7d"});
-            await userService.setLastLogin(user,Date.now().toString())
+            await userService.setLastLogin(user,new Date())
             res.status(200).send({token: token})
 
         } else {

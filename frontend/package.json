@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint --fix",
     "e2e": "ng e2e",
-    "buildprod": "ng build --prod",
+    "buildprod": "ng build --configuration production",
     "cd-zip": "npm run buildprod && cd dist/Checkline && zip -r frontend.zip *"
   },
   "private": true,

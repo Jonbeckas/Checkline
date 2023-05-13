@@ -2,9 +2,9 @@
 
 
 <clr-datagrid [(clrDgSelected)]="selected">
-  <clr-dg-action-bar *permissionIf="['CENGINE_MODIFYUSERS']">
+  <clr-dg-action-bar *permissionIf="['RUNNER_MODIFY']">
     <div class="clr-row">
-      <div class="btn-group" *permissionIf="['CENGINE_MODIFYGROUPS']">
+      <div class="btn-group" *permissionIf="['RUNNER_MODIFY']">
         <button type="button" class="btn btn-sm" [disabled]="selected.length == 0" (click)="addRound()">
           <cds-icon shape="plus"></cds-icon> Round
         </button>
@@ -13,9 +13,9 @@
         </button>
       </div>
 
-      <clr-select-container class="state-select" *permissionIf="['CENGINE_MODIFYUSERS']">
+      <clr-select-container class="state-select" *permissionIf="['RUNNER_MODIFY']">
         <select clrSelect name="options" [disabled]="isDropdownDisabled()" (change)="onStateChange($event)">
-          <ng-container *ngIf="selected.length > 1 || selected.length == 0">
+          <ng-container *ngIf="selected.length > 1 || selected.length == 0 || isDropdownStateNeedsPlaceholder()">
             <option disabled hidden [attr.selected]="isDropdownStateNeedsPlaceholder()" [value]="'placeholder'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
           </ng-container>
           <ng-container *ngIf="selected.length >= 1">
@@ -27,22 +27,23 @@
         <clr-control-error>This field is required!</clr-control-error>
       </clr-select-container>
 
-      <clr-select-container class="state-select" *permissionIf="['CENGINE_MODIFYUSERS']">
+      <clr-select-container class="state-select" *permissionIf="['RUNNER_MODIFY']">
         <select clrSelect name="options" [disabled]="isDropdownDisabled()" (change)="onStationChange($event)">
-          <ng-container *ngIf="selected.length > 1 || selected.length == 1">
+          <ng-container *ngIf="selected.length > 1 || selected.length == 0 || isDropdownStationNeedsPlaceholder()">
             <option disabled hidden [attr.selected]="isDropdownStationNeedsPlaceholder()" [value]="'placeholder'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
           </ng-container>
           <ng-container *ngIf="selected.length >= 1">
-            <ng-container *ngFor="let station of $stations|async">
-              <option [value]="station" [attr.selected]="isDropdowStationSeleted(station)">{{station}}</option>
+            <ng-container *ngFor="let it of stations">
+              <option [value]="it" [attr.selected]="isDropdowStationSeleted(it)">{{it}}</option>
             </ng-container>
           </ng-container>
         </select>
         <clr-control-error>This field is required!</clr-control-error>
       </clr-select-container>
 
+
       <div class="grip-group">
-        <button type="button" class="btn btn-sm btn-secondary" [disabled]="selected.length == 0" *permissionIf="['CENGINE_MODIFYGROUPS']" (click)="qr()">
+        <button type="button" class="btn btn-sm btn-secondary" [disabled]="selected.length == 0" *permissionIf="['RUNNER_LIST']" (click)="qr()">
           <cds-icon shape="qr-code" *ngIf="!loadQr"></cds-icon>
           <clr-spinner *ngIf="loadQr"></clr-spinner> Card
         </button>
@@ -51,6 +52,9 @@
           <cds-icon shape="refresh"></cds-icon> Refresh
         </button>
       </div>
+      <button type="button" class="btn btn-sm btn-secondary" *permissionIf="['RUNNER_EXPORT']" (click)="onRunnerExport()">
+            <cds-icon shape="export"></cds-icon> Export
+      </button>
     </div>
   </clr-dg-action-bar>
 
@@ -64,10 +68,10 @@
   <clr-dg-row *clrDgItems="let runner of runners$ " [clrDgItem]="runner" >
     <clr-dg-cell>{{runner.username}}</clr-dg-cell>
     <clr-dg-cell>{{runner.state ? runner.state: "-"}}</clr-dg-cell>
-    <clr-dg-cell>{{timeToString(runner.lastStateChange)}}</clr-dg-cell>
+    <clr-dg-cell>{{runner.lastStateChange |date:'short'}}</clr-dg-cell>
     <clr-dg-cell>{{runner.round||0}}
     </clr-dg-cell>
-    <clr-dg-cell>{{this.timeToString(runner.timestamp)}}</clr-dg-cell>
+    <clr-dg-cell>{{runner.timestamp |date:'short'}}</clr-dg-cell>
     <clr-dg-cell>{{runner.station ? runner.station: "-"}}</clr-dg-cell>
   </clr-dg-row>
 

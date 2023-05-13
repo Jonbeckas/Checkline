@@ -57,7 +57,14 @@ export class AuthGuard  {
                 permissions.includes('RUNNER_MODIFY') ||
                 permissions.includes('CENGINE_ADMIN'));
               break;
-            } default: {
+            } case ('runner-overview'): {
+              observer.next(
+                permissions.includes("RUNNER_SELF_OVERVIEW") ||
+                permissions.includes("CENGINE_ADMIN")
+              )
+              break;
+            }
+            default: {
               observer.next(permissions.includes('CENGINE_ADMIN'));
             }
           }
