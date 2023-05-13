@@ -47,7 +47,7 @@ userRouter.put('/user', PermissionLoginValidator([["CENGINE_MODIFYUSERS"]]), asy
         return;
     }
     try {
-        await userService.addUser(uReq.username, uReq.password, uReq.firstname, uReq.name, byUserId);
+        await userService.addUser(uReq.username, uReq.firstname, uReq.name, uReq.password, byUserId);
         res.status(200).send();
     } catch(e) {
         if (e instanceof UserExistsError) {
