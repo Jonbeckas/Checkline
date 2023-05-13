@@ -15,11 +15,11 @@ jobs:
     - name: Get Tag
       run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
     - name: NPM install frontend
-      run: cd frontend && npm ci && cd ..
+      run: cd frontend && npm ci --legacy-peer-deps && cd ..
     - name: Build NPM frontend
       run: cd frontend && npm run cd-zip && cd ..
     - name: NPM install backend
-      run: cd backend && npm ci && cd ..
+      run: cd backend && npm ci --legacy-peer-deps && cd ..
     - name: Builf NPM backend
       run: cd backend && npm run cd-zip && cd ..
     - name: Create Release
