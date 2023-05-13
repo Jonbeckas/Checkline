@@ -138,13 +138,13 @@ export class GroupService {
         user.groups.push(group)
         await this.groupRepository.save(group)
         await this.userRepository.save(user)
-        SqlLogger.logI(`Add user ${user.username} to group ${group.name}`, 'group', byUserId)
+        SqlLogger.logI(`Add user ${user.username} to group ${group.name}`, 'user', byUserId)
     }
 
     async deleteUserFromGroup(user: User, group:Group, byUserId: string): Promise<void> {
         user.groups = user.groups.filter((grp) => grp.id != group.id);
         await this.userRepository.save(user); 
-        SqlLogger.logI(`Delete user ${user.username} from group ${group.name}`, 'group', byUserId)
+        SqlLogger.logI(`Delete user ${user.username} from group ${group.name}`, 'user', byUserId)
     }
 
     /**
