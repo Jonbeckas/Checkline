@@ -23,7 +23,7 @@ jobs:
     - name: Build NPM frontend
       run: cd frontend && npm run cd-zip && cd ..
     - name: NPM install backend
-      run: cd backend && npm ci --legacy-peer-deps && cd ..
+       run: cd backend && npm ci --legacy-peer-deps && cd ..
     - name: Builf NPM backend
       run: cd backend && npm run cd-zip && cd ..
     - name: Create Release

@@ -22,6 +22,11 @@ const routes: Routes = [
     canLoad: [AuthGuard]
   },
   {
+    path: 'runner-conspicous',
+    loadChildren: () => import("./modules/runnerconspicous/runnerconspicous.module").then(m => m.RunnerconspicousModule),
+    canLoad: [AuthGuard]
+  },
+  {
     path: 'admin',
     loadChildren: () => import('./modules/administration/administration.module').then(m => m.AdministrationModule),
     canLoad: [AuthGuard]
@@ -34,6 +39,10 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule),
+  },
+  {
+    path: 'system',
+    loadChildren: () => import('./modules/system/system.module').then(m => m.SystemModule),
   },
   {path: 'login', component: LoginComponent},
   {path: 'welcome', component: WelcomeComponent, canActivate: [AuthGuard]},

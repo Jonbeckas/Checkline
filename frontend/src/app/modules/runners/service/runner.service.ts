@@ -69,6 +69,33 @@ export class RunnerService {
     });
   }
 
+  getSelfRunner(): Observable<Runner> {
+    return new Observable<Runner>(observer => {
+      const token = this.cookieService.get('token');
+      const bearer = 'Bearer ' + token;
+      this.httpService.post<Runner>(ConfigService.settings.backendUrl+"/selfrunner",{},{headers: {Authorization: bearer}}).subscribe({
+          next: data => {
+            observer.next(data);
+            observer.complete();
+          },
+          error: (error: HttpErrorResponse) => {
+            if (error.status == 401) {
+              if (error.error.err == 'Invalid session') {
+                this.authService.logout();
+              } else {
+                console.error(error);
+              }
+            }  else {
+              console.error(error);
+            }
+            observer.complete();
+          }
+        }
+      )
+    });
+  }
+
+
   getStates(): Observable<WebValueResult> {
     return new Observable<WebValueResult>(observer => {
       const token = this.cookieService.get('token');
@@ -229,5 +256,27 @@ export class RunnerService {
     const bearer = 'Bearer ' + token;
 
     return this.httpService.post(ConfigService.settings.backendUrl+"/runners/station",{id:id, station:station},{headers: {Authorization: bearer}});
+  }
+
+  exportRunners() {
+    // ts-ignore because of unexpected exceptions, that should not happen
+    return new Observable<string>((observer) => {
+      const token = this.cookieService.get('token');
+      const bearer = 'Bearer ' + token;
+      this.httpService.get<string>(ConfigService.settings.backendUrl + '/runners/export', {
+        // @ts-ignore
+        responseType: 'text',
+        headers: {Authorization: bearer},
+      }).subscribe({
+        next: (data) => {
+          // @ts-ignore
+          observer.next(data);
+          observer.complete();
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error(error);
+        }
+      });
+    });
   }
 }

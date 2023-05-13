@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {UserService} from '../services/user.service';
 import {checkCircleIcon, ClarityIcons, exclamationCircleIcon} from '@cds/core/icon';
@@ -14,14 +14,14 @@ import {GroupService} from '../services/group.service';
 export class NewGroupModalComponent implements OnInit {
 
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   error: undefined|string;
   spinner = false;
   showSucces = false;
   open = true;
 
 
-  constructor( private router: Router, private formBuilder: FormBuilder, private groupService: GroupService) {
+  constructor( private router: Router, private formBuilder: UntypedFormBuilder, private groupService: GroupService) {
     this.form = this.formBuilder.group({
       groupname: ['', [Validators.required]],
     });

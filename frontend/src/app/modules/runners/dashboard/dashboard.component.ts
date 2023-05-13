@@ -3,7 +3,7 @@ import {AuthService} from "../../auth/auth.service";
 import {Runner} from "../dtos/Runner";
 import {RunnerService} from "../service/runner.service";
 import {ClrDatagrid} from "@clr/angular";
-import {ClarityIcons, minusIcon, plusIcon, qrCodeIcon, refreshIcon} from "@cds/core/icon";
+import {ClarityIcons, exportIcon, minusIcon, plusIcon, qrCodeIcon, refreshIcon} from "@cds/core/icon";
 import {SaveService} from "../../../service/save.service";
 import {catchError, takeUntil} from "rxjs/operators"
 import { of } from 'rxjs';
@@ -13,19 +13,15 @@ import { of } from 'rxjs';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit, OnDestroy {
-
+export class DashboardComponent implements OnInit, OnDestroy { 
   runners$: Runner[] = [];
   interval: number | undefined;
   TIMEOUT = 10000;
   states: string[] = [];
+  stations: string[] = [];
   selected: Runner[] = [];
   @ViewChild(ClrDatagrid) datagrid!: ClrDatagrid;
   loadQr = false;
-
-  $stations = this.runnerService.getStations().pipe(
-
-  )
 
   constructor(private authService: AuthService, private runnerService: RunnerService, private saveService: SaveService) {
   }
@@ -35,7 +31,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    ClarityIcons.addIcons(plusIcon, minusIcon, qrCodeIcon, refreshIcon);
+    ClarityIcons.addIcons(plusIcon, minusIcon, qrCodeIcon, refreshIcon, exportIcon);
 
     if (this.authService.hasPermissionOrAdmin('RUNNER_LIST')) {
       this.runnerService.getRunners().subscribe(sub => {
@@ -50,6 +46,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
         } else {
           console.error(sub.value);
         }
+      });
+    }
+    
+    if (this.authService.hasPermissionOrAdmin("RUNNER_MODIFY")) {
+      this.runnerService.getStations().subscribe(sub => {
+        this.stations = sub;
       });
     }
   }
@@ -78,6 +80,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.refreshTable();
   }
 
+  // null means false see selected documentation
   isDropdowStateSeleted(state: string) {
     if (this.selected.length == 1) {
       return (this.selected[0].state == state)?true: null;
@@ -98,18 +101,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   isDropdowStationSeleted(station: string) {
     if (this.selected.length == 1) {
-      return (this.selected[0].station == station)?true: false;
+      console.log(station, this.selected[0].station == station)
+      return (this.selected[0].station === station)?true: null;
     } else {
       let lastValue = this.selected[0].station;
       for (let element of this.selected) {
         if (element.state != lastValue) {
-          return false;
+          return null;
         }
       }
       if (lastValue == station) {
         return true;
       } else{
-        return false;
+        return null;
       }
     }
   }
@@ -120,9 +124,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
       for (let element of this.selected) {
         if (element.state != lastValue) {
           return true;
+        } else if (!element.state) {
+          return true
         }
       }
-      return null;
+      return false;
     }
     return true;
   }
@@ -130,12 +136,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
   isDropdownStationNeedsPlaceholder() {
     if (this.selected.length > 0) {
       let lastValue = this.selected[0].station;
+      console.log(this.selected[0].station)
       for (let element of this.selected) {
         if (element.station != lastValue) {
           return true;
+        } else if (!element.station) {
+          console.log("YES")
+          return true
         }
       }
-      return null;
+      return false;
     }
     return true;
   }
@@ -175,5 +185,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.loadQr = false;
       })
     }
+  }
+
+  onRunnerExport() {
+    this.runnerService.exportRunners().subscribe((data) => {
+      const blob = new Blob([data], { type: 'text/csv' });
+      this.saveService.save(blob,"export-runners.csv")
+    })
   }
 }

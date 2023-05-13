@@ -5,6 +5,7 @@ import {UserNotFoundError} from "../exception/UserNotFoundError";
 import * as Argon2 from "argon2";
 import {use} from "chai";
 import {UserExistsError} from "../exception/UserExistsError";
+import { SqlLogger } from "../logger/SqlLogger";
 
 export class UserService {
 
@@ -41,18 +42,20 @@ export class UserService {
      * @param name
      * @param password
      */
-    async addUser(username: string, firstname: string, name: string, password: string):Promise<User> {
+    async addUser(username: string, firstname: string, name: string, password: string, byUserId: string):Promise<User> {
         const user = await this.userRepository.findOne({where:{username:username}})
         if (user) {
             throw new UserExistsError()
         }
         const hash = await Argon2.hash(password);
         let newUser = User.newUser(name,firstname,username,hash);
+        SqlLogger.logI(`Added user ${username}`,'user', byUserId)
         return await this.userRepository.save(newUser)
     }
 
-    async deleteUser(user: User): Promise<void> {
+    async deleteUser(user: User, byUserId: string): Promise<void> {
         await this.userRepository.remove(user)
+        SqlLogger.logI(`Deleted user ${user.username}`, 'user', byUserId)
     }
 
     /**
@@ -68,7 +71,7 @@ export class UserService {
         }
     }
 
-    async setLastLogin(user:User,lastLogin:string): Promise<void> {
+    async setLastLogin(user:User,lastLogin: Date): Promise<void> {
         user.lastLogin = lastLogin;
         await this.userRepository.save(user);
     }

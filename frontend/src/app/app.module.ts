@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {APP_INITIALIZER, LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +12,9 @@ import {PermissionDirectiveModule} from './directives/permission-directive/permi
 import { ClarityModule } from '@clr/angular';
 import {ConfigService} from "./config/config.service";
 import {ReactiveFormsModule} from "@angular/forms";
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import localeDeExtra from '@angular/common/locales/extra/de';
 
 export function initializeApp(appConfig: ConfigService) {
   return () => appConfig.load();
@@ -35,10 +38,16 @@ export function initializeApp(appConfig: ConfigService) {
       ConfigService,
       { provide: APP_INITIALIZER,
         useFactory: initializeApp,
-        deps: [ConfigService], multi: true }],
+        deps: [ConfigService], multi: true },
+      {provide: LOCALE_ID, useValue: 'de-DE' }],
+      
     exports: [
       ReactiveFormsModule
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    registerLocaleData(localeDe, 'de-DE', localeDeExtra);
+  }
+ }

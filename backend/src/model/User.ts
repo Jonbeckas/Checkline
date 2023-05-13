@@ -19,8 +19,8 @@ export class User {
     @Column()
     username!:string;
 
-    @Column({nullable: true,type:"text"})
-    lastLogin!:string;
+    @Column({nullable: true,type:"datetime"})
+    lastLogin!:Date;
 
     @ManyToMany(type => Group, group => group.users, )
     groups!: Group[]
@@ -33,7 +33,7 @@ export class User {
         user.password = encryptedPassword;
         user.groups = []
         if (lastLogin) {
-            user.lastLogin = lastLogin;
+            user.lastLogin = new Date();
         }
         return user;
     }

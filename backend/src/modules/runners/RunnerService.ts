@@ -8,6 +8,7 @@ import { RunnerStateNotFoundError } from "../../exception/RunnerStateNotFound";
 import { UserNotFoundError } from "../../exception/UserNotFoundError";
 import { RunnerStateNotSetError } from "../../exception/RunnerStateNotSetError";
 import { RunnerDto } from "./dtos/RunnerDto";
+import { SqlLogger } from "../../logger/SqlLogger";
 
 export class RunnerService {
     constructor (private userService: UserService, private groupService: GroupService, private runnerRepository: Repository<Runner>) {}
@@ -80,10 +81,12 @@ export class RunnerService {
      * @param username
      * @param state 
      */
-    async setRunneState(runner: Runner,state:string):Promise<void> {
+    async setRunneState(runner: Runner,state:string, userId: string):Promise<void> {
         if (CONFIG.runners.states.includes(state)) {
             runner.state = state;
+    runner.lastStateChange = new Date();
             this.runnerRepository.save(runner);
+            SqlLogger.logI(`Runner ${runner.id} state change to ${state}`,"runner",userId)
         } else {
             throw new RunnerStateNotFoundError();
         }
@@ -101,10 +104,11 @@ export class RunnerService {
         }
     }
 
-    async addRound(runner: Runner):Promise<void> {
+    async addRound(runner: Runner, userId: string):Promise<void> {
         if (await this.getRunnerState(runner)) {
             runner.round += 1;
             this.runnerRepository.save(runner);
+            SqlLogger.logI(`Runner ${runner.id} add round, new value ${runner.round}`,"runner",userId)
         }
     }
 
@@ -112,11 +116,12 @@ export class RunnerService {
      * Only decrease if round > 0
      * @param runner
      */
-    async decreaseRound(runner:Runner):Promise<void> {
+    async decreaseRound(runner:Runner, userId: string):Promise<void> {
         if (await this.getRunnerState(runner)) {
             if (runner.round > 0) {
                 runner.round -= 1;
                 this.runnerRepository.save(runner);
+            SqlLogger.logI(`Runner ${runner.id} descrease round, new value ${runner.round}`,"runner",userId)
             }
         }
 
@@ -126,7 +131,7 @@ export class RunnerService {
      * Set timestamp to current time
      */
     async changeTimestampToNow(runner:Runner) {
-        runner.timestamp = new Date().getTime();
+        runner.timestamp = new Date();
         this.runnerRepository.save(runner);
     }
 
@@ -134,10 +139,11 @@ export class RunnerService {
      * Set round
      * @param round
      */
-    async setStation(runner:Runner,station: string) {
-        if (CONFIG.stations.includes(station)) {
+    async setStation(runner:Runner,station: string, userId: string) {
+        if (CONFIG.runners.stations.includes(station)) {
             runner.station = station;
             this.runnerRepository.save(runner);
+            SqlLogger.logI(`Runner ${runner.id} station change to ${station}`,"runner",userId)
         } else {
 
         }
@@ -149,5 +155,26 @@ export class RunnerService {
      */
     async getStation(runner:Runner): Promise<string|null> {
         return runner.station;
+    }
+
+    /**
+     * Get conspicous users
+     */
+    async getConspicousUsers(): Promise<Runner[]> {
+        let date = new Date();
+        return (await this.runnerRepository.createQueryBuilder("runner")
+        .where(`(runner.timestamp + INTERVAL ${CONFIG.runners.conspicousAfterSeconds} SECOND) < '${new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString()}'`)
+        .innerJoinAndSelect("user", "u", "runner.id = u.id")
+        .getRawMany()).map((it) => {
+            let runner = new RunnerDto()
+            runner.username = it.u_username
+            runner.id = it.runner_id
+            runner.lastStateChange = it.runner_lastStateChange
+            runner.round = it.runner_round
+            runner.state = it.runner_state
+            runner.station = it.runner_station
+            runner.timestamp = it.runner_timestamp
+            return runner
+        })
     }
 }
