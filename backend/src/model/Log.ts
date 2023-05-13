@@ -6,8 +6,8 @@ export class Log {
     @PrimaryGeneratedColumn("increment")
     id!: number
 
-    @Column({type:"bigint"})
-    timestamp!: number
+    @Column({type:"datetime"})
+    timestamp!: Date
 
     @Column()
     data!: string
@@ -26,7 +26,7 @@ export class Log {
         log.data = data;
         log.type = type;
         log.user = user;
-        log.timestamp = Date.now();
+        log.timestamp = new Date();
         log.category = category;
         return log;
     }

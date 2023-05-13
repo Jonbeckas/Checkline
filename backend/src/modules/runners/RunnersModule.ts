@@ -71,7 +71,7 @@ runnersRouter.post("/runner/state",PermissionLoginValidator([["RUNNER_MODIFY"]])
     }
     try {
         let runner = await runnerService.getOrTemporaryGenerateRunnerById(req.body.id);
-        let result = await runnerService.setRunneState(runner,req.body.state);
+        let result = await runnerService.setRunneState(runner,req.body.state, (req as any).userData.userId);
         res.status(200).send()
     } catch (e) {
         try {
@@ -103,7 +103,7 @@ runnersRouter.post("/runners/addRound",PermissionLoginValidator([["RUNNER_MODIFY
     }
     try {
         let runner = await runnerService.getRunnerById(req.body.id);
-        await runnerService.addRound(runner);
+        await runnerService.addRound(runner, (req as any).userData.userId);
         await runnerService.changeTimestampToNow(runner);
         res.status(200).send()
     } catch(e) {
@@ -128,7 +128,7 @@ runnersRouter.post("/runners/decreaseRound",PermissionLoginValidator([["RUNNER_M
 
     try {
         let runner = await runnerService.getRunnerById(rReq.id);
-        await runnerService.decreaseRound(runner)
+        await runnerService.decreaseRound(runner, (req as any).userData.userId)
         await runnerService.changeTimestampToNow(runner);
         res.status(200).send()
     } catch(e) {
@@ -190,7 +190,7 @@ runnersRouter.post("/runners/station",PermissionLoginValidator([["RUNNER_MODIFY"
 
     try {
         let runner = await runnerService.getRunnerById(id);
-        runnerService.setStation(runner, station);
+        runnerService.setStation(runner, station, (req as any).userData.userId);
         res.status(200).send();
     } catch(e) {
         if (e instanceof RunnerNotFoundError) {

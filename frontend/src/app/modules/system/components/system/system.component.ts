@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ClarityIcons, exportIcon } from '@cds/core/icon';
 
 @Component({
   selector: 'app-system',
@@ -10,6 +11,7 @@ export class SystemComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    ClarityIcons.addIcons(exportIcon);
   }
 
 }
