@@ -8,6 +8,7 @@ import { RunnerStateNotFoundError } from "../../exception/RunnerStateNotFound";
 import { UserNotFoundError } from "../../exception/UserNotFoundError";
 import { RunnerStateNotSetError } from "../../exception/RunnerStateNotSetError";
 import { RunnerDto } from "./dtos/RunnerDto";
+import { SqlLogger } from "../../logger/SqlLogger";
 
 export class RunnerService {
     constructor (private userService: UserService, private groupService: GroupService, private runnerRepository: Repository<Runner>) {}
@@ -80,11 +81,12 @@ export class RunnerService {
      * @param username
      * @param state 
      */
-    async setRunneState(runner: Runner,state:string):Promise<void> {
+    async setRunneState(runner: Runner,state:string, userId: string):Promise<void> {
         if (CONFIG.runners.states.includes(state)) {
             runner.state = state;
     runner.lastStateChange = new Date();
             this.runnerRepository.save(runner);
+            SqlLogger.logI(`Runner ${runner.id} state change to ${state}`,"runner",userId)
         } else {
             throw new RunnerStateNotFoundError();
         }
@@ -102,10 +104,11 @@ export class RunnerService {
         }
     }
 
-    async addRound(runner: Runner):Promise<void> {
+    async addRound(runner: Runner, userId: string):Promise<void> {
         if (await this.getRunnerState(runner)) {
             runner.round += 1;
             this.runnerRepository.save(runner);
+            SqlLogger.logI(`Runner ${runner.id} add round, new value ${runner.round}`,"runner",userId)
         }
     }
 
@@ -113,11 +116,12 @@ export class RunnerService {
      * Only decrease if round > 0
      * @param runner
      */
-    async decreaseRound(runner:Runner):Promise<void> {
+    async decreaseRound(runner:Runner, userId: string):Promise<void> {
         if (await this.getRunnerState(runner)) {
             if (runner.round > 0) {
                 runner.round -= 1;
                 this.runnerRepository.save(runner);
+            SqlLogger.logI(`Runner ${runner.id} descrease round, new value ${runner.round}`,"runner",userId)
             }
         }
 
@@ -135,10 +139,11 @@ export class RunnerService {
      * Set round
      * @param round
      */
-    async setStation(runner:Runner,station: string) {
+    async setStation(runner:Runner,station: string, userId: string) {
         if (CONFIG.runners.stations.includes(station)) {
             runner.station = station;
             this.runnerRepository.save(runner);
+            SqlLogger.logI(`Runner ${runner.id} station change to ${station}`,"runner",userId)
         } else {
 
         }

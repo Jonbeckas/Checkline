@@ -39,18 +39,18 @@ class Main {
             group = await groupService.getGroupByName(CONFIG.adminGroup.name)
             if (!groupService.hasPermission(group, "CENGINE_ADMIN")) {
                 console.log("Give group " + CONFIG.adminGroup.name + " the permission CENGIN_ADMIN")
-                await groupService.addPermissionToGroup(group, "CENGINE_ADMIN")
+                await groupService.addPermissionToGroup(group, "CENGINE_ADMIN", 'system')
             }
         }
          catch (e) {
-            group = await groupService.addGroup(CONFIG.adminGroup.name,["CENGINE_ADMIN"])
+            group = await groupService.addGroup(CONFIG.adminGroup.name,["CENGINE_ADMIN"], 'system')
             console.log("Created new Group "+CONFIG.adminGroup.name)
         }
 
         try {
             let user = await userService.getUserByUsername(CONFIG.admin.username)
             if (!user.groups.some((group) => group.name == CONFIG.adminGroup.name)) {
-                await groupService.addUserToGroup(user, group)
+                await groupService.addUserToGroup(user, group, 'system')
             }
 
             if (process.argv.includes("-p")) {
@@ -68,8 +68,8 @@ class Main {
             console.log("--------------------------------------")
             console.log("New admin password: "+password)
             console.log("--------------------------------------")
-            let user = await userService.addUser(CONFIG.admin.username,CONFIG.admin.firstname,CONFIG.admin.name, password)
-            await groupService.addUserToGroup(user, group)
+            let user = await userService.addUser(CONFIG.admin.username,CONFIG.admin.firstname,CONFIG.admin.name, password, 'system')
+            await groupService.addUserToGroup(user, group, 'system')
         }
     }
 

@@ -15,6 +15,7 @@ import { RunnerStateNotFoundError } from "../../exception/RunnerStateNotFound";
 import { RunnerStateNotSetError } from "../../exception/RunnerStateNotSetError";
 import { CONFIG } from "../../config/Config";
 import { UserNotFoundError } from "../../exception/UserNotFoundError";
+import Papa from "papaparse";
 
 
 export const runnersRouter = express.Router({caseSensitive:false});
@@ -70,7 +71,7 @@ runnersRouter.post("/runner/state",PermissionLoginValidator([["RUNNER_MODIFY"]])
     }
     try {
         let runner = await runnerService.getOrTemporaryGenerateRunnerById(req.body.id);
-        let result = await runnerService.setRunneState(runner,req.body.state);
+        let result = await runnerService.setRunneState(runner,req.body.state, (req as any).userData.userId);
         res.status(200).send()
     } catch (e) {
         try {
@@ -102,7 +103,7 @@ runnersRouter.post("/runners/addRound",PermissionLoginValidator([["RUNNER_MODIFY
     }
     try {
         let runner = await runnerService.getRunnerById(req.body.id);
-        await runnerService.addRound(runner);
+        await runnerService.addRound(runner, (req as any).userData.userId);
         await runnerService.changeTimestampToNow(runner);
         res.status(200).send()
     } catch(e) {
@@ -127,7 +128,7 @@ runnersRouter.post("/runners/decreaseRound",PermissionLoginValidator([["RUNNER_M
 
     try {
         let runner = await runnerService.getRunnerById(rReq.id);
-        await runnerService.decreaseRound(runner)
+        await runnerService.decreaseRound(runner, (req as any).userData.userId)
         await runnerService.changeTimestampToNow(runner);
         res.status(200).send()
     } catch(e) {
@@ -189,7 +190,7 @@ runnersRouter.post("/runners/station",PermissionLoginValidator([["RUNNER_MODIFY"
 
     try {
         let runner = await runnerService.getRunnerById(id);
-        runnerService.setStation(runner, station);
+        runnerService.setStation(runner, station, (req as any).userData.userId);
         res.status(200).send();
     } catch(e) {
         if (e instanceof RunnerNotFoundError) {
@@ -261,3 +262,13 @@ runnersRouter.get("/runners/conspicous", PermissionLoginValidator([["RUNNER_CONS
     let runnerService = (<any> req).runnerService as RunnerService;
     res.status(200).send(await runnerService.getConspicousUsers())
 });
+
+/**
+ * Export runners as csv
+ */
+runnersRouter.get("/runners/export", PermissionLoginValidator([["RUNNER_EXPORT"]]), async (req, res) => {
+    const runnerService = (<any> req).runnerService as RunnerService;
+
+    let response = Papa.unparse(await runnerService.getRunners())
+    res.contentType("text/csv").status(200).send(response)
+})
