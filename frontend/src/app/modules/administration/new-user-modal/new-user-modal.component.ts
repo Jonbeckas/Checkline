@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService, WebResult} from '../../auth/auth.service';
 import {checkCircleIcon, ClarityIcons, exclamationCircleIcon} from '@cds/core/icon';
@@ -12,14 +12,14 @@ import {UserService} from '../services/user.service';
 })
 export class NewUserModalComponent implements OnInit {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   error: undefined|string;
   spinner = false;
   showSucces = false;
   open = true;
 
 
-  constructor( private router: Router, private formBuilder: FormBuilder, private userService: UserService) {
+  constructor( private router: Router, private formBuilder: UntypedFormBuilder, private userService: UserService) {
     this.form = this.formBuilder.group({
       username: ['', [Validators.required]],
       firstname: ['', Validators.required],

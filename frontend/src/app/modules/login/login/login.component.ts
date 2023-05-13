@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
 import {Router, RouteReuseStrategy} from '@angular/router';
 import {environment} from '../../../../environments/environment';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {AuthService, WebResult} from '../../auth/auth.service';
 import {ClarityIcons, exclamationCircleIcon, windowCloseIcon} from '@cds/core/icon';
 
@@ -12,13 +12,13 @@ import {ClarityIcons, exclamationCircleIcon, windowCloseIcon} from '@cds/core/ic
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   error: undefined|string;
   spinner = false;
 
 
 
-  constructor( private router: Router, private formBuilder: FormBuilder, private authService: AuthService) {
+  constructor( private router: Router, private formBuilder: UntypedFormBuilder, private authService: AuthService) {
     this.form = this.formBuilder.group({
       username: ['', [Validators.required]],
       password: ['', Validators.required]

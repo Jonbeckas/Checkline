@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ClrDatagrid} from '@clr/angular';
-import {FormBuilder, Validators} from '@angular/forms';
+import {UntypedFormBuilder, Validators} from '@angular/forms';
 import {UserService} from '../services/user.service';
 import {WebResult} from '../../auth/auth.service';
 import {GroupService} from '../services/group.service';
@@ -25,7 +25,7 @@ export class EditGroupModalComponent implements OnInit {
   permissionForm: any;
   spinnerPem = false;
 
-  constructor(private formBuilder: FormBuilder, private groupService: GroupService) { }
+  constructor(private formBuilder: UntypedFormBuilder, private groupService: GroupService) { }
 
   ngOnInit(): void {
     this.groupnameForm = this.formBuilder.group({
