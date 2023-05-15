@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, LOCALE_ID, NgModule} from '@angular/core';
+import {APP_INITIALIZER, LOCALE_ID, NgModule, isDevMode} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +15,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 export function initializeApp(appConfig: ConfigService) {
   return () => appConfig.load();
@@ -32,7 +33,13 @@ export function initializeApp(appConfig: ConfigService) {
         BrowserAnimationsModule,
         HttpClientModule,
         PermissionDirectiveModule,
-        ClarityModule
+        ClarityModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+          enabled: !isDevMode(),
+          // Register the ServiceWorker as soon as the application is stable
+          // or after 30 seconds (whichever comes first).
+          registrationStrategy: 'registerWhenStable:30000'
+        })
     ],
     providers: [CookieService,
       ConfigService,
