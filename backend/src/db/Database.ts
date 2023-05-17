@@ -1,6 +1,7 @@
 import {Connection, createConnection} from "typeorm";
 import * as Path from "path";
 import { CONFIG } from "../config/Config";
+import { InitMigration1684329519144 } from "./migrations.ts/1684329519144-InitMigration";
 
 
 export class Database {
@@ -11,10 +12,11 @@ export class Database {
             Path.resolve(Path.parse(__dirname).dir,"model").replace(/\\/gi,"/")+"/*.js"
         ],
         migrations: [
-            Path.resolve(Path.parse(__dirname).dir,"migrations").replace(/\\/gi,"/")+"/*.js"
+          InitMigration1684329519144
         ],
-        synchronize: true,
-        logging: new Array()
+        migrationsTransactionMode: 'each',
+        synchronize: false,
+        logging: ["schema","query","error"]
     }
 
     constructor() {

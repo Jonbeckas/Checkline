@@ -15,6 +15,7 @@ export class Group {
     users!: User[]
 
     @OneToMany(type => Permission, permission => permission.group)
+    @JoinTable()
     permissions!: Permission[]
 
 }
