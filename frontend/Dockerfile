@@ -1,11 +1,11 @@
 ### STAGE 1: Build ###
-FROM node:14.9.0-alpine3.12 AS build
+FROM node:20-alpine AS build
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
 RUN npm run buildprod
 ### STAGE 2: Run ###
-FROM nginx:1.19.10-alpine
+FROM nginx:mainline-alpine
 COPY --from=build /usr/src/app/dist/Checkline /usr/share/nginx/html
 
