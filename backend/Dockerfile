@@ -7,7 +7,7 @@ COPY . .
 RUN ls
 RUN npm run build
 ### STAGE 2: Run ###
-FROM node
+FROM node:lts-alpine
 COPY --from=build /usr/src/app/build /usr/build
 WORKDIR /usr/build
 RUN npm install

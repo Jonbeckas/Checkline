@@ -8,6 +8,7 @@ services:
       - '3306:3306'
     environment:
       MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: checkline
 
   phpmyadmin:
     depends_on:
@@ -21,6 +22,7 @@ services:
       PMA_HOST: db
 
   checkline-backend:
+    restart: always
     depends_on:
       - db
     image: ghcr.io/jonbeckas/checkline-backend:latest

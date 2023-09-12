@@ -7,5 +7,6 @@ COPY . .
 RUN npm run buildprod
 ### STAGE 2: Run ###
 FROM nginx:mainline-alpine
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /usr/src/app/dist/Checkline /usr/share/nginx/html
 
