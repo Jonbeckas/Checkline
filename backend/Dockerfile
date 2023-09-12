@@ -11,7 +11,7 @@ FROM node
 COPY --from=build /usr/src/app/build /usr/build
 WORKDIR /usr/build
 RUN npm install
-RUN adduser -D checklineuser
+RUN adduser --disabled-password checklineuser
 USER checklineuser
 ENTRYPOINT node /usr/build/main.js
 
