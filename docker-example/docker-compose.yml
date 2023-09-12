@@ -3,7 +3,6 @@ version: '3.2'
 services:
   db:
     image: mysql:latest
-    container_name: appsDB
     restart: always
     ports:
       - '3306:3306'
@@ -24,14 +23,14 @@ services:
   checkline-backend:
     depends_on:
       - db
-    image: ghcr.io/jonbeckas/checkline-frontend:latest
+    image: ghcr.io/jonbeckas/checkline-backend:latest
     ports: 
       - "8081:8081"
     volumes:
       - ${PWD}/backend-config.json:/usr/build/config.json
 
   checkline-frontend:
-    image: ghcr.io/jonbeckas/checkline-backend:latest
+    image: ghcr.io/jonbeckas/checkline-frontend:latest
     ports: 
       - "8082:80"
     volumes:

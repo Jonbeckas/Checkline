@@ -9,5 +9,5 @@ RUN npm run build
 ### STAGE 2: Run ###
 FROM node
 COPY --from=build /usr/src/app/build /usr/build
-ENTRYPOINT node /usr/build/index.js
+ENTRYPOINT node /usr/build/main.js
 
