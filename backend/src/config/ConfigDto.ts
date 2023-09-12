@@ -70,4 +70,7 @@ export class Configuration {
 
     @jsonMember(DefaultGroup,{isRequired: true})
     adminGroup!: DefaultGroup
+
+    @jsonMember(Boolean, {isRequired: false})
+    debug!: Boolean
 }

@@ -16,7 +16,7 @@ export class Database {
         ],
         migrationsTransactionMode: 'each',
         synchronize: false,
-        logging: ["schema","query","error"]
+        logging: ["schema","error"]
     }
 
     constructor() {
