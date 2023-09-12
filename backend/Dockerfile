@@ -9,5 +9,9 @@ RUN npm run build
 ### STAGE 2: Run ###
 FROM node
 COPY --from=build /usr/src/app/build /usr/build
+WORKDIR /usr/build
+RUN npm install
+RUN adduser -D checklineuser
+USER checklineuser
 ENTRYPOINT node /usr/build/main.js
 

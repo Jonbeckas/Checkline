@@ -27,11 +27,11 @@ services:
     ports: 
       - "8081:8081"
     volumes:
-      - ${PWD}/backend-config.json:/usr/build/config.json
+      - ./backend-config.json:/usr/build/config.json
 
   checkline-frontend:
     image: ghcr.io/jonbeckas/checkline-frontend:latest
     ports: 
       - "8082:80"
     volumes:
-      - ${PWD}/frontend-config.json:/usr/share/nginx/html/assets/config/config-prod.json
+      - ./frontend-config.json:/usr/share/nginx/html/assets/config/config-prod.json
