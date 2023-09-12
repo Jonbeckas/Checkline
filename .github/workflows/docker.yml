@@ -25,4 +25,5 @@ jobs:
         with:
           push: true
           context: frontend
+          file: ./frontend
           tags: ghcr.io/jonbeckas/checkline-frontend:latest
