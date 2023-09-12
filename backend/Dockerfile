@@ -5,7 +5,7 @@ COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
 RUN ls
-RUN npm run build:dev
+RUN npm run build
 ### STAGE 2: Run ###
 FROM node
 COPY --from=build /usr/src/app/build /usr/build
