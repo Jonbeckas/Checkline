@@ -1,5 +1,5 @@
 ### STAGE 1: Build ###
-FROM node:14.9.0-alpine3.12 AS build
+FROM node:lts-alpine AS build
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm install

@@ -20,9 +20,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}     
       -
-        name: Build and push
+        name: Build and push (frontend)
         uses: docker/build-push-action@v4
         with:
           push: true
           context: "{{defaultContext}}:frontend"
           tags: ghcr.io/jonbeckas/checkline-frontend:latest
+      -
+        name: Build and push (backend)
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          context: "{{defaultContext}}:backend"
+          tags: ghcr.io/jonbeckas/checkline-beckend:latest
