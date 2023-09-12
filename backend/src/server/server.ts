@@ -63,7 +63,9 @@ export class Server {
         }) as ErrorRequestHandler); 
 
         app.listen(CONFIG.port, () => {
-            console.log(listEndpoints(app))
+            if (CONFIG.debug) {
+                console.log(listEndpoints(app))
+            }
             console.log(`⚡️[server]: Server is running at http://localhost:${CONFIG.port}`);
         });
     }

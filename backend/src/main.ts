@@ -76,6 +76,9 @@ class Main {
     async initDb(): Promise<Connection> {
         let db = new Database();
         db.loadFromConfig();
+        if (CONFIG.debug) {
+            db.enableQueryLog();
+        }
         db.enableMigration(true);
         db.enableWarnLog();
         db.enableErrorLog();
