@@ -32,4 +32,4 @@ jobs:
         with:
           push: true
           context: "{{defaultContext}}:backend"
-          tags: ghcr.io/jonbeckas/checkline-beckend:latest
+          tags: ghcr.io/jonbeckas/checkline-backend:latest
