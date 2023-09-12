@@ -24,6 +24,5 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          file: ./frontend/Dockerfile
-          context: ./frontend/.
+          context: "{{defaultContext}}:frontend"
           tags: ghcr.io/jonbeckas/checkline-frontend:latest
